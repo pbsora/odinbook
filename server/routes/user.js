@@ -29,6 +29,13 @@ router.post("/log-in", async (req, res, next) => {
   })(req, res, next);
 });
 
+router.get("/log-out", (req, res, next) => {
+  req.logOut((err) => {
+    if (err) return next(err);
+    res.send("Logged out");
+  });
+});
+
 //register
 router.post(
   "/register",
@@ -41,6 +48,7 @@ router.post(
     .escape()
     .trim()
     .isLength({ min: 6 }),
+  body("email", "Email must be vaild").trim().escape().isLength({ min: 8 }),
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) return res.send(errors);

@@ -8,7 +8,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import Home from "./Pages/Home.tsx";
 import Auth from "./Pages/Auth.tsx";
-import { authLoader } from "./lib/authLoader.tsx";
+import { authLoader, loginLoader } from "./lib/authLoader.tsx";
 
 axios.defaults.baseURL = "http://localhost:5000/";
 
@@ -16,6 +16,7 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <Home />,
+    loader: loginLoader,
   },
   {
     path: "/auth",

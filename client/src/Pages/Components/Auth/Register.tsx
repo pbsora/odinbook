@@ -1,61 +1,50 @@
 import { useState } from "react";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
 import { RotatingLines } from "react-loader-spinner";
 
-// type Props = {}
-const Login = (/* props: Props */) => {
-  const [login, setLogin] = useState({
-    username: "",
-    password: "",
-  });
+const Register = () => {
   const [errors, setErrors] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const navigate = useNavigate();
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setLogin((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }));
-  };
-
-  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setLoading(true);
-
-    const { username, password } = login;
-    if (username == "" || password == "") return setLoading(false);
-
-    try {
-      const { data } = await axios({
-        method: "post",
-        url: "/user/log-in",
-        withCredentials: true,
-        data: {
-          username: username,
-          password: password,
-        },
-      });
-      if (data.error) {
-        setLoading(false);
-        return setErrors(data.error);
-      }
-      navigate("/");
-    } catch (error) {
-      console.log(error);
-      setErrors("Server error, please refresh the page");
-    }
-  };
-
   return (
-    <div className="p-10 border-2 border-black lg:w-2/4 rounded-xl h-2/4">
+    <div className="p-6 border-2 border-black w-[90%]  sm:w-3/4 rounded-xl ">
       <form
         action=""
         className="flex flex-col items-center w-3/4 gap-4 m-auto "
-        onSubmit={handleLogin}
       >
+        <div>
+          <label htmlFor="firstName" className="block text-2xl">
+            First name
+          </label>
+          <input
+            type="text"
+            name="firstName"
+            className="px-6 py-2 border-2 border-black rounded-xl focus:outline-4 focus:outline-sky-400"
+            minLength={3}
+          />
+        </div>
+        <div>
+          <label htmlFor="lastName" className="block text-2xl">
+            Last name
+          </label>
+          <input
+            type="text"
+            name="lastName"
+            className="px-6 py-2 border-2 border-black rounded-xl focus:outline-4 focus:outline-sky-400"
+            minLength={3}
+          />
+        </div>
+
+        <div>
+          <label htmlFor="email" className="block text-2xl">
+            E-mail
+          </label>
+          <input
+            type="email"
+            name="email"
+            className="px-6 py-2 border-2 border-black rounded-xl focus:outline-4 focus:outline-sky-400"
+            minLength={3}
+          />
+        </div>
         <div>
           <label htmlFor="username" className="block text-2xl">
             Username
@@ -64,7 +53,6 @@ const Login = (/* props: Props */) => {
             type="text"
             name="username"
             className="px-6 py-2 border-2 border-black rounded-xl focus:outline-4 focus:outline-sky-400"
-            onChange={handleChange}
             minLength={3}
           />
         </div>
@@ -76,7 +64,6 @@ const Login = (/* props: Props */) => {
             type="password"
             name="password"
             className="px-6 py-2 border-2 border-black rounded-xl"
-            onChange={handleChange}
           />
         </div>
         <span
@@ -96,4 +83,4 @@ const Login = (/* props: Props */) => {
     </div>
   );
 };
-export default Login;
+export default Register;

@@ -10,3 +10,13 @@ export const authLoader = async () => {
   if (data[0]) return redirect("/");
   return data;
 };
+
+export const loginLoader = async () => {
+  const { data } = await axios({
+    method: "get",
+    url: "/user/auth",
+    withCredentials: true,
+  });
+  if (!data[0]) return redirect("/auth");
+  return data;
+};

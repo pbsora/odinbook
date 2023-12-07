@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const session = require("express-session");
+const MongoStore = require("connect-mongo");
 
 const passport = require("passport");
 
@@ -31,7 +32,12 @@ app.use(
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
-    cookie: { maxAge: 24 * 60 * 60 * 1000 },
+    cookie: { maxAge: 24 * 60 * 60 * 1000 * 7 },
+    store: MongoStore.create({
+      // eslint-disable-next-line no-undef
+      mongoUrl: process.env.DATABASE_URL,
+      autoRemove: "native",
+    }),
   })
 );
 

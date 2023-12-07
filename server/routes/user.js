@@ -49,6 +49,7 @@ router.post(
     .trim()
     .isLength({ min: 6 }),
   body("email", "Email must be vaild").trim().escape().isLength({ min: 8 }),
+  body(""),
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) return res.send(errors);

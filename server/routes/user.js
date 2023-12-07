@@ -47,22 +47,39 @@ router.post(
   body("password", "Password must be at least 6 characters")
     .escape()
     .trim()
+    .toLowerCase()
     .isLength({ min: 6 }),
-  body("email", "Email must be vaild").trim().escape().isLength({ min: 8 }),
-  body(""),
+  body("email", "Email must be valid")
+    .trim()
+    .escape()
+    .toLowerCase()
+    .isLength({ min: 8 }),
+  body("firstName").toLowerCase().trim().escape(),
+  body("lastName").toLowerCase().trim().escape(),
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) return res.send(errors);
 
-    const { username } = req.body;
+    const { username, email } = req.body;
     const userExists = await User.findOne({ username });
-    if (userExists) return res.json({ message: "User already exists" });
+    if (userExists) return res.json({ error: "User already exists" });
+    console.log(userExists);
+
+    //TODO: check if email exists
+    // if (userExists.email === email)
+    //   return res.json({ error: "E-mail already in use" });
 
     let { password } = req.body;
     password = await bcrypt.hash(password, 10);
 
     try {
-      const newUser = new User({ username, password });
+      const newUser = new User({
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        email: req.body.email,
+        username,
+        password,
+      });
       await newUser.save();
       res.status(200).json({ confirmation: "User created successfully" });
     } catch (error) {

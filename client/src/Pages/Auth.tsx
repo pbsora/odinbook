@@ -22,9 +22,9 @@ const Auth = () => {
 
   return (
     <div className="flex w-screen h-screen ">
-      <div className="hidden w-2/4 bg-cyan-400 lg:block"></div>
+      <div className="hidden w-2/4 bg-cyan-400 xl:block"></div>
       <div
-        className="flex flex-col items-center justify-center w-full h-full gap-6 lg:w-2/4"
+        className="flex flex-col items-center justify-center w-full h-full gap-6 xl:w-2/4"
         ref={parent}
       >
         <div className="flex gap-6 ">
@@ -45,7 +45,7 @@ const Auth = () => {
             Register
           </button>
         </div>
-        {auth === "login" ? <Login /> : <Register />}
+        {auth === "login" ? <Login /> : <Register setAuth={setAuth} />}
       </div>
     </div>
   );

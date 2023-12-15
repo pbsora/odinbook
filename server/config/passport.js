@@ -1,6 +1,8 @@
 const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 const localStrategy = require("passport-local").Strategy;
+const GoogleStrategy = require("passport-google-oauth20");
+require("dotenv").config();
 
 module.exports = function (passport) {
   passport.use(
@@ -19,13 +21,46 @@ module.exports = function (passport) {
     })
   );
 
+  //Google auth
+
+  passport.use(
+    new GoogleStrategy(
+      {
+        // eslint-disable-next-line no-undef
+        clientID: process.env.GOOGLE_CLIENT_ID,
+        // eslint-disable-next-line no-undef
+        clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+        callbackURL: "/auth/google/callback",
+        scope: ["profile"],
+        state: true,
+      },
+      async function verify(accessToken, refreshToken, profile, cb) {
+        const userData = profile._json;
+        let user = await User.findOne({ email: userData.email });
+        if (!user) {
+          const newUser = new User({
+            username: userData.email.split("@")[0].toLowerCase(),
+            email: userData.email.toLowerCase(),
+            firstName: userData.given_name.toLowerCase(),
+            lastName: userData.family_name.toLowerCase(),
+            loginType: "Google",
+          });
+          await newUser.save();
+          return cb(null, newUser);
+        } else {
+          return cb(null, user);
+        }
+      }
+    )
+  );
+
   passport.serializeUser((user, done) => {
     done(null, user.id);
   });
 
   passport.deserializeUser(async (id, done) => {
     try {
-      const user = await User.findById(id).select("-password");
+      const user = await User.findById(id).select("-password, -createdAt");
       done(null, user);
     } catch (error) {
       done(error);

@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { RotatingLines } from "react-loader-spinner";
+import GoogleButton from "react-google-button";
 
 // type Props = {}
 const Login = (/* props: Props */) => {
@@ -31,7 +32,7 @@ const Login = (/* props: Props */) => {
     try {
       const { data } = await axios({
         method: "post",
-        url: "/user/log-in",
+        url: "/auth/log-in",
         withCredentials: true,
         data: {
           username: username,
@@ -49,8 +50,12 @@ const Login = (/* props: Props */) => {
     }
   };
 
+  const handleGoogle = () => {
+    window.open("http://localhost:5000/auth/google", "_self");
+  };
+
   return (
-    <div className="w-[90%] p-10 border-2 border-black md:w-2/4 rounded-xl h-2/4 ">
+    <div className="w-[90%] p-10 border-2 border-black md:w-2/4 rounded-xl h-fit ">
       <form
         action=""
         className="flex flex-col items-center w-full gap-4 m-auto "
@@ -63,9 +68,10 @@ const Login = (/* props: Props */) => {
           <input
             type="text"
             name="username"
-            className="w-full px-6 py-2 border-2 border-black rounded-xl focus:outline-4 focus:outline-sky-400"
+            className="login-input"
             onChange={handleChange}
             minLength={3}
+            placeholder="Username"
           />
         </div>
         <div className="w-3/4">
@@ -75,8 +81,9 @@ const Login = (/* props: Props */) => {
           <input
             type="password"
             name="password"
-            className="w-full px-6 py-2 border-2 border-black rounded-xl focus:outline-4 focus:outline-sky-400"
+            className="login-input"
             onChange={handleChange}
+            placeholder="Password"
           />
         </div>
         <span
@@ -86,11 +93,15 @@ const Login = (/* props: Props */) => {
         >
           {errors || "Nothing"}
         </span>
+
         <button
           type="submit"
-          className="flex items-center justify-center w-3/4 px-6 py-2 border-2 border-black rounded-3xl hover:bg-zinc-200"
+          className="flex items-center justify-center w-3/4 px-6 py-2 border-2 border-black rounded-lg hover:bg-zinc-200"
         >
           {loading ? <RotatingLines width="24" strokeColor="blue" /> : "Log-in"}
+        </button>
+        <button onClick={handleGoogle} className="mt-3">
+          <GoogleButton />
         </button>
       </form>
     </div>

@@ -18,13 +18,13 @@ router.get("/", (req, res) => {
 router.post("/log-in", async (req, res, next) => {
   passport.authenticate("local", (err, user, info) => {
     if (err) return next(info);
-    if (!user) return res.send({ error: info.error });
+    if (!user) return res.status(400).json({ error: info.error });
 
     req.logIn(user, (err) => {
       if (err) {
         return next(err);
       }
-      res.send({ message: "Successfully authenticated" });
+      res.status(200).json({ message: "Successfully authenticated" });
     });
   })(req, res, next);
 });
@@ -39,35 +39,39 @@ router.get("/log-out", (req, res, next) => {
 //register
 router.post(
   "/register",
-  body("username", "Username must be specified")
-    .trim()
-    .toLowerCase()
-    .escape()
-    .isLength({ min: 3 }),
-  body("password", "Password must be at least 6 characters")
-    .escape()
-    .trim()
-    .toLowerCase()
-    .isLength({ min: 6 }),
-  body("email", "Email must be valid")
-    .trim()
-    .escape()
-    .toLowerCase()
-    .isLength({ min: 8 }),
-  body("firstName").toLowerCase().trim().escape(),
-  body("lastName").toLowerCase().trim().escape(),
+  [
+    body("username", "Username must be specified")
+      .trim()
+      .toLowerCase()
+      .escape()
+      .isLength({ min: 3 }),
+    body("password", "Password must be at least 6 characters")
+      .escape()
+      .trim()
+      .toLowerCase()
+      .isLength({ min: 6 }),
+    body("email", "Email must be valid")
+      .trim()
+      .escape()
+      .toLowerCase()
+      .isLength({ min: 8 }),
+    body("firstName").toLowerCase().trim().escape(),
+    body("lastName").toLowerCase().trim().escape(),
+  ],
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) return res.send(errors);
 
     const { username, email } = req.body;
-    const userExists = await User.findOne({ username });
-    if (userExists) return res.json({ error: "User already exists" });
-    console.log(userExists);
+    const [userExists, emailExists] = await Promise.all([
+      User.findOne({ username }),
+      User.findOne({ email }),
+    ]);
 
-    //TODO: check if email exists
-    // if (userExists.email === email)
-    //   return res.json({ error: "E-mail already in use" });
+    if (userExists)
+      return res.status(422).json({ error: "User already exists" });
+    if (emailExists)
+      return res.status(422).json({ error: "Email already in use" });
 
     let { password } = req.body;
     password = await bcrypt.hash(password, 10);
@@ -81,11 +85,31 @@ router.post(
         password,
       });
       await newUser.save();
-      res.status(200).json({ confirmation: "User created successfully" });
+      res.status(201).json({ confirmation: "User created successfully" });
     } catch (error) {
-      res.send(error);
+      console.log(error);
+      res.status(500).json({ error: "Internal server error" });
     }
   }
+);
+
+//Google auth
+
+router.get(
+  "/google",
+  passport.authenticate("google", {
+    scope: [
+      "https://www.googleapis.com/auth/userinfo.profile",
+      "https://www.googleapis.com/auth/userinfo.email",
+    ],
+  })
+);
+
+router.get(
+  "/google/callback",
+  passport.authenticate("google", {
+    successRedirect: "http://localhost:5173/",
+  })
 );
 
 //auth

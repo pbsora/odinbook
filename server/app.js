@@ -46,7 +46,7 @@ app.use(passport.session());
 
 //--------------------end of middleware-----------------//
 
-app.use("/user", userRoutes);
+app.use("/auth", userRoutes);
 
 app.get("/", (req, res) => {
   res.send("oi");

@@ -7,6 +7,7 @@ const User = new Schema({
   email: { type: String, required: true, unique: true, min: 8 },
   firstName: { type: String, required: true, min: 2 },
   lastName: { type: String, required: true, min: 2 },
+  loginType: { type: String, default: "Local" },
   createdAt: { type: Date, default: Date.now },
 });
 

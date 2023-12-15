@@ -7,7 +7,7 @@ const matchPassword = (pass: string, secondPass: string) => {
 };
 
 const isBlank = (obj: Form) => {
-  return Object.values(obj).every((value) => {
+  return Object.values(obj).some((value) => {
     if (value === "") return true;
     return false;
   });
@@ -64,7 +64,7 @@ const Register = ({ setAuth }: Props) => {
     try {
       const { data } = await axios({
         method: "post",
-        url: "user/register",
+        url: "auth/register",
         withCredentials: true,
         data: {
           firstName: form.firstName,
@@ -81,13 +81,23 @@ const Register = ({ setAuth }: Props) => {
       }
       setAuth("login");
     } catch (error) {
-      console.log(error);
+      if (
+        axios.isAxiosError(error) &&
+        error.response &&
+        error.response.status === 422
+      ) {
+        if (error.response.data && error.response.data.error) {
+          setLoading(false);
+          return setErrors(error.response.data.error);
+        }
+      }
+
       setErrors("Server error, please refresh the page");
     }
   };
 
   return (
-    <div className="py-6 px-3 border-2 border-black w-[90%]  sm:w-3/4 rounded-xl text-xl">
+    <div className="py-6 px-3 border-2 border-black w-[90%]  sm:w-3/4 rounded-xl text-xl h-fit">
       <form
         action=""
         className="flex flex-col items-center w-full gap-4 m-auto md:w-3/4 "
@@ -100,7 +110,7 @@ const Register = ({ setAuth }: Props) => {
           <input
             type="text"
             name="firstName"
-            className="w-full px-6 py-2 border-2 border-black rounded-xl focus:outline-4 focus:outline-sky-400"
+            className="register-input"
             onChange={handleChange}
           />
         </div>
@@ -111,7 +121,7 @@ const Register = ({ setAuth }: Props) => {
           <input
             type="text"
             name="lastName"
-            className="w-full px-6 py-2 border-2 border-black rounded-xl focus:outline-4 focus:outline-sky-400"
+            className="register-input"
             onChange={handleChange}
           />
         </div>
@@ -122,7 +132,7 @@ const Register = ({ setAuth }: Props) => {
           <input
             type="email"
             name="email"
-            className="w-full px-6 py-2 border-2 border-black rounded-xl focus:outline-4 focus:outline-sky-400"
+            className="register-input"
             onChange={handleChange}
           />
         </div>
@@ -133,7 +143,7 @@ const Register = ({ setAuth }: Props) => {
           <input
             type="text"
             name="username"
-            className="w-full px-6 py-2 border-2 border-black rounded-xl focus:outline-4 focus:outline-sky-400"
+            className="register-input"
             onChange={handleChange}
           />
         </div>
@@ -144,7 +154,7 @@ const Register = ({ setAuth }: Props) => {
           <input
             type="password"
             name="password"
-            className="w-full px-6 py-2 border-2 border-black rounded-xl"
+            className="register-input"
             onChange={handleChange}
           />
         </div>
@@ -155,7 +165,7 @@ const Register = ({ setAuth }: Props) => {
           <input
             type="password"
             name="confirmPassword"
-            className="w-full px-6 py-2 border-2 border-black rounded-xl"
+            className="register-input"
             onChange={handleChange}
           />
         </div>
@@ -168,7 +178,7 @@ const Register = ({ setAuth }: Props) => {
         </span>
         <button
           type="submit"
-          className="flex items-center justify-center w-3/4 px-6 py-2 border-2 border-black rounded-3xl hover:bg-zinc-200"
+          className="flex items-center justify-center w-3/4 px-6 py-2 transition-colors duration-200 border-2 border-black rounded-lg hover:bg-zinc-200"
         >
           {loading ? (
             <RotatingLines width="24" strokeColor="blue" />

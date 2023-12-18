@@ -1,18 +1,23 @@
 import { useState } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { RotatingLines } from "react-loader-spinner";
 import GoogleButton from "react-google-button";
+import { API } from "../../../utils/api";
+import { useMutation } from "@tanstack/react-query";
 
-// type Props = {}
-const Login = (/* props: Props */) => {
+type ErrorResponse = {
+  response: {
+    data: {
+      error: string;
+    };
+  };
+};
+
+const Login = () => {
   const [login, setLogin] = useState({
     username: "",
     password: "",
   });
   const [errors, setErrors] = useState("");
-  const [loading, setLoading] = useState(false);
-
   const navigate = useNavigate();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -22,32 +27,23 @@ const Login = (/* props: Props */) => {
     }));
   };
 
+  const mutation = useMutation({
+    mutationKey: ["login"],
+    mutationFn: async () => {
+      return await API.post("/auth/log-in", {
+        username: login.username,
+        password: login.password,
+      });
+    },
+    onSettled: (data, error: ErrorResponse | null) => {
+      if (error) return setErrors(error.response.data.error);
+      navigate("/");
+    },
+  });
+
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setLoading(true);
-
-    const { username, password } = login;
-    if (username == "" || password == "") return setLoading(false);
-
-    try {
-      const { data } = await axios({
-        method: "post",
-        url: "/auth/log-in",
-        withCredentials: true,
-        data: {
-          username: username,
-          password: password,
-        },
-      });
-      if (data.error) {
-        setLoading(false);
-        return setErrors(data.error);
-      }
-      navigate("/");
-    } catch (error) {
-      console.log(error);
-      setErrors("Server error, please refresh the page");
-    }
+    mutation.mutate();
   };
 
   const handleGoogle = () => {
@@ -86,19 +82,15 @@ const Login = (/* props: Props */) => {
             placeholder="Password"
           />
         </div>
-        <span
-          className={`italic text-red-600 opacity-0 ${
-            errors !== "" && "opacity-100"
-          }`}
-        >
-          {errors || "Nothing"}
+        <span className={`italic text-red-600 opacity-0 ${"opacity-100"}`}>
+          {errors !== "" && errors}
         </span>
 
         <button
           type="submit"
           className="flex items-center justify-center w-3/4 px-6 py-2 border-2 border-black rounded-lg hover:bg-zinc-200"
         >
-          {loading ? <RotatingLines width="24" strokeColor="blue" /> : "Log-in"}
+          Log-in
         </button>
         <button onClick={handleGoogle} className="mt-3">
           <GoogleButton />

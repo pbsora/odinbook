@@ -18,7 +18,7 @@ router.get("/", (req, res) => {
 router.post("/log-in", async (req, res, next) => {
   passport.authenticate("local", (err, user, info) => {
     if (err) return next(info);
-    if (!user) return res.status(400).json({ error: info.error });
+    if (!user) return res.status(422).json({ error: info.error });
 
     req.logIn(user, (err) => {
       if (err) {
@@ -68,6 +68,7 @@ router.post(
       User.findOne({ email }),
     ]);
 
+    //Will trigger the catch in FE
     if (userExists)
       return res.status(422).json({ error: "User already exists" });
     if (emailExists)

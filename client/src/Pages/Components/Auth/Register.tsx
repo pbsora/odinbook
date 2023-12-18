@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { RotatingLines } from "react-loader-spinner";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 
 const matchPassword = (pass: string, secondPass: string) => {
   return pass === secondPass;
@@ -81,17 +81,15 @@ const Register = ({ setAuth }: Props) => {
       }
       setAuth("login");
     } catch (error) {
-      if (
-        axios.isAxiosError(error) &&
-        error.response &&
-        error.response.status === 422
-      ) {
-        if (error.response.data && error.response.data.error) {
+      const { response } = error as AxiosError & {
+        response: { data: { error: string } };
+      };
+      if (axios.isAxiosError(error) && response && response.status === 422) {
+        if (response.data && response.data.error) {
           setLoading(false);
-          return setErrors(error.response.data.error);
+          return setErrors(response.data.error);
         }
       }
-
       setErrors("Server error, please refresh the page");
     }
   };

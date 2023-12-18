@@ -30,7 +30,7 @@ const Auth = () => {
         <div className="flex gap-6 ">
           <button
             className={`border-b-2 ${
-              auth == "login" ? "border-sky-400" : "border-black"
+              auth == "login" ? "border-sky-400" : "border-zinc-400"
             }`}
             onClick={handleTab}
           >
@@ -38,7 +38,7 @@ const Auth = () => {
           </button>
           <button
             className={`border-b-2 ${
-              auth == "register" ? "border-sky-400" : "border-black"
+              auth == "register" ? "border-sky-400" : "border-zinc-400"
             }`}
             onClick={handleTab}
           >

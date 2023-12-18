@@ -164,7 +164,9 @@ const Register = ({ setAuth }: Props) => {
         </span>
         <button
           type="submit"
-          className="flex items-center justify-center w-3/4 px-6 py-2 transition-colors duration-200 border-2 border-black rounded-lg hover:bg-zinc-200"
+          className={`flex items-center  justify-center w-3/4 px-6 py-2 transition-colors duration-200 border-2 border-black rounded-lg hover:bg-zinc-200
+          ${registerMutation.isPending && "cursor-not-allowed"}`}
+          disabled={registerMutation.isPending}
         >
           {registerMutation.isPending ? (
             <RotatingLines width="24" strokeColor="blue" />

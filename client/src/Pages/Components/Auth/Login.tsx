@@ -46,7 +46,7 @@ const Login = () => {
   };
 
   return (
-    <div className="w-[90%] p-10 border-2 border-black md:w-2/4 rounded-xl h-fit ">
+    <div className="w-[90%] p-10 border-2 border-black md:w-2/4 rounded-md h-fit shadow-2xl">
       <form
         action=""
         className="flex flex-col items-center w-full gap-4 m-auto "
@@ -85,7 +85,9 @@ const Login = () => {
 
         <button
           type="submit"
-          className="flex items-center justify-center w-3/4 px-6 py-2 border-2 border-black rounded-lg hover:bg-zinc-200"
+          className={`flex items-center justify-center  w-3/4 px-6 py-2 border-2 border-black rounded-lg hover:bg-zinc-200
+          ${loginMutation.isPending && "cursor-not-allowed"}`}
+          disabled={loginMutation.isPending}
         >
           {loginMutation.isPending ? (
             <RotatingLines width="24" strokeColor="blue" />

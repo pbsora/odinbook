@@ -1,20 +1,25 @@
-import {} from "react";
+import { useState, useEffect } from "react";
 import { useLoaderData } from "react-router-dom";
 import Header from "./Components/Global/Header";
-import defaultUser from "../assets/images/default_user.png";
 
-type AuthData = {
-  data: [boolean, object];
-};
+import { UserContext } from "../lib/Context/UserContext";
+import { AuthData } from "../assets/Types & Interfaces";
 
 const Home = () => {
   const auth = useLoaderData() as AuthData;
-  console.log(auth);
+  const [user, setUser] = useState<AuthData>(auth);
+
+  useEffect(() => {
+    setUser(auth);
+  }, [auth]);
 
   return (
     <>
-      <Header />
-      <img src={defaultUser} alt="default user" />
+      <UserContext.Provider value={user}>
+        <main className="h-[1000vh] overflow-x-hidden">
+          <Header />
+        </main>
+      </UserContext.Provider>
     </>
   );
 };

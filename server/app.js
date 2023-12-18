@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+const path = require("path");
 const session = require("express-session");
 const MongoStore = require("connect-mongo");
 
@@ -13,11 +14,12 @@ const cors = require("cors");
 
 const userRoutes = require("./routes/user");
 const mongoose = require("mongoose");
-// eslint-disable-next-line no-undef
+
 mongoose.connect(process.env.DATABASE_URL).catch((err) => console.log(err));
 
 //---------------------middleware----------------------//
 
+app.use(express.static(path.join(__dirname, "/assets")));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(
@@ -28,13 +30,11 @@ app.use(
 );
 app.use(
   session({
-    // eslint-disable-next-line no-undef
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
     cookie: { maxAge: 24 * 60 * 60 * 1000 * 7 },
     store: MongoStore.create({
-      // eslint-disable-next-line no-undef
       mongoUrl: process.env.DATABASE_URL,
       autoRemove: "native",
     }),

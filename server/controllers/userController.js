@@ -4,11 +4,10 @@ const passport = require("passport");
 
 const User = require("../models/User");
 
+//get a user
 exports.get_user = (req, res) => {
   res.send("user");
 };
-
-//get a user
 
 //login
 exports.log_in = (req, res, next) => {
@@ -42,7 +41,6 @@ exports.register = [
   body("password", "Password must be at least 6 characters")
     .escape()
     .trim()
-    .toLowerCase()
     .isLength({ min: 6 }),
   body("email", "Email must be valid")
     .trim()
@@ -90,6 +88,7 @@ exports.register = [
 
 //auth
 exports.auth = (req, res) => {
+  // res.cookie("teste", "randomstuff");
   res.send([req.isAuthenticated(), req.user]);
 };
 

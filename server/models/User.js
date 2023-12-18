@@ -9,6 +9,7 @@ const User = new Schema({
   lastName: { type: String, required: true, min: 2 },
   loginType: { type: String, default: "Local" },
   createdAt: { type: Date, default: Date.now },
+  image: { type: String, default: "http://localhost:5000/default_user.png" },
 });
 
 module.exports = mongoose.model("User", User);

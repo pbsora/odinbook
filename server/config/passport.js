@@ -36,6 +36,7 @@ module.exports = function (passport) {
       },
       async function verify(accessToken, refreshToken, profile, cb) {
         const userData = profile._json;
+
         let user = await User.findOne({ email: userData.email });
         if (!user) {
           const newUser = new User({
@@ -44,6 +45,7 @@ module.exports = function (passport) {
             firstName: userData.given_name.toLowerCase(),
             lastName: userData.family_name.toLowerCase(),
             loginType: "Google",
+            image: userData.picture,
           });
           await newUser.save();
           return cb(null, newUser);
@@ -60,7 +62,7 @@ module.exports = function (passport) {
 
   passport.deserializeUser(async (id, done) => {
     try {
-      const user = await User.findById(id).select("-password, -createdAt");
+      const user = await User.findById(id).select("-password -createdAt -__v");
       done(null, user);
     } catch (error) {
       done(error);

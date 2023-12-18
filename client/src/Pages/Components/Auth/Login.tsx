@@ -3,14 +3,8 @@ import { useNavigate } from "react-router-dom";
 import GoogleButton from "react-google-button";
 import { API } from "../../../utils/api";
 import { useMutation } from "@tanstack/react-query";
-
-type ErrorResponse = {
-  response: {
-    data: {
-      error: string;
-    };
-  };
-};
+import { ErrorResponse } from "../../../assets/Types & Interfaces";
+import { RotatingLines } from "react-loader-spinner";
 
 const Login = () => {
   const [login, setLogin] = useState({
@@ -27,7 +21,7 @@ const Login = () => {
     }));
   };
 
-  const mutation = useMutation({
+  const loginMutation = useMutation({
     mutationKey: ["login"],
     mutationFn: async () => {
       return await API.post("/auth/log-in", {
@@ -35,7 +29,7 @@ const Login = () => {
         password: login.password,
       });
     },
-    onSettled: (data, error: ErrorResponse | null) => {
+    onSettled: (_data, error: ErrorResponse | null) => {
       if (error) return setErrors(error.response.data.error);
       navigate("/");
     },
@@ -43,7 +37,8 @@ const Login = () => {
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    mutation.mutate();
+    if (!login.username.trim() || !login.password.trim()) return;
+    loginMutation.mutate();
   };
 
   const handleGoogle = () => {
@@ -68,6 +63,7 @@ const Login = () => {
             onChange={handleChange}
             minLength={3}
             placeholder="Username"
+            required
           />
         </div>
         <div className="w-3/4">
@@ -80,6 +76,7 @@ const Login = () => {
             className="login-input"
             onChange={handleChange}
             placeholder="Password"
+            required
           />
         </div>
         <span className={`italic text-red-600 opacity-0 ${"opacity-100"}`}>
@@ -90,7 +87,11 @@ const Login = () => {
           type="submit"
           className="flex items-center justify-center w-3/4 px-6 py-2 border-2 border-black rounded-lg hover:bg-zinc-200"
         >
-          Log-in
+          {loginMutation.isPending ? (
+            <RotatingLines width="24" strokeColor="blue" />
+          ) : (
+            "Log-in"
+          )}
         </button>
         <button onClick={handleGoogle} className="mt-3">
           <GoogleButton />

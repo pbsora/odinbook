@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { RotatingLines } from "react-loader-spinner";
-import axios, { AxiosError } from "axios";
+import { useMutation } from "@tanstack/react-query";
+import { API } from "../../../utils/api";
+import { ErrorResponse } from "../../../assets/Types & Interfaces";
 
 const matchPassword = (pass: string, secondPass: string) => {
   return pass === secondPass;
@@ -28,7 +30,6 @@ type Form = {
 
 const Register = ({ setAuth }: Props) => {
   const [errors, setErrors] = useState("");
-  const [loading, setLoading] = useState(false);
 
   const [form, setForm] = useState({
     firstName: "",
@@ -46,52 +47,39 @@ const Register = ({ setAuth }: Props) => {
     }));
   };
 
+  const registerMutation = useMutation({
+    mutationKey: ["register"],
+    mutationFn: async () => {
+      return await API.post("/auth/register", {
+        firstName: form.firstName,
+        lastName: form.lastName,
+        email: form.email,
+        username: form.username,
+        password: form.password,
+      });
+    },
+    onError(error: ErrorResponse | null) {
+      console.log(error?.response.data.error);
+      error && setErrors(error.response.data.error);
+    },
+    onSuccess() {
+      setAuth("login");
+    },
+  });
+
   const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setLoading(true);
 
     if (isBlank(form)) {
-      setLoading(false);
       return setErrors("Please fill every input");
     }
 
     const { password, confirmPassword } = form;
     if (!matchPassword(password, confirmPassword)) {
-      setLoading(false);
       return setErrors("Passwords don't match");
     }
 
-    try {
-      const { data } = await axios({
-        method: "post",
-        url: "auth/register",
-        withCredentials: true,
-        data: {
-          firstName: form.firstName,
-          lastName: form.lastName,
-          email: form.email,
-          username: form.username,
-          password,
-        },
-      });
-      console.log(data);
-      if (data.error) {
-        setLoading(false);
-        return setErrors(data.error);
-      }
-      setAuth("login");
-    } catch (error) {
-      const { response } = error as AxiosError & {
-        response: { data: { error: string } };
-      };
-      if (axios.isAxiosError(error) && response && response.status === 422) {
-        if (response.data && response.data.error) {
-          setLoading(false);
-          return setErrors(response.data.error);
-        }
-      }
-      setErrors("Server error, please refresh the page");
-    }
+    registerMutation.mutate();
   };
 
   return (
@@ -178,7 +166,7 @@ const Register = ({ setAuth }: Props) => {
           type="submit"
           className="flex items-center justify-center w-3/4 px-6 py-2 transition-colors duration-200 border-2 border-black rounded-lg hover:bg-zinc-200"
         >
-          {loading ? (
+          {registerMutation.isPending ? (
             <RotatingLines width="24" strokeColor="blue" />
           ) : (
             "Register"

@@ -6,7 +6,12 @@ import { RxHamburgerMenu } from "react-icons/rx";
 import UserCard from "./UserCard";
 import { debounce } from "lodash";
 
-const Header = () => {
+type Props = {
+  sidebar: boolean;
+  setSidebar: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+const Header = ({ sidebar, setSidebar }: Props) => {
   const [logged, user] = useContext(UserContext) as AuthData;
   const [nav, setNav] = useState(false);
 
@@ -15,7 +20,6 @@ const Header = () => {
     if (window.scrollY > 600) {
       setNav(true);
     } else {
-      console.log("rerender");
       setNav(false);
     }
   }, 200);
@@ -30,12 +34,15 @@ const Header = () => {
   }, [handleScroll]);
 
   return (
-    <div className="sticky flex justify-center w-screen h-20 ">
+    <div className="sticky flex justify-center max-w-[99vw] h-20 m-auto ">
       <nav className={nav ? "full-navbar" : "navbar"}>
-        <div className="text-[2rem] flex justify-center items-center cursor-pointer hover:scale-125 duration-200">
+        <div
+          className="text-[2rem] flex justify-center items-center cursor-pointer hover:scale-125 duration-200"
+          onClick={() => setSidebar(!sidebar)}
+        >
           <RxHamburgerMenu />
         </div>
-        <div className="relative flex items-center h-full gap-6 group">
+        <div className="relative flex items-center h-full gap-6 pl-12 pr-3 group">
           <span className="text-2xl select-none">
             {capitalize(user.firstName)}
           </span>

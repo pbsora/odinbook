@@ -8,6 +8,9 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import Home from "./Pages/Home.tsx";
 import Auth from "./Pages/Auth.tsx";
+import Feed from "./Pages/Feed.tsx";
+import Settings from "./Pages/Settings.tsx";
+
 import { authLoader, loginLoader } from "./lib/authLoader.tsx";
 
 const queryClient = new QueryClient();
@@ -17,6 +20,13 @@ const router = createBrowserRouter([
     path: "/",
     element: <Home />,
     loader: loginLoader,
+    children: [
+      { path: "/", element: <Feed /> },
+      {
+        path: "/u/settings",
+        element: <Settings />,
+      },
+    ],
   },
   {
     path: "/auth",

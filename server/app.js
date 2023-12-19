@@ -3,6 +3,7 @@ const app = express();
 const path = require("path");
 const session = require("express-session");
 const MongoStore = require("connect-mongo");
+// const logger = require("morgan");
 
 const passport = require("passport");
 
@@ -22,6 +23,7 @@ mongoose.connect(process.env.DATABASE_URL).catch((err) => console.log(err));
 app.use(express.static(path.join(__dirname, "/assets")));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+// app.use(logger());
 app.use(
   cors({
     origin: "http://localhost:5173",
@@ -33,7 +35,8 @@ app.use(
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
-    cookie: { maxAge: 24 * 60 * 60 * 1000 * 7 },
+    cookie: { maxAge: 24 * 60 * 60 * 1000 * 7, httpOnly: true },
+
     store: MongoStore.create({
       mongoUrl: process.env.DATABASE_URL,
       autoRemove: "native",

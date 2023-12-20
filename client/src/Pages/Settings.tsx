@@ -1,4 +1,4 @@
 const Settings = () => {
-  return <div>Settings</div>;
+  return <div className="h-screen -z-50">Settings</div>;
 };
 export default Settings;

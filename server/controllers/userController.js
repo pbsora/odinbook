@@ -27,7 +27,7 @@ exports.log_in = (req, res, next) => {
 exports.log_out = (req, res, next) => {
   req.logOut((err) => {
     if (err) return next(err);
-    res.send("Logged out");
+    res.status(200).json({ message: "Logged out successfully" });
   });
 };
 

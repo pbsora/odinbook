@@ -9,11 +9,12 @@ const passport = require("passport");
 
 require("./config/passport")(passport);
 
-// const bcrypt = require("bcryptjs");
 require("dotenv").config();
 const cors = require("cors");
 
 const userRoutes = require("./routes/user");
+const postRoutes = require("./routes/post");
+
 const mongoose = require("mongoose");
 
 mongoose.connect(process.env.DATABASE_URL).catch((err) => console.log(err));
@@ -50,10 +51,7 @@ app.use(passport.session());
 //--------------------end of middleware-----------------//
 
 app.use("/auth", userRoutes);
-
-app.get("/", (req, res) => {
-  res.send("oi");
-});
+app.use("/post", postRoutes);
 
 app.listen(5000, () => {
   console.log("Listening on port 5000");

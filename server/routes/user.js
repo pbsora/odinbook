@@ -10,7 +10,7 @@ router.post("/log-in", user_controller.log_in);
 
 router.post("/register", user_controller.register);
 
-router.get("/log-out", user_controller.log_out);
+router.post("/log-out", user_controller.log_out);
 
 //Google auth
 

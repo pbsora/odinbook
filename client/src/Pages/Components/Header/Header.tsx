@@ -12,11 +12,10 @@ type Props = {
 };
 
 const Header = ({ sidebar, setSidebar }: Props) => {
-  const [logged, user] = useContext(UserContext) as AuthData;
+  const [, user] = useContext(UserContext) as AuthData;
   const [nav, setNav] = useState(false);
 
   const handleScroll = debounce(() => {
-    console.log(window.scrollY);
     if (window.scrollY > 600) {
       setNav(true);
     } else {
@@ -34,7 +33,7 @@ const Header = ({ sidebar, setSidebar }: Props) => {
   }, [handleScroll]);
 
   return (
-    <div className="sticky flex justify-center max-w-[99vw] h-20 m-auto ">
+    <header className="sticky flex justify-center max-w-[100vw] h-20 m-auto z-50">
       <nav className={nav ? "full-navbar" : "navbar"}>
         <div
           className="text-[2rem] flex justify-center items-center cursor-pointer hover:scale-125 duration-200"
@@ -42,7 +41,7 @@ const Header = ({ sidebar, setSidebar }: Props) => {
         >
           <RxHamburgerMenu />
         </div>
-        <div className="relative flex items-center h-full gap-6 pl-12 pr-3 group">
+        <div className="relative flex items-center gap-6 pl-12 pr-3 group">
           <span className="text-2xl select-none">
             {capitalize(user.firstName)}
           </span>
@@ -54,7 +53,7 @@ const Header = ({ sidebar, setSidebar }: Props) => {
           <UserCard user={user} />
         </div>
       </nav>
-    </div>
+    </header>
   );
 };
 export default Header;

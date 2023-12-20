@@ -1,4 +1,12 @@
+import NewPost from "./Components/Feed/NewPost";
+import Timeline from "./Components/Feed/Timeline";
+
 const Feed = () => {
-  return <div className="w-[55vw] h-[1000vh]  border border-red-700 "></div>;
+  return (
+    <div className="w-full 2xl:w-[55vw] ">
+      <NewPost />
+      <Timeline />
+    </div>
+  );
 };
 export default Feed;

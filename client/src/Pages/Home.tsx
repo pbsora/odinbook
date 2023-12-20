@@ -18,10 +18,14 @@ const Home = () => {
   return (
     <>
       <UserContext.Provider value={user}>
-        <main className="overflow-x-hidden lg:overflow-x-visible">
+        <main
+          className={`${
+            sidebar && "overflow-y-hidden"
+          } overflow-x-hidden lg:overflow-visible font-inter`}
+        >
           <Header sidebar={sidebar} setSidebar={setSidebar} />
-          <div className="relative flex w-full gap-5 m-auto mt-12 border border-green-500 lg:w-3/4 ">
-            <Sidebar sidebar={sidebar} />
+          <div className="relative flex w-full gap-5 m-auto  lg:mt-12 lg:w-[90vw] 2xl:w-3/4 ">
+            <Sidebar sidebar={sidebar} setSidebar={setSidebar} />
             <Outlet />
           </div>
         </main>

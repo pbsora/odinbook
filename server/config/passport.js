@@ -43,7 +43,7 @@ module.exports = function (passport) {
             username: userData.email.split("@")[0].toLowerCase(),
             email: userData.email.toLowerCase(),
             firstName: userData.given_name.toLowerCase(),
-            lastName: userData.family_name.toLowerCase(),
+            lastName: userData.family_name?.toLowerCase(),
             loginType: "Google",
             image: userData.picture,
           });

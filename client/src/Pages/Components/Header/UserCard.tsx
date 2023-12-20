@@ -26,7 +26,7 @@ const UserCard = ({ user }: Props) => {
       <span className="text-xl">{user.username}</span>
       <span className="text-xl text-zinc-400">{user.email}</span>
       <button
-        className="flex items-center gap-1 px-10 py-2 mt-3 text-lg transition-transform duration-200 bg-red-600 rounded-full hover:scale-110"
+        className="flex items-center gap-1 px-6 py-2 mt-3 text-lg transition-transform duration-200 bg-red-600 rounded-full hover:scale-110"
         onClick={handleLogout}
       >
         <BiLogOut />

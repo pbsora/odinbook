@@ -98,6 +98,7 @@ const Register = ({ setAuth }: Props) => {
             name="firstName"
             className="register-input"
             onChange={handleChange}
+            value={form.firstName}
           />
         </div>
         <div className="w-3/4">
@@ -109,6 +110,7 @@ const Register = ({ setAuth }: Props) => {
             name="lastName"
             className="register-input"
             onChange={handleChange}
+            value={form.lastName}
           />
         </div>
         <div className="w-3/4">
@@ -120,6 +122,7 @@ const Register = ({ setAuth }: Props) => {
             name="email"
             className="register-input"
             onChange={handleChange}
+            value={form.email}
           />
         </div>
         <div className="w-3/4">
@@ -131,6 +134,7 @@ const Register = ({ setAuth }: Props) => {
             name="username"
             className="register-input"
             onChange={handleChange}
+            value={form.username}
           />
         </div>
         <div className="w-3/4">
@@ -142,6 +146,7 @@ const Register = ({ setAuth }: Props) => {
             name="password"
             className="register-input"
             onChange={handleChange}
+            value={form.password}
           />
         </div>
         <div className="w-3/4">
@@ -153,6 +158,7 @@ const Register = ({ setAuth }: Props) => {
             name="confirmPassword"
             className="register-input"
             onChange={handleChange}
+            value={form.confirmPassword}
           />
         </div>
         <span

@@ -5,13 +5,14 @@ const postController = require("../controllers/postController");
 //create post
 router.post("/new-post", postController.create_post);
 
+//get multiple posts
+router.get("/", postController.get_all_posts);
+
 //get a post
-router.get("/by-post/:post_id", postController.get_post);
+router.get("/:post_id", postController.get_post);
 
 //get multiple posts from user
-router.get("/by-author/:author_id", postController.get_multiple);
-
-//get multiple posts
+router.get("/author/:author_id", postController.get_multiple);
 
 //like a post
 

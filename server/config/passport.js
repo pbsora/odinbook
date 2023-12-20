@@ -26,9 +26,7 @@ module.exports = function (passport) {
   passport.use(
     new GoogleStrategy(
       {
-        // eslint-disable-next-line no-undef
         clientID: process.env.GOOGLE_CLIENT_ID,
-        // eslint-disable-next-line no-undef
         clientSecret: process.env.GOOGLE_CLIENT_SECRET,
         callbackURL: "/auth/google/callback",
         scope: ["profile"],

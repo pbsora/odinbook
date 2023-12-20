@@ -23,3 +23,10 @@ export interface IUser {
   user: UserType;
   setUser: React.Dispatch<React.SetStateAction<UserType>>;
 }
+
+export type PostResponse = {
+  _id: string;
+  author_id: string;
+  content: string;
+  created_at: string;
+};

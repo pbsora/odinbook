@@ -61,6 +61,7 @@ const Login = () => {
             name="username"
             className="login-input"
             onChange={handleChange}
+            value={login.username}
             minLength={3}
             placeholder="Username"
             required
@@ -75,6 +76,7 @@ const Login = () => {
             name="password"
             className="login-input"
             onChange={handleChange}
+            value={login.password}
             placeholder="Password"
             required
           />

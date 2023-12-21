@@ -12,6 +12,8 @@ router.get("/", postController.get_all_posts);
 //get a post
 router.get("/:post_id", postController.get_post);
 
+router.delete("/:post_id", checkAuthenticated, postController.delete_post);
+
 //get multiple posts from user
 router.get("/author/:author_id", postController.get_multiple);
 

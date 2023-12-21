@@ -6,7 +6,7 @@ const isError = (res, error) => {
   if (error instanceof mongoose.Error.ValidationError) {
     res.status(400).json({ error: error.message });
   } else if (error instanceof mongoose.Error.CastError) {
-    res.status(400).json({ error: "Invalid credentials" });
+    res.status(400).json({ error: "Invalid parameters" });
   } else {
     res.status(500).json({ error: "Server error" });
   }
@@ -45,6 +45,17 @@ exports.get_post = async (req, res) => {
   try {
     const post = await Post.findById(req.params.post_id);
     res.send(post);
+  } catch (error) {
+    isError(res, error);
+  }
+};
+
+//Delete post DELETE
+exports.delete_post = async (req, res) => {
+  try {
+    console.log(req.params.post_id);
+    await Post.findByIdAndDelete(req.params.post_id);
+    res.status(200).json({ message: "Deleted successfully" });
   } catch (error) {
     isError(res, error);
   }

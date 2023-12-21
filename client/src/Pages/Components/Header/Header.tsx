@@ -2,17 +2,16 @@ import { useContext, useEffect, useState } from "react";
 import { AuthData } from "../../../assets/Types & Interfaces";
 import { UserContext } from "../../../lib/Context/UserContext";
 import { capitalize } from "../../../utils/capitalize";
-import { RxHamburgerMenu } from "react-icons/rx";
 import UserCard from "./UserCard";
 import { debounce } from "lodash";
 import Hamburger from "hamburger-react";
 
 type Props = {
-  sidebar: boolean;
-  setSidebar: React.Dispatch<React.SetStateAction<boolean>>;
+  open: boolean;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const Header = ({ sidebar, setSidebar }: Props) => {
+const Header = ({ open, setOpen }: Props) => {
   const [, user] = useContext(UserContext) as AuthData;
   const [nav, setNav] = useState(false);
 
@@ -38,9 +37,9 @@ const Header = ({ sidebar, setSidebar }: Props) => {
       <nav className={nav ? "full-navbar" : "navbar"}>
         <div
           className="text-[2rem] flex justify-center items-center cursor-pointer hover:scale-125 duration-200 text-zinc-400"
-          onClick={() => setSidebar(!sidebar)}
+          onClick={() => setOpen(!open)}
         >
-          <Hamburger />
+          <Hamburger toggled={open} toggle={setOpen} />
         </div>
         <div className="relative flex items-center gap-6 pl-12 pr-3 group">
           <span className="text-2xl select-none">

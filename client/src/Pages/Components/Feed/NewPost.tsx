@@ -41,13 +41,15 @@ const NewPost = () => {
           cols={50}
           rows={5}
           className="block w-full p-3 text-xl border-[3px] resize-none rounded-xl border-zinc-400 focus:outline-sky-500"
-          maxLength={160}
+          minLength={6}
+          maxLength={320}
           onChange={handleChange}
           value={post}
           placeholder="What's on your mind?"
+          required
         />
         <div className="flex items-center justify-between mx-6 mt-4">
-          <span className="text-lg">{post.length}/160</span>
+          <span className="text-lg">{post.length}/320</span>
           <button
             type="submit"
             className={`${

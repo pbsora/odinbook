@@ -26,7 +26,12 @@ export interface IUser {
 
 export type PostResponse = {
   _id: string;
-  author_id: string;
+  author_id: {
+    createdAt: string;
+    image: string;
+    username: string;
+    _id: string;
+  };
   content: string;
   created_at: string;
 };

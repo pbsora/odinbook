@@ -9,7 +9,7 @@ import Sidebar from "./Components/Global/Sidebar";
 const Home = () => {
   const auth = useLoaderData() as AuthData;
   const [user, setUser] = useState<AuthData>(auth);
-  const [sidebar, setSidebar] = useState(false);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     setUser(auth);
@@ -20,12 +20,12 @@ const Home = () => {
       <UserContext.Provider value={user}>
         <main
           className={`${
-            sidebar && "overflow-y-hidden"
+            open && "overflow-y-hidden"
           } overflow-x-hidden lg:overflow-visible font-inter`}
         >
-          <Header sidebar={sidebar} setSidebar={setSidebar} />
+          <Header open={open} setOpen={setOpen} />
           <div className="relative flex w-full gap-5 m-auto  lg:mt-12 lg:w-[90vw] 2xl:w-3/4 ">
-            <Sidebar sidebar={sidebar} setSidebar={setSidebar} />
+            <Sidebar open={open} setOpen={setOpen} />
             <Outlet />
           </div>
         </main>

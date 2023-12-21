@@ -9,3 +9,7 @@ export const useFetchPosts = () => {
     },
   });
 };
+
+export const useUserPosts = () => {
+  //TODO
+};

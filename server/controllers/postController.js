@@ -2,6 +2,16 @@ const mongoose = require("mongoose");
 const Post = require("../models/Post");
 const { body } = require("express-validator");
 
+const isError = (res, error) => {
+  if (error instanceof mongoose.Error.ValidationError) {
+    res.status(400).json({ error: error.message });
+  } else if (error instanceof mongoose.Error.CastError) {
+    res.status(400).json({ error: "Invalid credentials" });
+  } else {
+    res.status(500).json({ error: "Server error" });
+  }
+};
+
 //Post create POST
 exports.create_post = [
   body("content").trim().escape(),
@@ -12,11 +22,7 @@ exports.create_post = [
       await newPost.save();
       res.status(201).json({ message: "Created successfully" });
     } catch (error) {
-      if (error instanceof mongoose.Error.ValidationError) {
-        res.status(400).json({ error: error.message });
-      } else {
-        res.status(500).json({ error: "Server Error" });
-      }
+      isError(res, error);
     }
   },
 ];
@@ -24,7 +30,10 @@ exports.create_post = [
 //Get all posts GET
 exports.get_all_posts = async (req, res) => {
   try {
-    const posts = await Post.find().limit(10);
+    const posts = await Post.find()
+      .sort({ created_at: -1 })
+      .limit(10)
+      .populate("author_id", "username image createdAt _id");
     res.status(200).send(posts);
   } catch (error) {
     res.send(error.message);
@@ -37,11 +46,7 @@ exports.get_post = async (req, res) => {
     const post = await Post.findById(req.params.post_id);
     res.send(post);
   } catch (error) {
-    if (error instanceof mongoose.Error.ValidationError) {
-      res.status(400).json({ error: error.message });
-    } else {
-      res.status(500).json({ error: "Server Error" });
-    }
+    isError(res, error);
   }
 };
 
@@ -51,10 +56,6 @@ exports.get_multiple = async (req, res) => {
     const posts = await Post.find({ author_id: req.params.author_id });
     res.status(200).send(posts);
   } catch (error) {
-    if (error instanceof mongoose.Error.ValidationError) {
-      res.status(400).json({ error: error.message });
-    } else {
-      res.status(500).json({ error: "Server Error" });
-    }
+    isError(res, error);
   }
 };

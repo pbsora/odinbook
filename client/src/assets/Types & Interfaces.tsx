@@ -17,6 +17,7 @@ export type UserType = {
   username: string;
   _id: string;
   image: string;
+  createdAt: string;
 };
 
 export interface IUser {
@@ -33,5 +34,8 @@ export type PostResponse = {
     _id: string;
   };
   content: string;
+  likes: [string];
   created_at: string;
 };
+
+export type OutletContext = { open: boolean };

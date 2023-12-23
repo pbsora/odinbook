@@ -12,6 +12,7 @@ import Feed from "./Pages/Feed.tsx";
 import Settings from "./Pages/Settings.tsx";
 
 import { authLoader, loginLoader } from "./lib/authLoader.tsx";
+import OwnProfile from "./Pages/OwnProfile.tsx";
 
 const queryClient = new QueryClient();
 
@@ -26,6 +27,7 @@ const router = createBrowserRouter([
         path: "/u/settings",
         element: <Settings />,
       },
+      { path: "/u/profile", element: <OwnProfile /> },
     ],
   },
   {

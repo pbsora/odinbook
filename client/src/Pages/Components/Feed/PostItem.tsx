@@ -1,41 +1,45 @@
 import { AuthData, PostResponse } from "../../../assets/Types & Interfaces";
 import { Link } from "react-router-dom";
 import { capitalize } from "../../../utils/capitalize";
-import { useMutation } from "@tanstack/react-query";
-import { API } from "../../../utils/api";
 import { GrLike } from "react-icons/gr";
 import { FaCommentAlt } from "react-icons/fa";
 import { HiDotsHorizontal } from "react-icons/hi";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { UserContext } from "../../../lib/Context/UserContext";
 import { MdDeleteOutline } from "react-icons/md";
 import { FaShare } from "react-icons/fa";
 import { CiBookmark } from "react-icons/ci";
+import {
+  useDeletePost,
+  useLikePost,
+  useUnlikePost,
+} from "../../../lib/PostQueries";
+import { DateTime } from "ts-luxon";
 
 type Props = { post: PostResponse };
 
 const PostItem = ({ post }: Props) => {
   const [options, setOptions] = useState(false);
-
   const [, user] = useContext(UserContext) as AuthData;
+  const [likedPost, setLikedPost] = useState(false);
+  const ownPost = () => user._id === post.author_id._id;
 
-  const ownPost = () => user._id == post.author_id._id;
+  const likeMutation = useLikePost(post._id, user._id);
+  const unlikeMutation = useUnlikePost(post._id, user._id);
+  const deleteMutation = useDeletePost(post._id);
 
-  const deleteMutation = useMutation({
-    mutationKey: ["deletePost"],
-    mutationFn: async () => {
-      return await API.delete(`/post/${post._id}`);
-    },
-    onError: (error) => {
-      console.log(error);
-    },
-    onSuccess: (data) => {
-      console.log(data);
-    },
-  });
+  useEffect(() => {
+    if (isLiked(user._id, post.likes)) setLikedPost(true);
+    if (likeMutation.isSuccess) setLikedPost(true);
+    if (unlikeMutation.isSuccess) setLikedPost(false);
+  }, [post.likes, user._id, likeMutation, unlikeMutation]);
 
   const handleDelete = () => {
     deleteMutation.mutate();
+  };
+
+  const handleLike = () => {
+    likedPost ? unlikeMutation.mutate() : likeMutation.mutate();
   };
 
   return (
@@ -51,16 +55,29 @@ const PostItem = ({ post }: Props) => {
         />
         <Link
           to={"u/" + post.author_id.username}
-          className="transition-all duration-400 hover:border-b hover:border-zinc-400"
+          className="flex-1 text-2xl transition-all duration-400 hover:border-b hover:border-zinc-400"
         >
           {capitalize(post.author_id.username)}
         </Link>
+        <span className="mr-12">
+          {DateTime.fromJSDate(
+            typeof post.created_at === "string"
+              ? new Date(post.created_at)
+              : post.created_at
+          ).toLocaleString(DateTime.DATETIME_SHORT)}
+        </span>
       </div>
       <div className="flex-1 p-6 text-2xl">
         <section>{post.content}</section>
       </div>
       <div className="flex justify-around p-4 lg:p-8">
-        <button className="flex items-center gap-4 text-lg lg:text-2xl">
+        <button
+          className={`flex items-center gap-4 text-lg lg:text-2xl ${
+            likedPost && "text-sky-500"
+          }`}
+          disabled={likeMutation.isPending || unlikeMutation.isPending}
+          onClick={handleLike}
+        >
           <GrLike /> Like
         </button>
         <button className="flex items-center gap-4 text-lg lg:text-2xl">
@@ -84,10 +101,10 @@ const PostItem = ({ post }: Props) => {
                 onClick={handleDelete}
               >
                 <MdDeleteOutline />
-                <span className="text-2xl text-red-400">Delete</span>
+                <span className="text-2xl text-red-400 ">Delete</span>
               </button>
             )}
-            <button className="flex items-center justify-center gap-2 py-3 text-3xl ">
+            <button className="flex items-center justify-center gap-2 py-3 text-3xl">
               <FaShare />
               <span className="text-2xl ">Share</span>
             </button>
@@ -102,3 +119,7 @@ const PostItem = ({ post }: Props) => {
   );
 };
 export default PostItem;
+
+function isLiked(user_id: string, likes: string[]) {
+  return likes.includes(user_id);
+}

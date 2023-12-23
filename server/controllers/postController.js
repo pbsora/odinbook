@@ -20,7 +20,11 @@ exports.create_post = [
     try {
       const newPost = new Post({ author_id, content });
       await newPost.save();
-      res.status(201).json({ message: "Created successfully" });
+      const post = await newPost.populate(
+        "author_id",
+        "username image createdAt _id"
+      );
+      res.status(201).send(post);
     } catch (error) {
       isError(res, error);
     }
@@ -53,7 +57,6 @@ exports.get_post = async (req, res) => {
 //Delete post DELETE
 exports.delete_post = async (req, res) => {
   try {
-    console.log(req.params.post_id);
     await Post.findByIdAndDelete(req.params.post_id);
     res.status(200).json({ message: "Deleted successfully" });
   } catch (error) {
@@ -66,6 +69,38 @@ exports.get_multiple = async (req, res) => {
   try {
     const posts = await Post.find({ author_id: req.params.author_id });
     res.status(200).send(posts);
+  } catch (error) {
+    isError(res, error);
+  }
+};
+
+//Like post PATCH
+exports.like = async (req, res) => {
+  try {
+    const { post_id } = req.params;
+    const { user_id } = req.body;
+    await Post.findByIdAndUpdate(
+      { _id: post_id, likes: { $ne: user_id } },
+      { $addToSet: { likes: user_id } },
+      { new: true }
+    );
+    res.status(200).json({ message: "Liked successfully" });
+  } catch (error) {
+    isError(res, error);
+  }
+};
+
+//Unlike post PATCH
+exports.unlike = async (req, res) => {
+  try {
+    const { post_id } = req.params;
+    const { user_id } = req.body;
+    await Post.findByIdAndUpdate(
+      { _id: post_id, likes: user_id },
+      { $pull: { likes: user_id } },
+      { new: true }
+    );
+    res.status(200).json({ message: "Unliked successfully" });
   } catch (error) {
     isError(res, error);
   }

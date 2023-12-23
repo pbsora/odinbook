@@ -8,8 +8,13 @@ module.exports = function (passport) {
   passport.use(
     new localStrategy(async (username, password, done) => {
       try {
-        const user = await User.findOne({ username });
-        if (!user) return done(null, false, { error: "Incorrect Username" });
+        const user = await User.findOne({
+          $or: [{ username }, { email: username }],
+        });
+        console.log(user);
+        if (!user) return done(null, false, { error: "Incorrect Credentials" });
+        if (user.loginType === "Google")
+          return done(null, false, { error: "Please login with Google" });
         //compare password and hashed password
         const result = await bcrypt.compare(password, user.password);
         if (result) return done(null, user);
@@ -60,7 +65,7 @@ module.exports = function (passport) {
 
   passport.deserializeUser(async (id, done) => {
     try {
-      const user = await User.findById(id).select("-password -createdAt -__v");
+      const user = await User.findById(id).select("-password -__v");
       done(null, user);
     } catch (error) {
       done(error);

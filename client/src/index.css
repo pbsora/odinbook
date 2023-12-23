@@ -18,6 +18,6 @@
     @apply w-full m-auto border-b-2 lg:border-2 bg-white border-zinc-300 lg:h-16 lg:w-[60%] py-3 lg:py-0 lg:mt-4 lg:rounded-3xl shadow-xl flex justify-between px-8  fixed top-0 transition-all duration-500;
   }
   .full-navbar {
-    @apply fixed top-0 flex border-b-2 justify-between bg-white w-[100vw] px-16 py-3  lg:py-0  m-auto transition-all duration-500 border-2 shadow-xl border-zinc-300 lg:h-16;
+    @apply fixed top-0 flex border-b-2 justify-between bg-white w-[100vw] px-16 py-6  lg:py-9  m-auto transition-all duration-500 border-2 shadow-xl border-zinc-300 lg:h-16;
   }
 }

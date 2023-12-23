@@ -36,7 +36,7 @@ const Header = ({ open, setOpen }: Props) => {
     <header className="sticky flex justify-center max-w-[100vw] h-20 m-auto z-50">
       <nav className={nav ? "full-navbar" : "navbar"}>
         <div
-          className="text-[2rem] flex justify-center items-center cursor-pointer hover:scale-125 duration-200 text-zinc-400"
+          className="text-[2rem] flex justify-center items-center cursor-pointer lg:opacity-0 lg:pointer-events-none hover:scale-125 duration-200 text-zinc-400"
           onClick={() => setOpen(!open)}
         >
           <Hamburger toggled={open} toggle={setOpen} />

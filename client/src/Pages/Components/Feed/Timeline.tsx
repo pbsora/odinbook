@@ -1,10 +1,15 @@
 import { Fragment } from "react";
 import { PostResponse } from "../../../assets/Types & Interfaces";
 import PostItem from "./PostItem";
-type Props = { posts: PostResponse[] };
+import { useAutoAnimate } from "@formkit/auto-animate/react";
+
+type Props = { posts: PostResponse[] | null };
+
 const Timeline = ({ posts }: Props) => {
+  const [parent] = useAutoAnimate();
+
   return (
-    <div className="mt-6  h-[1000vh] lg:rounded-xl">
+    <div className="mt-6 mb-10 lg:rounded-xl" ref={parent}>
       {posts &&
         posts.map((post) => (
           <Fragment key={post._id}>

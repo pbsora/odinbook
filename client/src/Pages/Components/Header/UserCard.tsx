@@ -1,7 +1,7 @@
 import { UserType } from "../../../assets/Types & Interfaces";
 import { capitalize } from "../../../utils/capitalize";
 import { API } from "../../../utils/api";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { BiLogOut } from "react-icons/bi";
 
 type Props = {
@@ -22,7 +22,10 @@ const UserCard = ({ user }: Props) => {
         alt="user image"
         className="w-[7rem] rounded-full border-2 border-zinc-400"
       />
-      <h2 className="text-2xl">{capitalize(user.firstName)}</h2>
+      <Link to={"/u/profile"}>
+        {" "}
+        <h2 className="text-2xl">{capitalize(user.firstName)}</h2>
+      </Link>
       <span className="text-xl">{user.username}</span>
       <span className="text-xl text-zinc-400">{user.email}</span>
       <button

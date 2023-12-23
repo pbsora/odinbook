@@ -18,6 +18,10 @@ router.delete("/:post_id", checkAuthenticated, postController.delete_post);
 router.get("/author/:author_id", postController.get_multiple);
 
 //like a post
+router.patch("/like/:post_id", checkAuthenticated, postController.like);
+
+//unlike a post
+router.patch("/unlike/:post_id", checkAuthenticated, postController.unlike);
 
 //get all comments for a post
 

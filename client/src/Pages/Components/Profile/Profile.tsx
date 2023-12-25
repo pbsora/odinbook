@@ -8,9 +8,8 @@ type Props = {
 };
 
 const Profile = ({ user }: Props) => {
-  console.log(user);
   return (
-    <div className="w-full h-[55vh] flex flex-col justify-around  relative">
+    <div className="w-full h-[55vh] flex flex-col justify-around border rounded-xl  relative">
       <div className="absolute text-4xl duration-200 cursor-pointer right-10 top-7 hover:scale-125">
         <CiEdit />
       </div>
@@ -23,18 +22,21 @@ const Profile = ({ user }: Props) => {
         <span className="text-2xl">{`${capitalize(
           user?.firstName
         )} ${capitalize(user?.lastName)}`}</span>
+        <p className="w-2/4">
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Hic dolor
+          dicta non nobis error a quisquam quidem voluptas. Nam magni itaque in
+          aliquid deleniti dolor temporibus dolores, non facere officiis.
+        </p>
       </section>
       <div className="w-full pl-10 text-xl justify-self-start">
         <p>
-          Joined on:{" "}
-          <span>
-            {user &&
-              DateTime.fromJSDate(
-                typeof user.createdAt === "string"
-                  ? new Date(user.createdAt)
-                  : user.createdAt
-              ).toLocaleString(DateTime.DATE_SHORT)}
-          </span>
+          Joined on:{""}
+          {user &&
+            DateTime.fromJSDate(
+              typeof user.createdAt === "string"
+                ? new Date(user.createdAt)
+                : user.createdAt
+            ).toLocaleString(DateTime.DATE_SHORT)}
         </p>
       </div>
     </div>

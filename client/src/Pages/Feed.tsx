@@ -9,6 +9,7 @@ const Feed = () => {
   const posts: PostResponse[] = useFetchPosts().data?.data;
   const [allPosts, setAllPosts] = useState<PostResponse[] | null>(null);
   const { open } = useTab();
+  console.log(posts);
 
   useEffect(() => {
     posts && setAllPosts(posts);

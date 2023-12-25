@@ -11,7 +11,7 @@ module.exports = function (passport) {
         const user = await User.findOne({
           $or: [{ username }, { email: username }],
         });
-        console.log(user);
+
         if (!user) return done(null, false, { error: "Incorrect Credentials" });
         if (user.loginType === "Google")
           return done(null, false, { error: "Please login with Google" });

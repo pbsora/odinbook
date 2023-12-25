@@ -3,11 +3,15 @@ const router = express.Router();
 const postController = require("../controllers/postController");
 const checkAuthenticated = require("../lib/authMiddleware");
 
-//create post
-router.post("/new-post", checkAuthenticated, postController.create_post);
+router.get("/test", (req, res) => {
+  res.status(204).send();
+});
 
 //get multiple posts
 router.get("/", postController.get_all_posts);
+
+//create post
+router.post("/new-post", checkAuthenticated, postController.create_post);
 
 //get a post
 router.get("/:post_id", postController.get_post);

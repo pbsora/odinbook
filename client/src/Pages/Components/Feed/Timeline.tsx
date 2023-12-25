@@ -10,12 +10,13 @@ const Timeline = ({ posts }: Props) => {
 
   return (
     <div className="mt-6 mb-10 lg:rounded-xl" ref={parent}>
-      {posts &&
-        posts.map((post) => (
-          <Fragment key={post._id}>
-            <PostItem post={post} />
-          </Fragment>
-        ))}
+      {posts?.length
+        ? posts.map((post) => (
+            <Fragment key={post._id}>
+              <PostItem post={post} />
+            </Fragment>
+          ))
+        : "Nothing here yet"}
     </div>
   );
 };

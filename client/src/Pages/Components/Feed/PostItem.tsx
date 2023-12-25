@@ -54,12 +54,16 @@ const PostItem = ({ post }: Props) => {
           alt="post creator image"
         />
         <Link
-          to={"u/" + post.author_id.username}
+          to={
+            post.author_id._id === user._id
+              ? "u/profile"
+              : `u/${post.author_id.username}`
+          }
           className="flex-1 text-2xl transition-all duration-400 hover:border-b hover:border-zinc-400"
         >
           {capitalize(post.author_id.username)}
         </Link>
-        <span className="mr-12">
+        <span className="mr-12 text-lg lg:text-xl">
           {DateTime.fromJSDate(
             typeof post.created_at === "string"
               ? new Date(post.created_at)

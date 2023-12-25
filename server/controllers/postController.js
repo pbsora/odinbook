@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Post = require("../models/Post");
+
 const { body } = require("express-validator");
 
 const isError = (res, error) => {
@@ -8,13 +9,13 @@ const isError = (res, error) => {
   } else if (error instanceof mongoose.Error.CastError) {
     res.status(400).json({ error: "Invalid parameters" });
   } else {
-    res.status(500).json({ error: "Server error" });
+    res.status(500).json({ error: error.message });
   }
 };
 
 //Post create POST
 exports.create_post = [
-  body("content").trim().escape(),
+  body("content").trim(),
   async (req, res) => {
     const { author_id, content } = req.body;
     try {
@@ -26,7 +27,7 @@ exports.create_post = [
       );
       res.status(201).send(post);
     } catch (error) {
-      isError(res, error);
+      isError(res, error, content);
     }
   },
 ];
@@ -34,11 +35,14 @@ exports.create_post = [
 //Get all posts GET
 exports.get_all_posts = async (req, res) => {
   try {
-    const posts = await Post.find()
+    const { id } = req.query;
+    const query = id ? { author_id: { $eq: id } } : {};
+
+    const posts = await Post.find(query)
       .sort({ created_at: -1 })
       .limit(10)
       .populate("author_id", "username image createdAt _id");
-    res.status(200).send(posts);
+    res.status(200).json(posts);
   } catch (error) {
     res.send(error.message);
   }
@@ -67,7 +71,9 @@ exports.delete_post = async (req, res) => {
 //Get multiple posts from user GET
 exports.get_multiple = async (req, res) => {
   try {
-    const posts = await Post.find({ author_id: req.params.author_id });
+    const posts = await Post.find({ author_id: req.params.author_id }).limit(
+      20
+    );
     res.status(200).send(posts);
   } catch (error) {
     isError(res, error);
@@ -84,7 +90,7 @@ exports.like = async (req, res) => {
       { $addToSet: { likes: user_id } },
       { new: true }
     );
-    res.status(200).json({ message: "Liked successfully" });
+    res.status(204).send();
   } catch (error) {
     isError(res, error);
   }
@@ -100,7 +106,7 @@ exports.unlike = async (req, res) => {
       { $pull: { likes: user_id } },
       { new: true }
     );
-    res.status(200).json({ message: "Unliked successfully" });
+    res.status(204).send();
   } catch (error) {
     isError(res, error);
   }

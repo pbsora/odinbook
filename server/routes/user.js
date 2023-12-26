@@ -4,8 +4,6 @@ const passport = require("passport");
 
 const user_controller = require("../controllers/userController");
 
-router.get("/", user_controller.get_user);
-
 router.post("/log-in", user_controller.log_in);
 
 router.post("/register", user_controller.register);
@@ -33,6 +31,9 @@ router.get(
 
 //auth
 router.get("/auth", user_controller.auth);
+
+//GET a user
+router.get("/:username", user_controller.get_user);
 
 //add follow
 

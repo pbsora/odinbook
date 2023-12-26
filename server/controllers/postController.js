@@ -40,7 +40,7 @@ exports.get_all_posts = async (req, res) => {
 
     const posts = await Post.find(query)
       .sort({ created_at: -1 })
-      .limit(10)
+      .limit(30)
       .populate("author_id", "username image createdAt _id");
     res.status(200).json(posts);
   } catch (error) {

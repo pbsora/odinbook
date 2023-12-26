@@ -13,7 +13,7 @@ import {
   useDeletePost,
   useLikePost,
   useUnlikePost,
-} from "../../../lib/PostQueries";
+} from "../../../lib/Queries";
 import { DateTime } from "ts-luxon";
 
 type Props = { post: PostResponse };
@@ -45,7 +45,7 @@ const PostItem = ({ post }: Props) => {
   return (
     <div
       key={post._id}
-      className={`first:mt-5 mt-16 w-[95%] md:w-[85%] border m-auto h-fit flex flex-col rounded-xl shadow-xl`}
+      className={`first:mt-5 mt-5 w-[95%] md:w-[85%] border m-auto h-fit flex flex-col rounded-xl shadow-xl`}
     >
       <div className="flex items-center gap-6 py-3 pl-6 text-2xl">
         <img
@@ -59,11 +59,11 @@ const PostItem = ({ post }: Props) => {
               ? "u/profile"
               : `u/${post.author_id.username}`
           }
-          className="flex-1 text-2xl transition-all duration-400 hover:border-b hover:border-zinc-400"
+          className="text-2xl transition-all duration-400 hover:border-b hover:border-zinc-400"
         >
           {capitalize(post.author_id.username)}
         </Link>
-        <span className="mr-12 text-lg lg:text-xl">
+        <span className="flex justify-end flex-1 mr-12 text-lg">
           {DateTime.fromJSDate(
             typeof post.created_at === "string"
               ? new Date(post.created_at)

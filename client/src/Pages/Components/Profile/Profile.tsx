@@ -4,12 +4,12 @@ import { CiEdit } from "react-icons/ci";
 import { DateTime } from "ts-luxon";
 
 type Props = {
-  user?: UserType;
+  user: UserType;
 };
 
 const Profile = ({ user }: Props) => {
   return (
-    <div className="w-full h-[55vh] flex flex-col justify-around border rounded-xl  relative">
+    <div className="w-full h-[55vh] flex flex-col justify-around border-b-2 border-zinc-400 lg:border lg:rounded-xl  relative">
       <div className="absolute text-4xl duration-200 cursor-pointer right-10 top-7 hover:scale-125">
         <CiEdit />
       </div>

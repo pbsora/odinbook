@@ -13,7 +13,6 @@ it("Adds a user", async () => {
     firstName: "sora",
     lastName: "hoshi",
   });
-  console.log(usersId);
   expect(res.statusCode).toBe(201);
 });
 
@@ -53,13 +52,23 @@ it("Logs in", async () => {
   expect(res.statusCode).toBe(200);
 });
 
+it("Gets a user", async () => {
+  const res = await user.get(`/auth/sora`);
+  expect(res.body).toHaveProperty("username");
+});
+
+it("Fails to get a user", async () => {
+  const res = await user.get(`/auth/asfsadfsfddfg`);
+  expect(res.statusCode).toBe(404);
+});
+
 it("Creates a post", async () => {
   const res = await user
     .post("/post/new-post")
     .set("Content-Type", "application/json")
     .send({
       content: "testando essabagaça dnv",
-      author_id: "65808cbf5978578b744655ec",
+      author_id: usersId[0],
     });
 
   expect(res.statusCode).toBe(201);
@@ -71,7 +80,7 @@ it("Creates another post", async () => {
     .set("Content-Type", "application/json")
     .send({
       content: "testando dnv",
-      author_id: "6582defc4ae5d279ef66b963",
+      author_id: usersId[1],
     });
   expect(res.statusCode).toBe(201);
 });
@@ -82,13 +91,23 @@ it("Should return error if content is too short", async () => {
     .set("Content-Type", "application/json")
     .send({
       content: "test",
-      author_id: "65808cbf5978578b744655ec",
+      author_id: usersId[0],
     })
     .expect(400);
 });
 
 it("Gives a list of posts", async () => {
   const res = await user.get("/post/");
+  expect(res.body.length).toBeGreaterThanOrEqual(1);
+});
+
+it("Gives a list of posts from a user", async () => {
+  const res = await user.get(`/post/?id=${usersId[0]}`);
+  expect(res.body.length).toBeGreaterThanOrEqual(1);
+});
+
+it("Gives a list of posts from another user", async () => {
+  const res = await user.get(`/post/?id=${usersId[1]}`);
   expect(res.body.length).toBeGreaterThanOrEqual(1);
 });
 

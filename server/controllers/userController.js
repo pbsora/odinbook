@@ -4,11 +4,6 @@ const passport = require("passport");
 
 const User = require("../models/User");
 
-//get a user
-exports.get_user = (req, res) => {
-  res.send("user");
-};
-
 //login
 exports.log_in = (req, res, next) => {
   passport.authenticate("local", (err, user, info) => {
@@ -85,6 +80,21 @@ exports.register = [
     }
   },
 ];
+
+//get a user
+exports.get_user = async (req, res) => {
+  try {
+    const { username } = req.params;
+    const user = await User.findOne({ username }).select(
+      "-password -loginType -__v"
+    );
+    if (!user) return res.status(404).send();
+    res.send(user);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send();
+  }
+};
 
 //auth
 exports.auth = (req, res) => {

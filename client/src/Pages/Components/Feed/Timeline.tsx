@@ -9,7 +9,7 @@ const Timeline = ({ posts }: Props) => {
   const [parent] = useAutoAnimate();
 
   return (
-    <div className="mt-6 mb-10 lg:rounded-xl" ref={parent}>
+    <div className="mb-10 lg:rounded-xl" ref={parent}>
       {posts?.length
         ? posts.map((post) => (
             <Fragment key={post._id}>

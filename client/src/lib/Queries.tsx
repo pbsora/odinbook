@@ -5,9 +5,7 @@ export const useFetchPosts = (params?: { id: string }) => {
   return useQuery({
     queryKey: ["all-posts"],
     queryFn: async () => {
-      return API.get(
-        `/post/?${params && Object.keys(params) + "=" + Object.values(params)}`
-      );
+      return API.get(`/post/?${params && "id=" + Object.values(params)}`);
     },
   });
 };
@@ -39,6 +37,15 @@ export const useDeletePost = (post_id: string) => {
     mutationKey: ["deletePost"],
     mutationFn: async () => {
       return await API.delete(`/post/${post_id}`);
+    },
+  });
+};
+
+export const useGetUser = (user_id: string) => {
+  return useQuery({
+    queryKey: ["getUser"],
+    queryFn: async () => {
+      return API.get(`/auth/${user_id}`);
     },
   });
 };

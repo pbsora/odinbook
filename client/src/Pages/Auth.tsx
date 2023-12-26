@@ -2,19 +2,10 @@ import { useState } from "react";
 import Login from "./Components/Auth/Login";
 import Register from "./Components/Auth/Register";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
-// import { useLoaderData } from "react-router-dom";
-
-// type AuthData = {
-//   data: [boolean, object];
-// };
 
 const Auth = () => {
   const [auth, setAuth] = useState("login");
-
   const [parent] = useAutoAnimate();
-
-  // const auth = useLoaderData() as AuthData;
-  // console.log(auth.data);
 
   const handleTab = () => {
     setAuth((prev) => (prev === "login" ? "register" : "login"));

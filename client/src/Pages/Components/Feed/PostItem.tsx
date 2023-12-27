@@ -16,9 +16,12 @@ import {
 } from "../../../lib/Queries";
 import { DateTime } from "ts-luxon";
 
-type Props = { post: PostResponse };
+type Props = {
+  post: PostResponse;
+  deletePost?: (post_id: string) => void;
+};
 
-const PostItem = ({ post }: Props) => {
+const PostItem = ({ post, deletePost }: Props) => {
   const [options, setOptions] = useState(false);
   const [, user] = useContext(UserContext) as AuthData;
   const [likedPost, setLikedPost] = useState(false);
@@ -32,7 +35,16 @@ const PostItem = ({ post }: Props) => {
     if (isLiked(user._id, post.likes)) setLikedPost(true);
     if (likeMutation.isSuccess) setLikedPost(true);
     if (unlikeMutation.isSuccess) setLikedPost(false);
-  }, [post.likes, user._id, likeMutation, unlikeMutation]);
+    if (deleteMutation.isSuccess) deletePost && deletePost(post._id);
+  }, [
+    post.likes,
+    user._id,
+    likeMutation,
+    unlikeMutation,
+    deletePost,
+    deleteMutation,
+    post._id,
+  ]);
 
   const handleDelete = () => {
     deleteMutation.mutate();
@@ -84,9 +96,12 @@ const PostItem = ({ post }: Props) => {
         >
           <GrLike /> Like
         </button>
-        <button className="flex items-center gap-4 text-lg lg:text-2xl">
+        <Link
+          to={`post/${post._id}`}
+          className="flex items-center gap-4 text-lg lg:text-2xl"
+        >
           <FaCommentAlt /> Comments
-        </button>
+        </Link>
         <div className="relative">
           <button
             className="flex items-center text-3xl lg:text-4xl"
@@ -105,7 +120,7 @@ const PostItem = ({ post }: Props) => {
                 onClick={handleDelete}
               >
                 <MdDeleteOutline />
-                <span className="text-2xl text-red-400 ">Delete</span>
+                <span className="text-2xl text-red-400">Delete</span>
               </button>
             )}
             <button className="flex items-center justify-center gap-2 py-3 text-3xl">

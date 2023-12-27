@@ -3,6 +3,7 @@ const request = require("supertest");
 
 const user = request.agent(app);
 const { usersId } = require("./config/testUsers");
+const { postIds } = require("./config/testPosts");
 require("./config/mongoTest");
 
 it("Adds a user", async () => {
@@ -94,6 +95,11 @@ it("Should return error if content is too short", async () => {
       author_id: usersId[0],
     })
     .expect(400);
+});
+
+it("Gets a specific post", async () => {
+  const res = await user.get(`/post/${postIds[0]}`);
+  expect(res.body).toHaveProperty("content");
 });
 
 it("Gives a list of posts", async () => {

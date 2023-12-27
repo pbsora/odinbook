@@ -17,7 +17,7 @@ const Feed = () => {
   return (
     <div className={`w-full 2xl:w-[55vw] ${open && "hidden"} z-[-1000px] `}>
       <NewPost setAllPosts={setAllPosts} />
-      <Timeline posts={allPosts} />
+      <Timeline posts={allPosts} setAllPosts={setAllPosts} />
     </div>
   );
 };

@@ -15,6 +15,8 @@ import { authLoader, loginLoader } from "./lib/authLoader.tsx";
 import { profileLoader } from "./lib/profileLoader.tsx";
 import OwnProfile from "./Pages/OwnProfile.tsx";
 import UserProfile from "./Pages/UserProfile.tsx";
+import NotFound from "./Pages/NotFound.tsx";
+import Post from "./Pages/Post.tsx";
 
 const queryClient = new QueryClient();
 
@@ -23,6 +25,7 @@ const router = createBrowserRouter([
     path: "/",
     element: <Home />,
     loader: loginLoader,
+    errorElement: <NotFound />,
     children: [
       { path: "/", element: <Feed /> },
       {
@@ -31,6 +34,7 @@ const router = createBrowserRouter([
       },
       { path: "/u/profile", element: <OwnProfile /> },
       { path: "u/:user_id", element: <UserProfile />, loader: profileLoader },
+      { path: "post/:post_id", element: <Post /> },
     ],
   },
   {

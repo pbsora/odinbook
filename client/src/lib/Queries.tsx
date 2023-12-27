@@ -1,11 +1,11 @@
 import { API } from "../utils/api";
 import { useQuery, useMutation } from "@tanstack/react-query";
 
-export const useFetchPosts = (params?: { id: string }) => {
+export const useFetchPosts = (params?: string) => {
   return useQuery({
     queryKey: ["all-posts"],
     queryFn: async () => {
-      return API.get(`/post/?${params && "id=" + Object.values(params)}`);
+      return API.get(`/post/?${params && "id=" + params}`);
     },
   });
 };

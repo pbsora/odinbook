@@ -1,20 +1,25 @@
 import Profile from "./Components/Profile/Profile";
-import { useParams } from "react-router-dom";
-import { useGetUser } from "../lib/Queries";
+import { useLoaderData } from "react-router-dom";
+import { useFetchPosts } from "../lib/Queries";
+import { PostResponse, UserType } from "../assets/Types & Interfaces";
+import Timeline from "./Components/Feed/Timeline";
+import { useEffect, useState } from "react";
 
 const UserProfile = () => {
-  const { user_id } = useParams();
-  const user = useGetUser(user_id || "");
-  console.log(user_id);
+  const [profilePosts, setProfilePosts] = useState<PostResponse[] | null>(null);
+  const user = useLoaderData() as UserType;
+  const posts: PostResponse[] = useFetchPosts(user._id).data?.data;
 
-  console.log(user.data?.data);
-  console.log(user.isLoading);
+  useEffect(() => {
+    if (posts) setProfilePosts(posts);
+  }, [posts]);
 
   //TODO: Add loading state and error state
 
   return (
     <div>
-      <Profile user={user.data?.data} />
+      <Profile user={user} />
+      <Timeline posts={profilePosts} />
     </div>
   );
 };

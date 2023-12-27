@@ -2,11 +2,19 @@ import { Fragment } from "react";
 import { PostResponse } from "../../../assets/Types & Interfaces";
 import PostItem from "./PostItem";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
+import { RotatingLines } from "react-loader-spinner";
 
 type Props = { posts: PostResponse[] | null };
 
 const Timeline = ({ posts }: Props) => {
   const [parent] = useAutoAnimate();
+
+  if (!posts)
+    return (
+      <div>
+        <RotatingLines />
+      </div>
+    );
 
   return (
     <div className="mb-10 lg:rounded-xl" ref={parent}>

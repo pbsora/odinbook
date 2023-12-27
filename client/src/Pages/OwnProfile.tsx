@@ -7,7 +7,7 @@ import { useFetchPosts } from "../lib/Queries";
 
 const OwnProfile = () => {
   const [, user] = useContext(UserContext) as AuthData;
-  const posts: PostResponse[] = useFetchPosts({ id: user._id }).data?.data;
+  const posts: PostResponse[] = useFetchPosts(user._id).data?.data;
   const profileRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {

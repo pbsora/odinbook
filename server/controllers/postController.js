@@ -44,7 +44,7 @@ exports.get_all_posts = async (req, res) => {
       .populate("author_id", "username image createdAt _id");
     res.status(200).json(posts);
   } catch (error) {
-    res.send(error.message);
+    isError(res, error);
   }
 };
 

@@ -2,12 +2,20 @@ import { capitalize } from "../../../utils/capitalize";
 import { UserType } from "../../../assets/Types & Interfaces";
 import { CiEdit } from "react-icons/ci";
 import { DateTime } from "ts-luxon";
+import { RotatingLines } from "react-loader-spinner";
 
 type Props = {
   user: UserType;
 };
 
 const Profile = ({ user }: Props) => {
+  if (!user)
+    return (
+      <div className="w-screen lg:w-[60vw] h-[55vh] flex  justify-center items-center border-b-2 border-zinc-400 lg:border lg:rounded-xl  relative">
+        <RotatingLines width="70" strokeColor="blue" />
+      </div>
+    );
+
   return (
     <div className="w-full h-[55vh] flex flex-col justify-around border-b-2 border-zinc-400 lg:border lg:rounded-xl  relative">
       <div className="absolute text-4xl duration-200 cursor-pointer right-10 top-7 hover:scale-125">

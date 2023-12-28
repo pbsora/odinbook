@@ -15,7 +15,9 @@ const isError = (res, error) => {
 exports.get_comments = async (req, res) => {
   try {
     const { post_id } = req.params;
-    const comments = await Comment.find({ post_id });
+    const comments = await Comment.find({ post_id })
+      .populate("author_id", "_id username image")
+      .sort({ created_at: -1 });
     res.status(200).send(comments);
   } catch (error) {
     isError(res, error);
@@ -29,7 +31,7 @@ exports.create_comment = async (req, res) => {
     const { post_id } = req.params;
     const comment = new Comment({ author_id, post_id, content });
     await comment.save();
-    res.status(200).send(comment);
+    res.status(201).send(comment);
   } catch (error) {
     isError(res, error);
   }

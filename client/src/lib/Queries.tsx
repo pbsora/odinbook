@@ -5,7 +5,7 @@ export const useFetchPosts = (params?: string) => {
   return useQuery({
     queryKey: ["all-posts"],
     queryFn: async () => {
-      return API.get(`/post/?${params && "id=" + params}`);
+      return await API.get(`/post/?${params && "id=" + params}`);
     },
   });
 };
@@ -54,7 +54,32 @@ export const useGetUser = (user_id: string) => {
   return useQuery({
     queryKey: ["getUser"],
     queryFn: async () => {
-      return API.get(`/auth/${user_id}`);
+      return await API.get(`/auth/${user_id}`);
+    },
+  });
+};
+
+export const useComment = (
+  post_id: string,
+  author_id: string,
+  content: string
+) => {
+  return useMutation({
+    mutationKey: ["newComment"],
+    mutationFn: async () => {
+      return await API.post(`/post/${post_id}/comment`, {
+        author_id,
+        content,
+      });
+    },
+  });
+};
+
+export const useGetComments = (post_id: string) => {
+  return useQuery({
+    queryKey: ["getComments"],
+    queryFn: async () => {
+      return await API.get(`/post/${post_id}/comment`);
     },
   });
 };

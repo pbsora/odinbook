@@ -30,8 +30,6 @@ const PostDetails = ({ post, setPost }: Props) => {
   const unlikeMutation = useUnlikePost(post._id, user._id);
   const deleteMutation = useDeletePost(post._id);
 
-  console.log(post);
-
   useEffect(() => {
     if (isLiked(user._id, post.likes)) setLikedPost(true);
     if (likeMutation.isSuccess) {
@@ -58,10 +56,7 @@ const PostDetails = ({ post, setPost }: Props) => {
   };
 
   return (
-    <div
-      key={post._id}
-      className={`w-[95%] md:w-full m-auto h-fit flex flex-col px-8`}
-    >
+    <div className={`w-[95%] md:w-full m-auto h-fit flex flex-col  md:px-8`}>
       <div className="flex items-center gap-6 py-3 pl-6 text-2xl">
         <img
           className="max-w-[3rem] rounded-full border-2 border-zinc-400 xl:max-w-[4rem]"

@@ -107,7 +107,7 @@ it("Creates a comment", async () => {
     .post(`/post/${postIds[0]}/comment`)
     .send({ author_id: usersId[1], content: "Testing the comments with Jest" });
   expect(res.body).toHaveProperty("author_id");
-  expect(res.statusCode).toBe(200);
+  expect(res.statusCode).toBe(201);
 });
 
 it("Creates another comment", async () => {
@@ -116,7 +116,7 @@ it("Creates another comment", async () => {
     content: "Testing the comments with Jest again",
   });
   expect(res.body).toHaveProperty("author_id");
-  expect(res.statusCode).toBe(200);
+  expect(res.statusCode).toBe(201);
 });
 
 it("Gives a list of posts", async () => {

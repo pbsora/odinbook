@@ -33,8 +33,8 @@ const router = createBrowserRouter([
         element: <Settings />,
       },
       { path: "/u/profile", element: <OwnProfile /> },
-      { path: "u/:user_id", element: <UserProfile />, loader: profileLoader },
-      { path: "post/:post_id", element: <Post /> },
+      { path: "/u/:user_id", element: <UserProfile />, loader: profileLoader },
+      { path: "/post/:post_id", element: <Post /> },
     ],
   },
   {

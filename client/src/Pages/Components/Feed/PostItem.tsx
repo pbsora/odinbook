@@ -93,7 +93,10 @@ const PostItem = ({ post, deletePost }: Props) => {
           disabled={likeMutation.isPending || unlikeMutation.isPending}
           onClick={handleLike}
         >
-          <GrLike /> Like
+          <GrLike />{" "}
+          {post.likes.length === 1
+            ? post.likes.length + " Like"
+            : post.likes.length + " Likes"}
         </button>
         <Link
           to={`/post/${post._id}`}

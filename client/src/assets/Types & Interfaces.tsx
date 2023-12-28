@@ -38,4 +38,16 @@ export type PostResponse = {
   created_at: string;
 };
 
+export type CommentResponse = {
+  _id: string;
+  author_id: {
+    _id: string;
+    username: string;
+    image: string;
+  };
+  post_id: string;
+  content: string;
+  created_at: string | Date;
+};
+
 export type OutletContext = { open: boolean };

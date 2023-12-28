@@ -51,7 +51,7 @@ exports.get_all_posts = async (req, res) => {
 //Get a post GET
 exports.get_post = async (req, res) => {
   try {
-    const post = await Post.findById(req.params.post_id);
+    const post = await Post.findById(req.params.post_id).populate("author_id");
     res.send(post);
   } catch (error) {
     isError(res, error);

@@ -36,3 +36,6 @@ exports.create_comment = async (req, res) => {
 };
 
 //Deletes a comment DELETE
+exports.delete_comment = async (req, res) => {
+  ////
+};

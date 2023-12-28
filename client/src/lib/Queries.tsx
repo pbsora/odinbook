@@ -10,6 +10,15 @@ export const useFetchPosts = (params?: string) => {
   });
 };
 
+export const useGetPostDetails = (params: string) => {
+  return useQuery({
+    queryKey: ["post-detail"],
+    queryFn: async () => {
+      return await API.get(`/post/${params}`);
+    },
+  });
+};
+
 export const useUserPosts = () => {
   //TODO
 };

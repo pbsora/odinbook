@@ -1,0 +1,38 @@
+const mongoose = require("mongoose");
+const Comment = require("../models/Comment");
+
+const isError = (res, error) => {
+  if (error instanceof mongoose.Error.ValidationError) {
+    res.status(400).json({ error: error.message });
+  } else if (error instanceof mongoose.Error.CastError) {
+    res.status(400).json({ error: "Invalid parameters" });
+  } else {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+//Get a list of comments GET
+exports.get_comments = async (req, res) => {
+  try {
+    const { post_id } = req.params;
+    const comments = await Comment.find({ post_id });
+    res.status(200).send(comments);
+  } catch (error) {
+    isError(res, error);
+  }
+};
+
+//Create a comment POST
+exports.create_comment = async (req, res) => {
+  try {
+    const { author_id, content } = req.body;
+    const { post_id } = req.params;
+    const comment = new Comment({ author_id, post_id, content });
+    await comment.save();
+    res.status(200).send(comment);
+  } catch (error) {
+    isError(res, error);
+  }
+};
+
+//Deletes a comment DELETE

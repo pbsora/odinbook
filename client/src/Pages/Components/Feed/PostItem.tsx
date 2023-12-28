@@ -22,7 +22,6 @@ type Props = {
 };
 
 const PostItem = ({ post, deletePost }: Props) => {
-  const [options, setOptions] = useState(false);
   const [, user] = useContext(UserContext) as AuthData;
   const [likedPost, setLikedPost] = useState(false);
   const ownPost = () => user._id === post.author_id._id;
@@ -97,22 +96,19 @@ const PostItem = ({ post, deletePost }: Props) => {
           <GrLike /> Like
         </button>
         <Link
-          to={`post/${post._id}`}
+          to={`/post/${post._id}`}
           className="flex items-center gap-4 text-lg lg:text-2xl"
         >
           <FaCommentAlt /> Comments
         </Link>
-        <div className="relative">
-          <button
-            className="flex items-center text-3xl lg:text-4xl"
-            onClick={() => setOptions(!options)}
-          >
+        <div className="relative group">
+          <button className="flex items-center text-3xl lg:text-4xl ">
             <HiDotsHorizontal />
           </button>
           <div
-            className={`${
-              options ? "scale-100" : "scale-0"
-            } min-w-[9rem] divide-y-2 px-6 border border-white w-fit  absolute bg-zinc-900 flex flex-col -translate-x-32 lg:translate-x-0 xl:translate-x-4 transition-all duration-200 ease-out origin-top-right lg:origin-top-left rounded-xl z-30`}
+            className={`
+              scale-0 group-hover:scale-100
+            min-w-[9rem] divide-y-2 px-6 border border-white w-fit  absolute bg-zinc-900 flex flex-col -translate-x-32 lg:translate-x-0 xl:translate-x-4 transition-all duration-200 ease-out origin-top-right lg:origin-top-left rounded-xl z-30`}
           >
             {ownPost() && (
               <button

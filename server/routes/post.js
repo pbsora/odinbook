@@ -1,11 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const postController = require("../controllers/postController");
+const commentController = require("../controllers/commentController");
 const checkAuthenticated = require("../lib/authMiddleware");
-
-router.get("/test", (req, res) => {
-  res.status(204).send();
-});
 
 //get multiple posts
 router.get("/", postController.get_all_posts);
@@ -28,7 +25,20 @@ router.patch("/like/:post_id", checkAuthenticated, postController.like);
 router.patch("/unlike/:post_id", checkAuthenticated, postController.unlike);
 
 //get all comments for a post
+router.get("/:post_id/comment", commentController.get_comments);
+
+//create comment POST
+router.post(
+  "/:post_id/comment",
+  checkAuthenticated,
+  commentController.create_comment
+);
 
 //delete comment
+router.delete(
+  "/:post_id/comment",
+  checkAuthenticated,
+  commentController.delete_comment
+);
 
 module.exports = router;

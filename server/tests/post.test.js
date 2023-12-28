@@ -102,6 +102,23 @@ it("Gets a specific post", async () => {
   expect(res.body).toHaveProperty("content");
 });
 
+it("Creates a comment", async () => {
+  const res = await user
+    .post(`/post/${postIds[0]}/comment`)
+    .send({ author_id: usersId[1], content: "Testing the comments with Jest" });
+  expect(res.body).toHaveProperty("author_id");
+  expect(res.statusCode).toBe(200);
+});
+
+it("Creates another comment", async () => {
+  const res = await user.post(`/post/${postIds[0]}/comment`).send({
+    author_id: usersId[2],
+    content: "Testing the comments with Jest again",
+  });
+  expect(res.body).toHaveProperty("author_id");
+  expect(res.statusCode).toBe(200);
+});
+
 it("Gives a list of posts", async () => {
   const res = await user.get("/post/");
   expect(res.body.length).toBeGreaterThanOrEqual(1);
@@ -117,6 +134,12 @@ it("Gives a list of posts from another user", async () => {
   expect(res.body.length).toBeGreaterThanOrEqual(1);
 });
 
+it("Gives a list of comments for a post", async () => {
+  const res = await user.get(`/post/${postIds[0]}/comment`);
+  expect(res.body.length).toBeGreaterThanOrEqual(1);
+  expect(res.statusCode).toBe(200);
+});
+
 it("Logs out", async () => {
   await user.post("/auth/log-out").expect(200);
 });
@@ -130,5 +153,12 @@ it("Reject a post if user not signed in", async () => {
       author_id: "65808cbf5978578b744655ec",
     });
 
+  expect(res.statusCode).toBe(401);
+});
+
+it("Rejects a comment if user not signed in", async () => {
+  const res = await user
+    .post(`/post/${postIds[0]}/comment`)
+    .send({ author_id: usersId[1], content: "Testing the comments with Jest" });
   expect(res.statusCode).toBe(401);
 });

@@ -34,7 +34,9 @@ const CommentSection = ({ post_id }: Props) => {
           <span>{comment.length}/160</span>
           <button
             type="submit"
-            className="p-5 border rounded-xl bg-sky-400"
+            className={`p-5 border rounded-xl bg-sky-400 ${
+              commentMutation.isPending && "cursor-not-allowed"
+            }`}
             disabled={commentMutation.isPending}
           >
             Comment

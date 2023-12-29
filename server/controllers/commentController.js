@@ -31,7 +31,8 @@ exports.create_comment = async (req, res) => {
     const { post_id } = req.params;
     const comment = new Comment({ author_id, post_id, content });
     await comment.save();
-    res.status(201).send(comment);
+    const resComment = await comment.populate("author_id");
+    res.status(201).send(resComment);
   } catch (error) {
     isError(res, error);
   }

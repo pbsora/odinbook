@@ -23,7 +23,7 @@ const OwnProfile = () => {
   }, [posts]);
 
   return (
-    <div className=" w-full 2xl:w-[55vw]">
+    <div className="w-full 2xl:max-w-[55vw]">
       <section ref={profileRef}>
         <Profile user={user} />
       </section>

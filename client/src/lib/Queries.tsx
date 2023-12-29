@@ -66,6 +66,7 @@ export const useComment = (
 ) => {
   return useMutation({
     mutationKey: ["newComment"],
+
     mutationFn: async () => {
       return await API.post(`/post/${post_id}/comment`, {
         author_id,
@@ -78,6 +79,7 @@ export const useComment = (
 export const useGetComments = (post_id: string) => {
   return useQuery({
     queryKey: ["getComments"],
+    refetchInterval: 10000,
     queryFn: async () => {
       return await API.get(`/post/${post_id}/comment`);
     },

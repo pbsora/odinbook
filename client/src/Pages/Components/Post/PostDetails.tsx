@@ -17,10 +17,9 @@ import PostDialog from "./PostDialog";
 
 type Props = {
   post: PostResponse;
-  setPost: React.Dispatch<React.SetStateAction<PostResponse | undefined>>;
 };
 
-const PostDetails = ({ post, setPost }: Props) => {
+const PostDetails = ({ post }: Props) => {
   const [, user] = useContext(UserContext) as AuthData;
   const [likedPost, setLikedPost] = useState(false);
   const ownPost = () => user._id === post.author_id._id;

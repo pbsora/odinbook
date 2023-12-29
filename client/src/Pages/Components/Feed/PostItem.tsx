@@ -56,7 +56,7 @@ const PostItem = ({ post, deletePost }: Props) => {
   return (
     <div
       key={post._id}
-      className={`first:mt-5 mt-5 w-[95%] md:w-[85%] border m-auto h-fit flex flex-col rounded-xl shadow-xl`}
+      className={`first:mt-5 mt-5 w-[95%] md:w-[90%] border m-auto h-fit flex flex-col rounded-xl shadow-xl`}
     >
       <div className="flex items-center gap-6 py-3 pl-6 text-2xl">
         <img
@@ -67,8 +67,8 @@ const PostItem = ({ post, deletePost }: Props) => {
         <Link
           to={
             post.author_id._id === user._id
-              ? "u/profile"
-              : `u/${post.author_id.username}`
+              ? "/u/profile"
+              : `/u/${post.author_id.username}`
           }
           className="text-2xl transition-all duration-400 hover:border-b hover:border-zinc-400"
         >
@@ -82,7 +82,7 @@ const PostItem = ({ post, deletePost }: Props) => {
           ).toLocaleString(DateTime.DATETIME_SHORT)}
         </span>
       </div>
-      <div className="flex-1 p-6 text-2xl">
+      <div className="flex-1 p-6 text-lg font-light md:text-2xl">
         <section>{post.content}</section>
       </div>
       <div className="flex justify-around p-4 lg:p-8">

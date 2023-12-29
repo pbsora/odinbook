@@ -3,12 +3,16 @@ import { UserContext } from "../../../lib/Context/UserContext";
 import { AuthData } from "../../../assets/Types & Interfaces";
 import { useComment } from "../../../lib/Queries";
 import { useToast } from "../ui/use-toast";
+import { UseQueryResult } from "@tanstack/react-query";
+import { AxiosResponse } from "axios";
 
 type Props = {
   post_id: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  commentResponse: UseQueryResult<AxiosResponse<any, any>, Error>;
 };
 
-const CommentSection = ({ post_id }: Props) => {
+const CommentSection = ({ post_id, commentResponse }: Props) => {
   const [, user] = useContext(UserContext) as AuthData;
   const [comment, setComment] = useState("");
   const commentMutation = useComment(post_id, user._id, comment);
@@ -24,7 +28,10 @@ const CommentSection = ({ post_id }: Props) => {
     });
     setTimeout(() => {
       setComment("");
-    }, 100);
+    }, 0);
+    setTimeout(() => {
+      commentResponse.refetch();
+    }, 1000);
   };
 
   return (

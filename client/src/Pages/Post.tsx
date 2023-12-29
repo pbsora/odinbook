@@ -13,8 +13,8 @@ const Post = () => {
   const [parent] = useAutoAnimate();
   const postResponse = useGetPostDetails(post_id || "");
   const postData = postResponse.data?.data as PostResponse;
-  const commentResponse = useGetComments(post_id || "").data
-    ?.data as CommentResponse[];
+  const commentResponse = useGetComments(post_id || "");
+  const commentData = commentResponse.data?.data as CommentResponse[];
 
   if (postResponse.error)
     return (
@@ -40,10 +40,13 @@ const Post = () => {
       </Link>
       <PostDetails post={postData} />
       <div className="w-[90%] mt-6 px-4 m-auto border-b-2 border-zinc-700"></div>
-      <CommentSection post_id={postData._id} />
+      <CommentSection
+        post_id={postData._id}
+        commentResponse={commentResponse}
+      />
       <div className="w-[90%]  mt-6 px-4 m-auto border-b-2 border-zinc-700"></div>
-      {commentResponse
-        ? commentResponse.map((comment) => (
+      {commentData
+        ? commentData.map((comment) => (
             <Fragment key={comment._id}>
               <CommentItem comment={comment} />
             </Fragment>

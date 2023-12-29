@@ -79,7 +79,6 @@ export const useComment = (
 export const useGetComments = (post_id: string) => {
   return useQuery({
     queryKey: ["getComments"],
-    refetchInterval: 10000,
     queryFn: async () => {
       return await API.get(`/post/${post_id}/comment`);
     },

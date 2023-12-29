@@ -1,14 +1,18 @@
 import { DateTime } from "ts-luxon";
-import { CommentResponse } from "../../../assets/Types & Interfaces";
+import { AuthData, CommentResponse } from "../../../assets/Types & Interfaces";
 import { GrLike } from "react-icons/gr";
 import { HiDotsHorizontal } from "react-icons/hi";
 import { Link } from "react-router-dom";
 import { capitalize } from "../../../utils/capitalize";
+import { UserContext } from "@/lib/Context/UserContext";
+import { useContext } from "react";
 
 type Props = {
   comment: CommentResponse;
 };
 const CommentItem = ({ comment }: Props) => {
+  const [, user] = useContext(UserContext) as AuthData;
+
   return (
     <div className="w-[90%] m-auto mt-5 flex flex-col gap-10 py-6 border-b">
       <div key={comment._id} className={`flex items-center w-full gap-3`}>
@@ -17,7 +21,14 @@ const CommentItem = ({ comment }: Props) => {
           alt="user picture"
           className="max-w-[3rem] rounded-full border-2 border-zinc-400 xl:max-w-[4rem]"
         />
-        <Link to={`/u/${comment.author_id.username}`} className="text-xl">
+        <Link
+          to={
+            comment.author_id._id === user._id
+              ? "/u/profile"
+              : `/u/${comment.author_id.username}`
+          }
+          className="text-xl"
+        >
           {capitalize(comment.author_id.username)}
         </Link>
         <span className="flex justify-end flex-1">

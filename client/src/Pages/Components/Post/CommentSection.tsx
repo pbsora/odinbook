@@ -2,6 +2,7 @@ import { FormEvent, useContext, useState } from "react";
 import { UserContext } from "../../../lib/Context/UserContext";
 import { AuthData } from "../../../assets/Types & Interfaces";
 import { useComment } from "../../../lib/Queries";
+import { useToast } from "../ui/use-toast";
 
 type Props = {
   post_id: string;
@@ -11,10 +12,19 @@ const CommentSection = ({ post_id }: Props) => {
   const [, user] = useContext(UserContext) as AuthData;
   const [comment, setComment] = useState("");
   const commentMutation = useComment(post_id, user._id, comment);
+  const { toast } = useToast();
 
   const handleNewComment = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     commentMutation.mutate();
+    toast({
+      title: "Success",
+      description: "Comment added sucessfully",
+      className: "text-xl",
+    });
+    setTimeout(() => {
+      setComment("");
+    }, 100);
   };
 
   return (

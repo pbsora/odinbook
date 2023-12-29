@@ -5,6 +5,7 @@ import Header from "./Components/Header/Header";
 import { UserContext } from "../lib/Context/UserContext";
 import { AuthData, OutletContext } from "../assets/Types & Interfaces";
 import Sidebar from "./Components/Global/Sidebar";
+import { Toaster } from "./Components/ui/toaster";
 
 const Home = () => {
   const auth = useLoaderData() as AuthData;
@@ -24,6 +25,7 @@ const Home = () => {
             <Sidebar open={open} setOpen={setOpen} />
             <Outlet context={{ open } satisfies OutletContext} />
           </div>
+          <Toaster />
         </main>
       </UserContext.Provider>
     </>

@@ -45,14 +45,14 @@ router.delete(
 
 //like comment
 router.patch(
-  "/comment/:comment_id/like",
+  "/comment/like/:comment_id",
   checkAuthenticated,
   commentController.like_comment
 );
 
 //unlike comment
 router.patch(
-  "/comment/:comment_id/unlike",
+  "/comment/unlike/:comment_id",
   checkAuthenticated,
   commentController.unlike_comment
 );

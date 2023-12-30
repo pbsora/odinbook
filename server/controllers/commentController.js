@@ -43,13 +43,13 @@ exports.like_comment = async (req, res) => {
   try {
     const { comment_id } = req.params;
     const { user_id } = req.body;
-    await Comment.findByIdAndUpdate(
+    const comment = await Comment.findByIdAndUpdate(
       { _id: comment_id, likes: { $ne: user_id } },
       { $addToSet: { likes: user_id } },
       { new: true }
     );
 
-    res.status(204).send();
+    res.status(200).json({ likes: comment.count });
   } catch (error) {
     isError(res, error);
   }
@@ -60,12 +60,12 @@ exports.unlike_comment = async (req, res) => {
   try {
     const { comment_id } = req.params;
     const { user_id } = req.body;
-    await Comment.findByIdAndUpdate(
+    const comment = await Comment.findByIdAndUpdate(
       { _id: comment_id, likes: user_id },
       { $pull: { likes: user_id } },
       { new: true }
     );
-    res.status(204).send();
+    res.status(200).json({ likes: comment.count });
   } catch (error) {
     isError(res, error);
   }

@@ -127,16 +127,18 @@ it("Deletes a comment", async () => {
 
 it("Likes a comment", async () => {
   const res = await user
-    .patch(`/post/comment/${commentIds[5]}/like`)
+    .patch(`/post/comment/like/${commentIds[5]}`)
     .send({ user_id: usersId[2] });
-  expect(res.statusCode).toBe(204);
+  expect(res.body.likes).toBe(1);
+  expect(res.statusCode).toBe(200);
 });
 
 it("Unlikes a comment", async () => {
   const res = await user
-    .patch(`/post/comment/${commentIds[5]}/unlike`)
+    .patch(`/post/comment/unlike/${commentIds[5]}`)
     .send({ user_id: usersId[2] });
-  expect(res.statusCode).toBe(204);
+  expect(res.body.likes).toBe(0);
+  expect(res.statusCode).toBe(200);
 });
 
 it("Gives a list of posts", async () => {

@@ -1,5 +1,5 @@
 import { Link, useParams } from "react-router-dom";
-import { Fragment } from "react";
+import { Fragment, useEffect } from "react";
 import PostDetails from "./Components/Post/PostDetails";
 import { useGetComments, useGetPostDetails } from "../lib/Queries";
 import { CommentResponse, PostResponse } from "../assets/Types & Interfaces";
@@ -10,11 +10,19 @@ import { useAutoAnimate } from "@formkit/auto-animate/react";
 
 const Post = () => {
   const { post_id } = useParams();
-  const [parent] = useAutoAnimate();
   const postResponse = useGetPostDetails(post_id || "");
   const postData = postResponse.data?.data as PostResponse;
   const commentResponse = useGetComments(post_id || "");
   const commentData = commentResponse.data?.data as CommentResponse[];
+
+  const [parent] = useAutoAnimate();
+
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }, [postData]);
 
   if (postResponse.error)
     return (
@@ -48,7 +56,10 @@ const Post = () => {
       {commentData
         ? commentData.map((comment) => (
             <Fragment key={comment._id}>
-              <CommentItem comment={comment} />
+              <CommentItem
+                comment={comment}
+                commentResponse={commentResponse}
+              />
             </Fragment>
           ))
         : "Loading comments"}

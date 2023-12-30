@@ -6,12 +6,33 @@ import { Link } from "react-router-dom";
 import { capitalize } from "../../../utils/capitalize";
 import { UserContext } from "@/lib/Context/UserContext";
 import { useContext } from "react";
+import { useDeleteComment } from "@/lib/Queries";
+import { UseQueryResult } from "@tanstack/react-query";
+import { AxiosResponse } from "axios";
+import { useToast } from "../ui/use-toast";
+import PostDialog from "./PostDialog";
 
 type Props = {
   comment: CommentResponse;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  commentResponse: UseQueryResult<AxiosResponse<any, any>, Error>;
 };
-const CommentItem = ({ comment }: Props) => {
+const CommentItem = ({ comment, commentResponse }: Props) => {
   const [, user] = useContext(UserContext) as AuthData;
+  const ownComment = () => comment.author_id._id === user._id;
+  const deleteMutation = useDeleteComment(comment._id);
+  const { toast } = useToast();
+
+  const handleDelete = () => {
+    deleteMutation.mutate();
+    toast({
+      title: "Deleted successfully",
+      description: "Comment deleted",
+    });
+    setTimeout(() => {
+      commentResponse.refetch();
+    }, 1000);
+  };
 
   return (
     <div className="w-[90%] m-auto mt-5 flex flex-col gap-10 py-6 border-b">
@@ -45,9 +66,12 @@ const CommentItem = ({ comment }: Props) => {
           <GrLike />
           10 Likes
         </button>
-        <button>
-          <HiDotsHorizontal />
-        </button>
+        <div className="relative group">
+          <button className="flex items-center text-3xl lg:text-4xl ">
+            <HiDotsHorizontal />
+          </button>
+          <PostDialog ownPost={ownComment} handleDelete={handleDelete} />
+        </div>
       </div>
     </div>
   );

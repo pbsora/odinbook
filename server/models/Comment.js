@@ -14,4 +14,8 @@ const Comment = new Schema({
   ],
 });
 
+Comment.virtual("count").get(function () {
+  return this.likes.length;
+});
+
 module.exports = new mongoose.model("Comment", Comment);

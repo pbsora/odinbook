@@ -84,3 +84,30 @@ export const useGetComments = (post_id: string) => {
     },
   });
 };
+
+export const useDeleteComment = (comment_id: string) => {
+  return useMutation({
+    mutationKey: ["deleteComment"],
+    mutationFn: async () => {
+      return await API.delete(`/post/comment/${comment_id}`);
+    },
+  });
+};
+
+export const useLikeComment = (comment_id: string, user_id: string) => {
+  return useMutation({
+    mutationKey: ["likePost"],
+    mutationFn: async () => {
+      return await API.patch(`/post/comment/like/${comment_id}`, { user_id });
+    },
+  });
+};
+
+export const useUnlikeComment = (comment_id: string, user_id: string) => {
+  return useMutation({
+    mutationKey: ["unlikePost"],
+    mutationFn: async () => {
+      return await API.patch(`/post/comment/unlike/${comment_id}`, { user_id });
+    },
+  });
+};

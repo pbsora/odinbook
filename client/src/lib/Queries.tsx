@@ -96,7 +96,7 @@ export const useDeleteComment = (comment_id: string) => {
 
 export const useLikeComment = (comment_id: string, user_id: string) => {
   return useMutation({
-    mutationKey: ["likePost"],
+    mutationKey: ["likeComment"],
     mutationFn: async () => {
       return await API.patch(`/post/comment/like/${comment_id}`, { user_id });
     },
@@ -105,7 +105,7 @@ export const useLikeComment = (comment_id: string, user_id: string) => {
 
 export const useUnlikeComment = (comment_id: string, user_id: string) => {
   return useMutation({
-    mutationKey: ["unlikePost"],
+    mutationKey: ["unlikeComment"],
     mutationFn: async () => {
       return await API.patch(`/post/comment/unlike/${comment_id}`, { user_id });
     },

@@ -46,7 +46,7 @@ const Post = () => {
       <Link to={"/"} className="lg:hidden">
         <button className="ml-5 text-3xl">{"<-"}</button>
       </Link>
-      <PostDetails post={postData} />
+      <PostDetails post={postData} commentCount={commentData?.length} />
       <div className="w-[90%] mt-6 px-4 m-auto border-b-2 border-zinc-700"></div>
       <CommentSection
         post_id={postData._id}

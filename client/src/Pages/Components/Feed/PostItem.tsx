@@ -74,7 +74,7 @@ const PostItem = ({ post, deletePost }: Props) => {
         >
           {capitalize(post.author_id.username)}
         </Link>
-        <span className="flex justify-end flex-1 mr-12 text-lg">
+        <span className="flex justify-end flex-1 mr-12 text-lg text-end">
           {DateTime.fromJSDate(
             typeof post.created_at === "string"
               ? new Date(post.created_at)

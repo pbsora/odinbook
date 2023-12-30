@@ -17,9 +17,10 @@ import PostDialog from "./PostDialog";
 
 type Props = {
   post: PostResponse;
+  commentCount: number;
 };
 
-const PostDetails = ({ post }: Props) => {
+const PostDetails = ({ post, commentCount }: Props) => {
   const [, user] = useContext(UserContext) as AuthData;
   const [likedPost, setLikedPost] = useState(false);
   const ownPost = () => user._id === post.author_id._id;
@@ -97,7 +98,8 @@ const PostDetails = ({ post }: Props) => {
             : post.likes.length + " Likes"}
         </button>
         <span className="flex items-center gap-4 text-lg lg:text-2xl">
-          <FaCommentAlt /> Comments
+          <FaCommentAlt />{" "}
+          {commentCount ? commentCount + " Comments" : "0 Comments"}
         </span>
         <div className="relative group">
           <button className="flex items-center text-3xl lg:text-4xl ">

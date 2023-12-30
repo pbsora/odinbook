@@ -48,6 +48,7 @@ export type CommentResponse = {
   post_id: string;
   content: string;
   created_at: string | Date;
+  likes: string[];
 };
 
 export type OutletContext = { open: boolean };

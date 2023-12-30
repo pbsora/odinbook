@@ -6,6 +6,12 @@ const Comment = new Schema({
   post_id: { type: Schema.Types.ObjectId, ref: "Post" },
   content: { type: String, minLength: 6, maxLength: 160 },
   created_at: { type: Date, default: Date.now },
+  likes: [
+    {
+      type: Schema.Types.ObjectId,
+      references: "User",
+    },
+  ],
 });
 
 module.exports = new mongoose.model("Comment", Comment);

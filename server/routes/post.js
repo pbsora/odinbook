@@ -24,10 +24,12 @@ router.patch("/like/:post_id", checkAuthenticated, postController.like);
 //unlike a post
 router.patch("/unlike/:post_id", checkAuthenticated, postController.unlike);
 
+//-------------Comments----------------//
+
 //get all comments for a post
 router.get("/:post_id/comment", commentController.get_comments);
 
-//create comment POST
+//create comment
 router.post(
   "/:post_id/comment",
   checkAuthenticated,
@@ -36,9 +38,16 @@ router.post(
 
 //delete comment
 router.delete(
-  "/:post_id/comment",
+  "/comment/:comment_id",
   checkAuthenticated,
   commentController.delete_comment
+);
+
+//like comment
+router.patch(
+  "/comment/:comment_id/like",
+  checkAuthenticated,
+  commentController.like_comment
 );
 
 module.exports = router;

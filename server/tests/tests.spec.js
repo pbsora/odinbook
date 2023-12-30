@@ -4,6 +4,7 @@ const request = require("supertest");
 const user = request.agent(app);
 const { usersId } = require("./config/testUsers");
 const { postIds } = require("./config/testPosts");
+const { commentIds } = require("./config/testComments");
 require("./config/mongoTest");
 
 it("Adds a user", async () => {
@@ -119,6 +120,19 @@ it("Creates another comment", async () => {
   expect(res.statusCode).toBe(201);
 });
 
+it("Deletes a comment", async () => {
+  const res = await user.delete(`/post/comment/${commentIds[0]}`);
+  expect(res.statusCode).toBe(204);
+});
+
+it("Likes a comment", async () => {
+  const res = await user
+    .patch(`/post/comment/${commentIds[5]}/like`)
+    .send({ user_id: usersId[2] });
+  expect(res.body.likes.length).toBeGreaterThanOrEqual(1);
+  expect(res.statusCode).toBe(200);
+});
+
 it("Gives a list of posts", async () => {
   const res = await user.get("/post/");
   expect(res.body.length).toBeGreaterThanOrEqual(1);
@@ -160,5 +174,10 @@ it("Rejects a comment if user not signed in", async () => {
   const res = await user
     .post(`/post/${postIds[0]}/comment`)
     .send({ author_id: usersId[1], content: "Testing the comments with Jest" });
+  expect(res.statusCode).toBe(401);
+});
+
+it("Rejects deletion of a comment if not signed in", async () => {
+  const res = await user.delete(`/post/comment/${commentIds[1]}`);
   expect(res.statusCode).toBe(401);
 });

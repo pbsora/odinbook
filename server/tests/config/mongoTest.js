@@ -3,8 +3,10 @@ const { MongoMemoryServer } = require("mongodb-memory-server");
 
 const { users, usersId } = require("./testUsers");
 const { testPosts, postIds } = require("./testPosts");
+const { testComments, commentIds } = require("./testComments");
 const User = require("../../models/User");
 const Post = require("../../models/Post");
+const Comment = require("../../models/Comment");
 
 beforeAll(async () => {
   const mongoServer = await MongoMemoryServer.create();
@@ -41,6 +43,19 @@ beforeAll(async () => {
   const pIds = Posts.map((post) => post.id);
   await Post.insertMany([...Posts]);
   postIds.push(...pIds);
+
+  const Comments = await Promise.all(
+    testComments.map((comment, index) => {
+      return new Comment({
+        author_id: usersId[index],
+        post_id: postIds[index],
+        content: testComments[index].content,
+      });
+    })
+  );
+  await Comment.insertMany([...Comments]);
+  const cIds = Comments.map((comment) => comment._id);
+  commentIds.push(...cIds);
 });
 
 afterAll(async () => {

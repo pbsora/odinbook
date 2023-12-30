@@ -129,8 +129,14 @@ it("Likes a comment", async () => {
   const res = await user
     .patch(`/post/comment/${commentIds[5]}/like`)
     .send({ user_id: usersId[2] });
-  expect(res.body.likes.length).toBeGreaterThanOrEqual(1);
-  expect(res.statusCode).toBe(200);
+  expect(res.statusCode).toBe(204);
+});
+
+it("Unlikes a comment", async () => {
+  const res = await user
+    .patch(`/post/comment/${commentIds[5]}/unlike`)
+    .send({ user_id: usersId[2] });
+  expect(res.statusCode).toBe(204);
 });
 
 it("Gives a list of posts", async () => {

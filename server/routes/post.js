@@ -50,4 +50,11 @@ router.patch(
   commentController.like_comment
 );
 
+//unlike comment
+router.patch(
+  "/comment/:comment_id/unlike",
+  checkAuthenticated,
+  commentController.unlike_comment
+);
+
 module.exports = router;

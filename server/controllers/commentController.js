@@ -43,19 +43,33 @@ exports.like_comment = async (req, res) => {
   try {
     const { comment_id } = req.params;
     const { user_id } = req.body;
-    const comment = await Comment.findByIdAndUpdate(
+    await Comment.findByIdAndUpdate(
       { _id: comment_id, likes: { $ne: user_id } },
       { $addToSet: { likes: user_id } },
       { new: true }
     );
-    console.log(comment.likes.length);
-    res.status(200).send(comment);
+
+    res.status(204).send();
   } catch (error) {
     isError(res, error);
   }
 };
 
-//Unlike comment
+//Unlike comment PATCH
+exports.unlike_comment = async (req, res) => {
+  try {
+    const { comment_id } = req.params;
+    const { user_id } = req.body;
+    await Comment.findByIdAndUpdate(
+      { _id: comment_id, likes: user_id },
+      { $pull: { likes: user_id } },
+      { new: true }
+    );
+    res.status(204).send();
+  } catch (error) {
+    isError(res, error);
+  }
+};
 
 //Deletes a comment DELETE
 exports.delete_comment = async (req, res) => {

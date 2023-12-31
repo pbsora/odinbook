@@ -5,6 +5,9 @@ import { capitalize } from "../../../utils/capitalize";
 import UserCard from "./UserCard";
 import { debounce } from "lodash";
 import Hamburger from "hamburger-react";
+import { IoHomeOutline } from "react-icons/io5";
+import { FaSignsPost } from "react-icons/fa6";
+import { Link } from "react-router-dom";
 
 type Props = {
   open: boolean;
@@ -40,6 +43,20 @@ const Header = ({ open, setOpen }: Props) => {
           onClick={() => setOpen(!open)}
         >
           <Hamburger toggled={open} toggle={setOpen} />
+        </div>
+        <div className="items-center justify-center flex-1 hidden gap-12 pl-20 text-4xl lg:flex text-zinc-700 ">
+          <Link
+            to={"/"}
+            className="transition-all duration-200 hover:scale-125"
+          >
+            <IoHomeOutline />
+          </Link>
+          <Link
+            to={"/discover"}
+            className="transition-all duration-200 hover:scale-125"
+          >
+            <FaSignsPost />
+          </Link>
         </div>
         <div className="relative flex items-center gap-6 pl-12 pr-3 group">
           <span className="text-2xl select-none">

@@ -19,8 +19,8 @@ const UserCard = ({ user, nav }: Props) => {
   return (
     <div
       className={` ${
-        nav ? "lg:top-[2.4rem]" : "lg:top-[3.7rem]"
-      } absolute right-[-20px] flex flex-col items-center gap-1 p-4 lg:p-12 border-2  top-[3.5rem] border-zinc-300 rounded-xl scale-0 bg-black group-hover:scale-100 transition-all duration-200 origin-top`}
+        nav ? "lg:top-[2.4rem]" : "lg:top-[3.7rem] "
+      } absolute right-[-20px] flex flex-col items-center min-w-[20rem] gap-1 p-4 lg:p-12 border-2 top-[4rem] border-zinc-300 rounded-xl scale-0 bg-zinc-50 group-hover:scale-100 transition-all duration-200 origin-top`}
     >
       <img
         src={user.image}

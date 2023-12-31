@@ -1,6 +1,5 @@
 import { capitalize } from "../../../utils/capitalize";
 import { AuthData, UserType } from "../../../assets/Types & Interfaces";
-import { CiEdit } from "react-icons/ci";
 import { DateTime } from "ts-luxon";
 import { RotatingLines } from "react-loader-spinner";
 import { useFollow, useUnfollow } from "../../../lib/Queries/userQueries";
@@ -9,6 +8,8 @@ import { useContext } from "react";
 import { toast } from "../ui/use-toast";
 import { UseQueryResult } from "@tanstack/react-query";
 import { AxiosResponse } from "axios";
+import { IoSettings } from "react-icons/io5";
+import { Link } from "react-router-dom";
 
 type Props = {
   user: UserType;
@@ -54,11 +55,14 @@ const Profile = ({ user, relationship }: Props) => {
     );
 
   return (
-    <div className="w-full h-[55vh] flex flex-col justify-around border-b-2 border-zinc-400 lg:border lg:rounded-xl  shadow-xl relative">
+    <div className="w-full h-[55vh] flex flex-col justify-around border-b-2 border-zinc-400 lg:border lg:rounded-xl md:mt-6  shadow-xl relative mb-5 bg-zinc-50">
       {ownProfile && (
-        <div className="absolute text-4xl duration-200 cursor-pointer right-10 top-7 hover:scale-125">
-          <CiEdit />
-        </div>
+        <Link
+          to={"/u/settings"}
+          className="absolute text-4xl duration-200 cursor-pointer right-10 top-7 hover:scale-125"
+        >
+          <IoSettings />
+        </Link>
       )}
       <section className="flex flex-col items-center gap-3">
         <img

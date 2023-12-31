@@ -41,7 +41,7 @@ const NewPost = ({ setAllPosts }: Props) => {
   };
 
   return (
-    <div className="w-full border-b lg:border border-zinc-400 lg:rounded-xl min-h-[25vh] py-4 shadow-xl">
+    <div className="w-full border-b lg:border border-zinc-400 lg:rounded-xl min-h-[25vh] py-4 shadow-xl mb-5 bg-zinc-50">
       <form className=" w-[90vw] md:w-[80%] m-auto" onSubmit={handleNewPost}>
         <textarea
           name="post"

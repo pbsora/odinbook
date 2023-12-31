@@ -15,6 +15,7 @@ import {
   useUnlikePost,
 } from "../../../lib/Queries/Queries";
 import { DateTime } from "ts-luxon";
+import PostDialog from "../Post/PostDialog";
 
 type Props = {
   post: PostResponse;
@@ -56,7 +57,7 @@ const PostItem = ({ post, deletePost }: Props) => {
   return (
     <div
       key={post._id}
-      className={`first:mt-5 mt-5 w-[95%] md:w-[90%] border m-auto h-fit flex flex-col rounded-xl shadow-xl`}
+      className={`first:mt-0 mt-5 w-[95%] md:w-[90%] border m-auto h-fit flex flex-col rounded-xl shadow-xl bg-zinc-50`}
     >
       <div className="flex items-center gap-6 py-3 pl-6 text-2xl">
         <img
@@ -108,29 +109,7 @@ const PostItem = ({ post, deletePost }: Props) => {
           <button className="flex items-center text-3xl lg:text-4xl ">
             <HiDotsHorizontal />
           </button>
-          <div
-            className={`
-              scale-0 group-hover:scale-100
-            min-w-[9rem] divide-y-2 px-6 border border-white w-fit  absolute bg-zinc-900 flex flex-col -translate-x-32 lg:translate-x-0 xl:translate-x-4 transition-all duration-200 ease-out origin-top-right lg:origin-top-left rounded-xl z-30`}
-          >
-            {ownPost() && (
-              <button
-                className="flex items-center justify-center gap-2 py-2 text-3xl hover:bg-red-700"
-                onClick={handleDelete}
-              >
-                <MdDeleteOutline />
-                <span className="text-2xl text-red-400">Delete</span>
-              </button>
-            )}
-            <button className="flex items-center justify-center gap-2 py-3 text-3xl">
-              <FaShare />
-              <span className="text-2xl ">Share</span>
-            </button>
-            <button className="flex items-center justify-center gap-2 py-2 text-3xl ">
-              <CiBookmark />
-              <span className="text-2xl ">Save</span>
-            </button>
-          </div>
+          <PostDialog handleDelete={handleDelete} ownPost={ownPost} />
         </div>
       </div>
     </div>

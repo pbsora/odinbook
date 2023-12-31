@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { PostResponse } from "../assets/Types & Interfaces";
 import { useFetchPosts } from "../lib/Queries/PostQueries";
-import NewPost from "./Components/Feed/NewPost";
+
 import Timeline from "./Components/Feed/Timeline";
 import { useTab } from "./Home";
 import { motion } from "framer-motion";
@@ -17,12 +17,11 @@ const Discover = () => {
 
   return (
     <motion.div
-      className={`w-full 2xl:w-[55vw] ${open && "hidden"} z-[-1000px] `}
+      className={`w-full 2xl:w-[55vw] ${open && "hidden"} z-[-1000px] md:mt-6 `}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
     >
-      <NewPost setAllPosts={setAllPosts} />
       <Timeline posts={allPosts} setAllPosts={setAllPosts} />
     </motion.div>
   );

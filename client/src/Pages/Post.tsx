@@ -27,21 +27,21 @@ const Post = () => {
 
   if (postResponse.error)
     return (
-      <div className="h-[90vh] lg:h-[55vh]  w-full lg:w-[60vw] grid place-content-center border rounded-xl text-3xl">
+      <div className="h-[90vh] lg:h-[55vh] w-full lg:w-[60vw] grid place-content-center border rounded-xl text-3xl">
         Post not found
       </div>
     );
 
   if (!postData)
     return (
-      <div className="h-[90vh] lg:h-[55vh]  w-full lg:w-[60vw] grid place-content-center border rounded-xl">
+      <div className="h-[90vh] lg:h-[55vh] w-full lg:w-[60vw] grid place-content-center border rounded-xl">
         <RotatingLines width="70" strokeColor="blue" />
       </div>
     );
 
   return (
     <motion.div
-      className="w-full lg:w-[55vw] border rounded-xl shadow-xl mb-20"
+      className="w-full lg:w-[55vw] border rounded-xl shadow-xl mb-20 bg-zinc-50 lg:mt-6"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 1 }}
@@ -55,7 +55,15 @@ const Post = () => {
         post_id={postData._id}
         commentResponse={commentResponse}
       />
-      <div className="w-[90%]  mt-6 px-4 m-auto border-b-2 border-zinc-700"></div>
+
+      {commentData && (
+        <div
+          className={`w-[90%] mt-6 px-4 m-auto ${
+            commentData.length && "border-b-2"
+          } border-zinc-700 `}
+        ></div>
+      )}
+
       <div ref={parent}>
         {commentData
           ? commentData.map((comment) => (

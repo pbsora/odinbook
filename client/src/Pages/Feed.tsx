@@ -19,7 +19,7 @@ const Feed = () => {
 
   return (
     <motion.div
-      className={`w-full 2xl:w-[55vw] ${open && "hidden"} z-[-1000px] `}
+      className={`w-full 2xl:w-[55vw] ${open && "hidden"} lg:mt-6 z-[-1000px] `}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}

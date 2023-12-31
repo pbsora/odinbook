@@ -4,6 +4,7 @@ import { useFetchPosts } from "../lib/Queries";
 import NewPost from "./Components/Feed/NewPost";
 import Timeline from "./Components/Feed/Timeline";
 import { useTab } from "./Home";
+import { motion } from "framer-motion";
 
 const Feed = () => {
   const posts: PostResponse[] = useFetchPosts().data?.data;
@@ -15,10 +16,15 @@ const Feed = () => {
   }, [posts]);
 
   return (
-    <div className={`w-full 2xl:w-[55vw] ${open && "hidden"} z-[-1000px] `}>
+    <motion.div
+      className={`w-full 2xl:w-[55vw] ${open && "hidden"} z-[-1000px] `}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+    >
       <NewPost setAllPosts={setAllPosts} />
       <Timeline posts={allPosts} setAllPosts={setAllPosts} />
-    </div>
+    </motion.div>
   );
 };
 export default Feed;

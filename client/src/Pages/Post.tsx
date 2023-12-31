@@ -7,6 +7,7 @@ import { RotatingLines } from "react-loader-spinner";
 import CommentSection from "./Components/Post/CommentSection";
 import CommentItem from "./Components/Post/CommentItem";
 // import { useAutoAnimate } from "@formkit/auto-animate/react";
+import { motion } from "framer-motion";
 
 const Post = () => {
   const { post_id } = useParams();
@@ -39,7 +40,12 @@ const Post = () => {
     );
 
   return (
-    <div className="w-full lg:w-[60vw] border rounded-xl shadow-xl mb-20">
+    <motion.div
+      className="w-full lg:w-[60vw] border rounded-xl shadow-xl mb-20"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.7 }}
+    >
       <Link to={"/"} className="lg:hidden">
         <button className="ml-5 text-3xl">{"<-"}</button>
       </Link>
@@ -60,7 +66,7 @@ const Post = () => {
             </Fragment>
           ))
         : "Loading comments"}
-    </div>
+    </motion.div>
   );
 };
 export default Post;

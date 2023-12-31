@@ -162,6 +162,43 @@ it("Gives a list of comments for a post", async () => {
   expect(res.statusCode).toBe(200);
 });
 
+it("Follows another user", async () => {
+  const res = await user
+    .post(`/relationship/follow`)
+    .send({ follower: usersId[0], following: usersId[1] });
+  expect(res.body).toHaveProperty("follower");
+  expect(res.statusCode).toBe(201);
+});
+
+it("Rejects following if already following", async () => {
+  const res = await user
+    .post(`/relationship/follow`)
+    .send({ follower: usersId[0], following: usersId[1] });
+  expect(res.body).toHaveProperty("error");
+  expect(res.statusCode).toBe(400);
+});
+
+it("Same user follows another user", async () => {
+  const res = await user
+    .post(`/relationship/follow`)
+    .send({ follower: usersId[0], following: usersId[2] });
+  expect(res.body).toHaveProperty("follower");
+  expect(res.statusCode).toBe(201);
+});
+
+it("List all people the user is following", async () => {
+  const res = await user.get(`/relationship/${usersId[0]}`);
+  expect(res.body.length).toBeGreaterThanOrEqual(2);
+  expect(res.statusCode).toBe(200);
+});
+
+it("Unfollows a user", async () => {
+  const res = await user.delete(`/relationship/${usersId[0]}/${usersId[1]}`);
+  console.log(res.body);
+  expect(res.body).toHaveProperty("message");
+  expect(res.statusCode).toBe(200);
+});
+
 it("Logs out", async () => {
   await user.post("/auth/log-out").expect(200);
 });

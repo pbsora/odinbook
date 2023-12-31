@@ -15,6 +15,7 @@ const cors = require("cors");
 
 const userRoutes = require("./routes/user");
 const postRoutes = require("./routes/post");
+const relationshipRoutes = require("./routes/relationship");
 
 //---------------------middleware----------------------//
 
@@ -48,6 +49,7 @@ app.use(passport.session());
 
 app.use("/auth", userRoutes);
 app.use("/post", postRoutes);
+app.use("/relationship", relationshipRoutes);
 
 app.listen(5000, () => {
   console.log("Listening on port 5000");

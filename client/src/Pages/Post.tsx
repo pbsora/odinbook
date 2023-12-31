@@ -6,7 +6,7 @@ import { CommentResponse, PostResponse } from "../assets/Types & Interfaces";
 import { RotatingLines } from "react-loader-spinner";
 import CommentSection from "./Components/Post/CommentSection";
 import CommentItem from "./Components/Post/CommentItem";
-import { useAutoAnimate } from "@formkit/auto-animate/react";
+// import { useAutoAnimate } from "@formkit/auto-animate/react";
 
 const Post = () => {
   const { post_id } = useParams();
@@ -15,7 +15,7 @@ const Post = () => {
   const commentResponse = useGetComments(post_id || "");
   const commentData = commentResponse.data?.data as CommentResponse[];
 
-  const [parent] = useAutoAnimate();
+  // const [parent] = useAutoAnimate();
 
   useEffect(() => {
     window.scrollTo({
@@ -39,10 +39,7 @@ const Post = () => {
     );
 
   return (
-    <div
-      className="w-full lg:w-[60vw] border rounded-xl shadow-xl mb-20"
-      ref={parent}
-    >
+    <div className="w-full lg:w-[60vw] border rounded-xl shadow-xl mb-20">
       <Link to={"/"} className="lg:hidden">
         <button className="ml-5 text-3xl">{"<-"}</button>
       </Link>

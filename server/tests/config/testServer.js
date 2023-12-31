@@ -2,6 +2,7 @@ const express = require("express");
 require("../../models/User");
 const post = require("../../routes/post");
 const users = require("../../routes/user");
+const relationship = require("../../routes/relationship");
 const session = require("express-session");
 const app = express();
 require("dotenv").config();
@@ -26,5 +27,6 @@ app.use(passport.session());
 
 app.use("/post", post);
 app.use("/auth", users);
+app.use("/relationship", relationship);
 
 module.exports = app;

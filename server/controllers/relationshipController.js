@@ -1,11 +1,12 @@
 const mongoose = require("mongoose");
 const Relationship = require("../models/Relationship");
+const Post = require("../models/Post");
 
 const isError = (res, error) => {
   if (error instanceof mongoose.Error.ValidationError) {
     res.status(400).json({ error: error.message });
   } else if (error instanceof mongoose.Error.CastError) {
-    res.status(400).json({ error: "Invalid parameters" });
+    res.status(400).json({ error: error.message });
   } else {
     res.status(500).json({ error: error.message });
   }
@@ -59,6 +60,19 @@ exports.following = async (req, res) => {
     const { user_id } = req.params;
     const following = await Relationship.find({ follower: user_id });
     res.status(200).send(following);
+  } catch (error) {
+    isError(res, error);
+  }
+};
+
+exports.following_posts = async (req, res) => {
+  try {
+    const { user_id } = req.params;
+    const following = await Relationship.find({ follower: user_id });
+    if (!following.length) return res.send({ message: "Not following anyone" });
+    const followingIds = following.map((user) => user.following);
+    const posts = await Post.find({ author_id: { $in: [...followingIds] } });
+    res.send(posts);
   } catch (error) {
     isError(res, error);
   }

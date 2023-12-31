@@ -9,6 +9,9 @@ router.post("/follow", checkAuthenticated, relationshipController.follow);
 //Get list of following users
 router.get("/:user_id", relationshipController.following);
 
+//Gets list of posts from following users
+router.get("/post/:user_id", relationshipController.following_posts);
+
 //Gets current relationship with user
 router.get(
   "/:follower/:following",

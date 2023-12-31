@@ -205,6 +205,18 @@ it("List all people the user is following", async () => {
   expect(res.statusCode).toBe(200);
 });
 
+it("Gets as list of posts from following users", async () => {
+  const res = await user.get(`/relationship/post/${usersId[0]}`);
+  expect(res.body.length).toBeGreaterThanOrEqual(2);
+  expect(res.statusCode).toBe(200);
+});
+
+it("Gets a warning that the user is not following anyone", async () => {
+  const res = await user.get(`/relationship/post/${usersId[5]}`);
+  expect(res.body).toHaveProperty("message");
+  expect(res.statusCode).toBe(200);
+});
+
 it("Unfollows a user", async () => {
   const res = await user.delete(`/relationship/${usersId[0]}/${usersId[1]}`);
   console.log(res.body);

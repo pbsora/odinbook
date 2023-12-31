@@ -48,7 +48,7 @@ const Profile = ({ user, relationship }: Props) => {
 
   if (!user)
     return (
-      <div className="w-screen lg:w-[60vw] h-[55vh] flex  justify-center items-center border-b-2 border-zinc-400 lg:border lg:rounded-xl  relative">
+      <div className="w-screen lg:w-[60vw] h-[55vh] flex  justify-center items-center  border-zinc-400  lg:rounded-xl  relative">
         <RotatingLines width="40" strokeColor="blue" />
       </div>
     );
@@ -92,8 +92,12 @@ const Profile = ({ user, relationship }: Props) => {
         {!ownProfile && (
           <div className="flex justify-end w-2/4 pr-10">
             <button
-              className="px-6 transition-all duration-1000 bg-sky-500 rounded-xl"
+              className={`px-6 transition-all duration-1000 bg-sky-500 rounded-xl ${
+                followMutation.isPending ||
+                (unfollowMutation.isPending && "cursor-not-allowed")
+              }`}
               onClick={handleFollow}
+              disabled={followMutation.isPending || unfollowMutation.isPending}
             >
               {following ? "Already following" : "Follow"}
             </button>

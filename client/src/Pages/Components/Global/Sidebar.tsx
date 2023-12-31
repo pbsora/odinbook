@@ -25,7 +25,7 @@ const Sidebar = ({ open, setOpen }: Props) => {
         </span>
       </Link>
       <Link
-        to={"/posts"}
+        to={"/discover"}
         className="flex items-center gap-4 text-5xl duration-200 cursor-pointer lg:text-4xl hover:text-zinc-500"
         onClick={() => setOpen(false)}
       >

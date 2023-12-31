@@ -1,6 +1,6 @@
 import Profile from "./Components/Profile/Profile";
 import { useLoaderData } from "react-router-dom";
-import { useFetchPosts } from "../lib/Queries/Queries";
+import { useFetchPosts } from "../lib/Queries/PostQueries";
 import { AuthData, PostResponse, UserType } from "../assets/Types & Interfaces";
 import Timeline from "./Components/Feed/Timeline";
 import { useContext, useEffect, useRef, useState } from "react";

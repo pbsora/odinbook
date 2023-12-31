@@ -3,7 +3,7 @@ import { UserContext } from "../lib/Context/UserContext";
 import { AuthData, PostResponse } from "../assets/Types & Interfaces";
 import Profile from "./Components/Profile/Profile";
 import Timeline from "./Components/Feed/Timeline";
-import { useFetchPosts } from "../lib/Queries/Queries";
+import { useFetchPosts } from "../lib/Queries/PostQueries";
 import { motion } from "framer-motion";
 
 const OwnProfile = () => {

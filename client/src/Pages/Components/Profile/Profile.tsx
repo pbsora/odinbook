@@ -48,13 +48,13 @@ const Profile = ({ user, relationship }: Props) => {
 
   if (!user)
     return (
-      <div className="w-screen lg:w-[60vw] h-[55vh] flex  justify-center items-center  border-zinc-400  lg:rounded-xl  relative">
+      <div className="w-screen lg:w-[60vw] h-[55vh] flex  justify-center items-center  border-zinc-400  lg:rounded-xl relative">
         <RotatingLines width="40" strokeColor="blue" />
       </div>
     );
 
   return (
-    <div className="w-full h-[55vh] flex flex-col justify-around border-b-2 border-zinc-400 lg:border lg:rounded-xl  relative">
+    <div className="w-full h-[55vh] flex flex-col justify-around border-b-2 border-zinc-400 lg:border lg:rounded-xl  shadow-xl relative">
       {ownProfile && (
         <div className="absolute text-4xl duration-200 cursor-pointer right-10 top-7 hover:scale-125">
           <CiEdit />

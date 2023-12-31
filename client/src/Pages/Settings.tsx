@@ -1,4 +1,4 @@
 const Settings = () => {
-  return <div className="h-screen -z-50">Settings</div>;
+  return <div className="w-full 2xl:max-w-[55vw] border">Settings</div>;
 };
 export default Settings;

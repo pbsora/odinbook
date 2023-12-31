@@ -1,15 +1,13 @@
-import { useContext, useEffect, useState } from "react";
-import { AuthData, PostResponse } from "../assets/Types & Interfaces";
-import { useFollowingPosts } from "../lib/Queries/PostQueries";
+import { useEffect, useState } from "react";
+import { PostResponse } from "../assets/Types & Interfaces";
+import { useFetchPosts } from "../lib/Queries/PostQueries";
 import NewPost from "./Components/Feed/NewPost";
 import Timeline from "./Components/Feed/Timeline";
 import { useTab } from "./Home";
 import { motion } from "framer-motion";
-import { UserContext } from "@/lib/Context/UserContext";
 
-const Feed = () => {
-  const [, user] = useContext(UserContext) as AuthData;
-  const posts: PostResponse[] = useFollowingPosts(user._id).data?.data;
+const Discover = () => {
+  const posts: PostResponse[] = useFetchPosts().data?.data;
   const [allPosts, setAllPosts] = useState<PostResponse[] | null>(null);
   const { open } = useTab();
 
@@ -29,4 +27,4 @@ const Feed = () => {
     </motion.div>
   );
 };
-export default Feed;
+export default Discover;

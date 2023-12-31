@@ -17,6 +17,7 @@ import OwnProfile from "./Pages/OwnProfile.tsx";
 import UserProfile from "./Pages/UserProfile.tsx";
 import NotFound from "./Pages/NotFound.tsx";
 import Post from "./Pages/Post.tsx";
+import Discover from "./Pages/Discover.tsx";
 
 const queryClient = new QueryClient();
 
@@ -28,6 +29,7 @@ const router = createBrowserRouter([
     errorElement: <NotFound />,
     children: [
       { path: "/", element: <Feed /> },
+      { path: "/discover", element: <Discover /> },
       {
         path: "/u/settings",
         element: <Settings />,

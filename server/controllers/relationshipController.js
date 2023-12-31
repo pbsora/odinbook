@@ -11,9 +11,23 @@ const isError = (res, error) => {
   }
 };
 
+exports.get_relationship = async (req, res) => {
+  try {
+    const { follower, following } = req.params;
+    const relationship = await Relationship.findOne({ follower, following });
+    if (!relationship) res.send(false);
+    else res.send(true);
+  } catch (error) {
+    isError(res, error);
+  }
+};
+
 exports.follow = async (req, res) => {
   try {
     const { follower, following } = req.body;
+    if (follower === following)
+      return res.status(400).send({ error: "Already following" });
+
     const relationshipExist = await Relationship.findOne({
       follower,
       following,

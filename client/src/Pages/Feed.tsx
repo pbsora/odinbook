@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { PostResponse } from "../assets/Types & Interfaces";
-import { useFetchPosts } from "../lib/Queries";
+import { useFetchPosts } from "../lib/Queries/Queries";
 import NewPost from "./Components/Feed/NewPost";
 import Timeline from "./Components/Feed/Timeline";
 import { useTab } from "./Home";

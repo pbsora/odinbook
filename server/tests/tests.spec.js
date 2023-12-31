@@ -162,12 +162,25 @@ it("Gives a list of comments for a post", async () => {
   expect(res.statusCode).toBe(200);
 });
 
-it("Follows another user", async () => {
+it("Follows user", async () => {
   const res = await user
     .post(`/relationship/follow`)
     .send({ follower: usersId[0], following: usersId[1] });
   expect(res.body).toHaveProperty("follower");
   expect(res.statusCode).toBe(201);
+});
+
+it("Gets current relationship", async () => {
+  const res = await user.get(`/relationship/${usersId[0]}/${usersId[1]}`);
+  expect(res.body).toBe(true);
+  expect(res.status).toBe(200);
+});
+
+it("Rejects follow to itself", async () => {
+  await user
+    .post(`/relationship/follow`)
+    .send({ follower: usersId[0], following: usersId[0] })
+    .expect(400);
 });
 
 it("Rejects following if already following", async () => {

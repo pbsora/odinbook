@@ -13,7 +13,7 @@ import {
   useDeletePost,
   useLikePost,
   useUnlikePost,
-} from "../../../lib/Queries";
+} from "../../../lib/Queries/Queries";
 import { DateTime } from "ts-luxon";
 
 type Props = {

@@ -21,7 +21,7 @@ const Home = () => {
           } overflow-x-hidden lg:overflow-visible font-inter`}
         >
           <Header open={open} setOpen={setOpen} />
-          <div className="relative flex w-full gap-5 m-auto  lg:mt-12 lg:w-[90vw] 2xl:w-3/4 ">
+          <div className="relative flex w-full gap-5 m-auto lg:mt-12 lg:w-[90vw] 2xl:w-3/4 ">
             <Sidebar open={open} setOpen={setOpen} />
             <Outlet context={{ open } satisfies OutletContext} />
           </div>

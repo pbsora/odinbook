@@ -1,7 +1,7 @@
 import { FormEvent, useContext, useState } from "react";
 import { UserContext } from "../../../lib/Context/UserContext";
 import { AuthData } from "../../../assets/Types & Interfaces";
-import { useComment } from "../../../lib/Queries";
+import { useComment } from "../../../lib/Queries/Queries";
 import { useToast } from "../ui/use-toast";
 import { UseQueryResult } from "@tanstack/react-query";
 import { AxiosResponse } from "axios";
@@ -31,7 +31,7 @@ const CommentSection = ({ post_id, commentResponse }: Props) => {
     }, 0);
     setTimeout(() => {
       commentResponse.refetch();
-    }, 1000);
+    }, 100);
   };
 
   return (

@@ -1,12 +1,12 @@
 import { Link, useParams } from "react-router-dom";
 import { Fragment, useEffect } from "react";
 import PostDetails from "./Components/Post/PostDetails";
-import { useGetComments, useGetPostDetails } from "../lib/Queries";
+import { useGetComments, useGetPostDetails } from "../lib/Queries/Queries";
 import { CommentResponse, PostResponse } from "../assets/Types & Interfaces";
 import { RotatingLines } from "react-loader-spinner";
 import CommentSection from "./Components/Post/CommentSection";
 import CommentItem from "./Components/Post/CommentItem";
-// import { useAutoAnimate } from "@formkit/auto-animate/react";
+import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { motion } from "framer-motion";
 
 const Post = () => {
@@ -16,7 +16,7 @@ const Post = () => {
   const commentResponse = useGetComments(post_id || "");
   const commentData = commentResponse.data?.data as CommentResponse[];
 
-  // const [parent] = useAutoAnimate();
+  const [parent] = useAutoAnimate();
 
   useEffect(() => {
     window.scrollTo({
@@ -41,10 +41,10 @@ const Post = () => {
 
   return (
     <motion.div
-      className="w-full lg:w-[60vw] border rounded-xl shadow-xl mb-20"
+      className="w-full lg:w-[55vw] border rounded-xl shadow-xl mb-20"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      transition={{ duration: 0.7 }}
+      transition={{ duration: 1 }}
     >
       <Link to={"/"} className="lg:hidden">
         <button className="ml-5 text-3xl">{"<-"}</button>
@@ -56,16 +56,18 @@ const Post = () => {
         commentResponse={commentResponse}
       />
       <div className="w-[90%]  mt-6 px-4 m-auto border-b-2 border-zinc-700"></div>
-      {commentData
-        ? commentData.map((comment) => (
-            <Fragment key={comment._id}>
-              <CommentItem
-                comment={comment}
-                commentResponse={commentResponse}
-              />
-            </Fragment>
-          ))
-        : "Loading comments"}
+      <div ref={parent}>
+        {commentData
+          ? commentData.map((comment) => (
+              <Fragment key={comment._id}>
+                <CommentItem
+                  comment={comment}
+                  commentResponse={commentResponse}
+                />
+              </Fragment>
+            ))
+          : "Loading comments"}
+      </div>
     </motion.div>
   );
 };

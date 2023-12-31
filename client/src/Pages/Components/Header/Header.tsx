@@ -50,7 +50,7 @@ const Header = ({ open, setOpen }: Props) => {
             alt="user picture"
             className="h-12  border-[2px] border-black rounded-full cursor-pointer justify-self-end transition-transform duration-200"
           />
-          <UserCard user={user} />
+          <UserCard user={user} nav={nav} />
         </div>
       </nav>
     </header>

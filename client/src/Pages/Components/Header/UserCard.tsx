@@ -6,8 +6,9 @@ import { BiLogOut } from "react-icons/bi";
 
 type Props = {
   user: UserType;
+  nav: boolean;
 };
-const UserCard = ({ user }: Props) => {
+const UserCard = ({ user, nav }: Props) => {
   const navigate = useNavigate();
   const handleLogout = async () => {
     const { status } = await API.post("/auth/log-out");
@@ -16,7 +17,11 @@ const UserCard = ({ user }: Props) => {
   };
 
   return (
-    <div className="absolute right-[-20px] flex flex-col items-center gap-1 p-4 lg:p-12 border-2 lg:top-[4.1rem] top-[3.5rem] border-zinc-300 rounded-xl scale-0 bg-black group-hover:scale-100 transition-all duration-200 origin-top">
+    <div
+      className={` ${
+        nav ? "lg:top-[2.4rem]" : "lg:top-[4.1rem]"
+      } absolute right-[-20px] flex flex-col items-center gap-1 p-4 lg:p-12 border-2  top-[3.5rem] border-zinc-300 rounded-xl scale-0 bg-black group-hover:scale-100 transition-all duration-200 origin-top`}
+    >
       <img
         src={user.image}
         alt="user image"

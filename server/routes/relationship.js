@@ -9,6 +9,13 @@ router.post("/follow", checkAuthenticated, relationshipController.follow);
 //Get list of following users
 router.get("/:user_id", relationshipController.following);
 
+//Gets current relationship with user
+router.get(
+  "/:follower/:following",
+  checkAuthenticated,
+  relationshipController.get_relationship
+);
+
 //Unfollow a user
 router.delete(
   "/:follower/:following",

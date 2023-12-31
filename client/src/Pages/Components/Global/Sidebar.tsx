@@ -12,7 +12,7 @@ const Sidebar = ({ open, setOpen }: Props) => {
     <aside
       className={`fixed top-10 lg:absolute lg:top-[8rem] ${
         open ? "left-0 blur-0" : "left-[-110vw] blur-lg"
-      }  w-screen py-24 -none px-8 h-screen bg-white gap-8 border-t filter flex flex-col items-center lg:items-baseline z-40 lg:h-[35vh] lg:sticky lg:top-28 lg:blur-none shadow-xl lg:w-[30vw] xl:w-[20vw] lg:border border-zinc-400 lg:rounded-xl transition-all duration-500 ease-in-out`}
+      }  w-screen  -none px-8 h-screen bg-white gap-8 border-t filter flex justify-center flex-col items-center lg:items-baseline z-40 lg:h-[35vh] lg:sticky lg:top-28 lg:blur-none shadow-xl lg:w-[30vw] xl:max-w-[20vw] lg:border border-zinc-400 lg:rounded-xl transition-all duration-500 ease-in-out`}
     >
       <Link
         to={"/"}

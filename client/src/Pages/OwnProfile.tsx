@@ -3,7 +3,8 @@ import { UserContext } from "../lib/Context/UserContext";
 import { AuthData, PostResponse } from "../assets/Types & Interfaces";
 import Profile from "./Components/Profile/Profile";
 import Timeline from "./Components/Feed/Timeline";
-import { useFetchPosts } from "../lib/Queries";
+import { useFetchPosts } from "../lib/Queries/Queries";
+import { motion } from "framer-motion";
 
 const OwnProfile = () => {
   const [profilePosts, setProfilePosts] = useState<PostResponse[] | null>(null);
@@ -23,12 +24,17 @@ const OwnProfile = () => {
   }, [posts]);
 
   return (
-    <div className="w-full 2xl:max-w-[55vw]">
+    <motion.div
+      className="w-full 2xl:max-w-[55vw]"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+    >
       <section ref={profileRef}>
         <Profile user={user} />
       </section>
       <Timeline posts={profilePosts} setAllPosts={setProfilePosts} />
-    </div>
+    </motion.div>
   );
 };
 export default OwnProfile;

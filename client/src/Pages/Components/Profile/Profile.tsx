@@ -1,14 +1,51 @@
 import { capitalize } from "../../../utils/capitalize";
-import { UserType } from "../../../assets/Types & Interfaces";
+import { AuthData, UserType } from "../../../assets/Types & Interfaces";
 import { CiEdit } from "react-icons/ci";
 import { DateTime } from "ts-luxon";
 import { RotatingLines } from "react-loader-spinner";
+import { useFollow, useUnfollow } from "../../../lib/Queries/userQueries";
+import { UserContext } from "@/lib/Context/UserContext";
+import { useContext } from "react";
+import { toast } from "../ui/use-toast";
+import { UseQueryResult } from "@tanstack/react-query";
+import { AxiosResponse } from "axios";
 
 type Props = {
   user: UserType;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  relationship?: UseQueryResult<AxiosResponse<any, any>, Error>;
 };
 
-const Profile = ({ user }: Props) => {
+const Profile = ({ user, relationship }: Props) => {
+  const [, currentUser] = useContext(UserContext) as AuthData;
+  const ownProfile = user._id === currentUser._id;
+  const following = relationship && relationship?.data?.data;
+
+  const followMutation = useFollow(currentUser._id, user._id);
+  const unfollowMutation = useUnfollow(currentUser._id, user._id);
+
+  const handleFollow = () => {
+    if (following) {
+      unfollowMutation.mutate();
+      toast({
+        title: "Success",
+        description: "Unfollowed with success",
+      });
+      setTimeout(() => {
+        relationship.refetch();
+      }, 1000);
+    } else {
+      followMutation.mutate();
+      toast({
+        title: "Success",
+        description: "Followed with success",
+      });
+      setTimeout(() => {
+        relationship?.refetch();
+      }, 1000);
+    }
+  };
+
   if (!user)
     return (
       <div className="w-screen lg:w-[60vw] h-[55vh] flex  justify-center items-center border-b-2 border-zinc-400 lg:border lg:rounded-xl  relative">
@@ -18,20 +55,21 @@ const Profile = ({ user }: Props) => {
 
   return (
     <div className="w-full h-[55vh] flex flex-col justify-around border-b-2 border-zinc-400 lg:border lg:rounded-xl  relative">
-      <div className="absolute text-4xl duration-200 cursor-pointer right-10 top-7 hover:scale-125">
-        <CiEdit />
-      </div>
+      {ownProfile && (
+        <div className="absolute text-4xl duration-200 cursor-pointer right-10 top-7 hover:scale-125">
+          <CiEdit />
+        </div>
+      )}
       <section className="flex flex-col items-center gap-3">
-        <figure>
-          <img
-            src={user?.image}
-            alt="User picture"
-            className="h-32 border-2 rounded-full"
-          />
-          <figcaption className="text-2xl text-center">{`${capitalize(
-            user?.firstName
-          )} ${capitalize(user?.lastName)}`}</figcaption>
-        </figure>
+        <img
+          src={user?.image}
+          alt="User picture"
+          className="h-32 border-2 rounded-full"
+        />
+        <figcaption className="text-2xl text-center">{`${capitalize(
+          user?.firstName
+        )} ${capitalize(user?.lastName)}`}</figcaption>
+
         <p className="w-2/4">
           Lorem ipsum dolor sit amet, consectetur adipisicing elit. Hic dolor
           dicta non nobis error a quisquam quidem voluptas. Nam magni itaque in
@@ -51,9 +89,16 @@ const Profile = ({ user }: Props) => {
               ).toLocaleString(DateTime.DATE_SHORT)}
           </p>
         </div>
-        <div className="flex justify-end w-2/4 pr-10">
-          <button className="px-6 bg-sky-500 rounded-xl">Follow</button>
-        </div>
+        {!ownProfile && (
+          <div className="flex justify-end w-2/4 pr-10">
+            <button
+              className="px-6 transition-all duration-1000 bg-sky-500 rounded-xl"
+              onClick={handleFollow}
+            >
+              {following ? "Already following" : "Follow"}
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

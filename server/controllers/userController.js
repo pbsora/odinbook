@@ -98,10 +98,10 @@ exports.get_user = async (req, res) => {
 
 //auth
 exports.auth = (req, res) => {
-  res.cookie("teste", "randomstuff", {
-    maxAge: 24 * 60 * 60 * 1000 * 7,
-    httpOnly: true,
-  });
+  // res.cookie("teste", "randomstuff", {
+  //   maxAge: 24 * 60 * 60 * 1000 * 7,
+  //   httpOnly: true,
+  // });
   res.send([req.isAuthenticated(), req.user]);
 };
 

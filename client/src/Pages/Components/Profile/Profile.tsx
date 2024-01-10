@@ -55,7 +55,7 @@ const Profile = ({ user, relationship }: Props) => {
     );
 
   return (
-    <div className="w-full h-[55vh] flex flex-col justify-around border-b-2 border-zinc-400 lg:border lg:rounded-xl md:mt-6  shadow-xl relative mb-5 bg-zinc-50">
+    <div className=" w-[95%] md:w-[75%] lg:w-[85%] m-auto h-[55vh] flex flex-col justify-around border-b-2 border-zinc-400 lg:border lg:rounded-xl md:mt-6  shadow-xl relative mb-5 bg-zinc-50">
       {ownProfile && (
         <Link
           to={"/u/settings"}

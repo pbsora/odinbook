@@ -2,7 +2,18 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const User = new Schema({
-  username: { type: String, required: true },
+  username: {
+    type: String,
+    required: true,
+    validate: {
+      validator: function (value) {
+        return /^[a-zA-Z0-9]+$/.test(value);
+      },
+      message: function (props) {
+        return `${props.value} is not a valid username!`;
+      },
+    },
+  },
   password: String,
   email: { type: String, required: true, unique: true, minLength: 8 },
   firstName: { type: String, required: true, minLength: 2 },

@@ -6,9 +6,7 @@ import { FaCommentAlt } from "react-icons/fa";
 import { HiDotsHorizontal } from "react-icons/hi";
 import { useState, useContext, useEffect } from "react";
 import { UserContext } from "../../../lib/Context/UserContext";
-import { MdDeleteOutline } from "react-icons/md";
-import { FaShare } from "react-icons/fa";
-import { CiBookmark } from "react-icons/ci";
+
 import {
   useDeletePost,
   useLikePost,
@@ -57,7 +55,7 @@ const PostItem = ({ post, deletePost }: Props) => {
   return (
     <div
       key={post._id}
-      className={`first:mt-0 mt-5 w-[95%] md:w-[90%] border m-auto h-fit flex flex-col rounded-xl shadow-xl bg-zinc-50`}
+      className={`first:mt-0 mt-5 w-[95%] md:w-[75%] lg:w-[85%] border m-auto h-fit flex flex-col rounded-xl border-zinc-400 dark:bg-darkSecondary dark:border-zinc-500`}
     >
       <div className="flex items-center gap-6 py-3 pl-6 text-2xl">
         <img

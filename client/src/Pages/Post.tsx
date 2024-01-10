@@ -41,7 +41,7 @@ const Post = () => {
 
   return (
     <motion.div
-      className="w-full lg:w-[55vw] border rounded-xl shadow-xl mb-20 bg-zinc-50 lg:mt-6"
+      className="w-full lg:w-[55vw] border rounded-xl shadow-xl mb-20 h-fit bg-zinc-50 dark:bg-darkSecondary lg:mt-6"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 1 }}
@@ -55,17 +55,14 @@ const Post = () => {
         post_id={postData._id}
         commentResponse={commentResponse}
       />
-
-      {commentData && (
-        <div
-          className={`w-[90%] mt-6 px-4 m-auto ${
-            commentData.length && "border-b-2"
-          } border-zinc-700 `}
-        ></div>
-      )}
+      <hr
+        className={`w-[90%] mt-6 px-4 m-auto 
+          border-b-2
+         border-zinc-700 `}
+      />
 
       <div ref={parent}>
-        {commentData
+        {commentData && commentData.length
           ? commentData.map((comment) => (
               <Fragment key={comment._id}>
                 <CommentItem
@@ -74,7 +71,7 @@ const Post = () => {
                 />
               </Fragment>
             ))
-          : "Loading comments"}
+          : ""}
       </div>
     </motion.div>
   );

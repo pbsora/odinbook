@@ -53,13 +53,13 @@ const Header = ({ open, setOpen }: Props) => {
         } bg-zinc-100 dark:bg-darkSecondary dark:text-zinc-200 border-zinc-400 dark:border-transparent`}
       >
         <div
-          className={`text-[2rem] flex justify-center items-center cursor-pointer lg:hidden lg:pointer-events-none hover:scale-125 duration-200`}
+          className={`text-[2rem]  flex justify-center items-center cursor-pointer lg:hidden lg:pointer-events-none hover:scale-110 duration-200`}
           onClick={() => setOpen(!open)}
         >
           <Hamburger toggled={open} toggle={setOpen} />
         </div>
         <div
-          className="flex items-center text-4xl hover:scale-110 dark:text-white"
+          className="items-center hidden text-4xl hover:scale-110 dark:text-white md:flex"
           onClick={handleTheme}
         >
           {currTheme === "dark" ? <LuMoonStar /> : <IoIosSunny />}

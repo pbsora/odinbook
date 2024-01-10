@@ -41,7 +41,7 @@ const Post = () => {
 
   return (
     <motion.div
-      className="w-full lg:w-[55vw] border rounded-xl shadow-xl mb-20 h-fit bg-zinc-50 dark:bg-darkSecondary lg:mt-6"
+      className="w-full lg:w-[55vw] border rounded-xl shadow-xl mb-20 h-fit bg-zinc-50 dark:bg-darkSecondary lg:mt-6 "
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 1 }}
@@ -50,16 +50,18 @@ const Post = () => {
         <button className="ml-5 text-3xl">{"<-"}</button>
       </Link>
       <PostDetails post={postData} commentCount={commentData?.length} />
-      <div className="w-[90%] mt-6 px-4 m-auto border-b-2 border-zinc-700"></div>
+      <hr className="w-[90%] mt-6 px-4 m-auto border-b-2 border-zinc-700" />
       <CommentSection
         post_id={postData._id}
         commentResponse={commentResponse}
       />
-      <hr
-        className={`w-[90%] mt-6 px-4 m-auto 
+      {!!commentData.length && (
+        <hr
+          className={`w-[90%] mt-6 px-4 m-auto 
           border-b-2
          border-zinc-700 `}
-      />
+        />
+      )}
 
       <div ref={parent}>
         {commentData && commentData.length

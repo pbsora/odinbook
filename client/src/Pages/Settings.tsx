@@ -1,6 +1,6 @@
 const Settings = () => {
   return (
-    <div className="w-full 2xl:max-w-[55vw] border-2 rounded-xl pb-28 px-12 flex flex-col gap-12 shadow-xl bg-zinc-50 border-zinc-400 p-6">
+    <div className="w-full 2xl:max-w-[55vw] border-2 rounded-xl pb-28 px-12 flex flex-col gap-12 shadow-xl bg-zinc-50 dark:bg-darkSecondary mt-6 border-zinc-400 p-6">
       <h1 className="text-4xl">Settings</h1>
       <section className="text-2xl">Profile picture</section>
 

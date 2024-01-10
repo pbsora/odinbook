@@ -11,7 +11,7 @@ const PostDialog = ({ ownPost, handleDelete }: Props) => {
     <div
       className={`
                 scale-0 group-hover:scale-100
-              min-w-[9rem] divide-y-2 px-6 border border-white w-fit  absolute bg-zinc-100 flex flex-col -translate-x-32 lg:translate-x-0 xl:translate-x-4 transition-all duration-200 ease-out origin-top-right lg:origin-top-left rounded-xl z-30`}
+              min-w-[9rem] divide-y-2 px-6 border border-white w-fit  absolute bg-zinc-100 dark:bg-darkSecondary flex flex-col -translate-x-32 lg:translate-x-0 xl:translate-x-4 transition-all duration-200 ease-out origin-top-right lg:origin-top-left rounded-xl z-30`}
     >
       {ownPost() && (
         <button

@@ -35,14 +35,14 @@ const CommentSection = ({ post_id, commentResponse }: Props) => {
   };
 
   return (
-    <div className="flex justify-center w-full mt-6 h-fit">
+    <div className="flex justify-center w-full mt-6 mb-3 h-fit">
       <form action="" className="w-[90%] h-fit" onSubmit={handleNewComment}>
         <textarea
           name="comment"
           cols={30}
           rows={4}
           placeholder="Got something cool to add?"
-          className="w-full p-4 text-xl border-2 resize-none rounded-xl border-zinc-400"
+          className="w-full p-4 text-xl border-2 resize-none rounded-xl border-zinc-400 dark:bg-zinc-800"
           onChange={(e) => setComment(e.target.value)}
           maxLength={160}
           value={comment}

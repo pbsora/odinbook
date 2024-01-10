@@ -42,14 +42,14 @@ const NewPost = ({ setAllPosts }: Props) => {
 
   return (
     <div
-      className={`w-full md:w-[75%] lg:w-[85%] m-auto border-b lg:border border-zinc-400 lg:rounded-xl min-h-[25vh] py-4 shadow-xl mb-5 dark:bg-darkSecondary dark:text-slate-300`}
+      className={`w-full md:w-[75%] lg:w-[85%] m-auto border-b lg:border border-zinc-400 dark:border-zinc-700 lg:rounded-xl min-h-[25vh] py-4 shadow-xl mb-5 dark:bg-darkSecondary dark:text-slate-300`}
     >
       <form className=" w-[90vw] md:w-[80%] m-auto" onSubmit={handleNewPost}>
         <textarea
           name="post"
           cols={50}
           rows={5}
-          className={`block w-full border-zinc-400 p-3 text-xl border-[3px] resize-none rounded-xl group dark:bg-zinc-900 dark:border-zinc-700 dark:border`}
+          className={`block w-full border-zinc-400 p-3 text-xl border-[3px] resize-none rounded-xl group dark:bg-zinc-800 dark:border-zinc-700 dark:border`}
           minLength={6}
           maxLength={320}
           onChange={handleChange}

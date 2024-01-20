@@ -13,6 +13,7 @@ type Props = {
 const NewPost = ({ setAllPosts }: Props) => {
   const [post, setPost] = useState("");
   const [, user] = useContext(UserContext) as AuthData;
+  const [image, setImage] = useState<File | null>(null);
 
   const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setPost(e.target.value);
@@ -41,13 +42,34 @@ const NewPost = ({ setAllPosts }: Props) => {
     newPostMutation.mutate();
   };
 
-  const handleImage = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleImage = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (image) {
+      const formData = new FormData();
+      formData.append("image", image);
+
+      try {
+        const { data } = await API.post("/post/image", formData);
+        console.log(data);
+      } catch (error) {
+        console.error("Error uploading image:", error);
+      }
+    } else {
+      // Handle the case where image is null (optional)
+      console.warn("No image selected");
+    }
+  };
+
+  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      setImage(e.target.files[0]);
+    }
   };
 
   return (
     <div
-      className={`w-full md:w-[75%] lg:w-[85%] m-auto border-b lg:border border-zinc-300 dark:border-zinc-700 lg:rounded-xl min-h-[25vh] py-4 shadow-xl mb-5 dark:bg-darkSecondary bg-zinc-50 dark:text-slate-300`}
+      className={`w-full md:w-[75%]  lg:w-[60%]  xl:w-[60%] 2xl:w-[85%] m-auto border-b lg:border border-zinc-300 dark:border-zinc-700 lg:rounded-xl min-h-[25vh] py-4 shadow-xl mb-5 dark:bg-darkSecondary bg-zinc-50 dark:text-slate-300`}
     >
       <form className=" w-[90vw] md:w-[80%] m-auto" onSubmit={handleNewPost}>
         <textarea
@@ -88,7 +110,7 @@ const NewPost = ({ setAllPosts }: Props) => {
       </form>
       <form action="" onSubmit={handleImage}>
         <div className="flex items-center space-x-6">
-          <input type="file" name="" id="" />
+          <input type="file" name="" id="" onChange={handleFileChange} />
         </div>
         <button>Submit image</button>
       </form>

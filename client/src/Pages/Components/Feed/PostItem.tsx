@@ -55,7 +55,7 @@ const PostItem = ({ post, deletePost }: Props) => {
   return (
     <div
       key={post._id}
-      className={`first:mt-0 mt-5 w-[95%] md:w-[75%] lg:w-[85%] border m-auto h-fit flex flex-col rounded-xl text-zinc-700 dark:text-white bg-neutral-50 border-zinc-300 dark:bg-darkSecondary dark:border-zinc-700 shadow-md duration-200 hover:shadow-xl`}
+      className={`first:mt-0 mt-5 w-[95%] md:w-[75%] lg:w-[60%] xl:w-[60%] 2xl:w-[85%] border m-auto h-fit flex flex-col rounded-xl text-zinc-700 dark:text-white bg-neutral-50 border-zinc-300 dark:bg-darkSecondary dark:border-zinc-700 shadow-md duration-200 hover:shadow-xl`}
     >
       <div className="flex items-center gap-6 py-3 pl-6 text-2xl">
         <img
@@ -81,12 +81,16 @@ const PostItem = ({ post, deletePost }: Props) => {
           ).toLocaleString(DateTime.DATE_SHORT)}
         </span>
       </div>
-      <div className="flex-1 p-6 text-lg md:text-xl">
+      <div className="flex-1 px-6 py-2 text-lg md:text-xl">
         <section>{post.content}</section>
         <img
-          src="https://images.unsplash.com/photo-1703587152450-e4534707e4a4?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-          alt=""
-          className="w-full md:w-[65%] m-auto mt-4 border rounded-xl"
+          src={
+            post.image
+              ? post.image
+              : "https://images.unsplash.com/photo-1703587152450-e4534707e4a4?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+          }
+          alt="post image"
+          className="w-[90%]  sm:w-[80%] md:w-[70%] lg:w-[65%]  xl:w-[60%] m-auto mt-4 border rounded-xl"
         />
       </div>
       <div className="flex justify-around p-4 lg:p-6 text-zinc-600 dark:text-white">

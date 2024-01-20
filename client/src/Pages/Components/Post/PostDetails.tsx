@@ -83,6 +83,15 @@ const PostDetails = ({ post, commentCount }: Props) => {
       </div>
       <div className="flex-1 p-6 text-xl">
         <section>{post.content}</section>
+        <img
+          src={
+            post.image
+              ? post.image
+              : "https://images.unsplash.com/photo-1703587152450-e4534707e4a4?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+          }
+          alt="post image"
+          className="w-full md:w-[70%] lg:w-[65%]  xl:w-[60%] m-auto mt-4 border rounded-xl"
+        />
       </div>
       <div className="flex justify-around p-4 lg:p-8">
         <button

@@ -45,11 +45,7 @@ const Header = ({ open, setOpen }: Props) => {
 
   return (
     <header className="sticky flex justify-center max-w-[100vw] h-20 m-auto z-50 text-zinc-800 dark:text-white">
-      <nav
-        className={`${
-          nav ? "full-navbar" : "navbar"
-        } bg-zinc-100 dark:bg-darkSecondary dark:text-zinc-200 border-zinc-200 dark:border-transparent`}
-      >
+      <nav className={`${nav ? "full-navbar" : "navbar"} `}>
         <div
           className={`flex justify-center items-center cursor-pointer lg:hidden lg:pointer-events-none hover:scale-110 duration-200`}
           onClick={() => setOpen(!open)}

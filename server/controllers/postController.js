@@ -21,8 +21,25 @@ exports.create_post = [
   body("content").trim(),
   async (req, res) => {
     const { author_id, content } = req.body;
+    let image;
+
+    if (req.file) {
+      await cloudinary.uploader.upload(req.file.path, (err, result) => {
+        if (err) {
+          fs.rmSync(req.file.path);
+          return res.status(500).json({
+            success: false,
+            message: "Error",
+          });
+        } else {
+          image = result.url;
+          fs.rmSync(req.file.path);
+        }
+      });
+    }
+
     try {
-      const newPost = new Post({ author_id, content });
+      const newPost = new Post({ author_id, content, image });
       await newPost.save();
       const post = await newPost.populate(
         "author_id",
@@ -34,21 +51,6 @@ exports.create_post = [
     }
   },
 ];
-
-exports.upload_image = (req, res) => {
-  cloudinary.uploader.upload(req.file.path, (err, result) => {
-    if (err) {
-      fs.rmSync(req.file.path);
-      res.status(500).json({
-        success: false,
-        message: "Error",
-      });
-    } else {
-      res.status(200).send(result);
-      fs.rmSync(req.file.path);
-    }
-  });
-};
 
 //Get all posts GET
 exports.get_all_posts = async (req, res) => {

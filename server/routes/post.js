@@ -8,10 +8,12 @@ const upload = require("../middleware/multer");
 router.get("/", postController.get_all_posts);
 
 //create post
-router.post("/new-post", checkAuthenticated, postController.create_post);
-
-//image test
-router.post("/image", upload.single("image"), postController.upload_image);
+router.post(
+  "/new-post",
+  checkAuthenticated,
+  upload.single("image"),
+  postController.create_post
+);
 
 //get a post
 router.get("/:post_id", postController.get_post);

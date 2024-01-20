@@ -14,7 +14,7 @@ const Timeline = ({ posts, setAllPosts }: Props) => {
 
   if (!posts)
     return (
-      <div className="flex justify-center mt-10 border">
+      <div className="flex justify-center h-screen mt-10 ">
         <RotatingLines strokeColor="blue" width="60" />
       </div>
     );

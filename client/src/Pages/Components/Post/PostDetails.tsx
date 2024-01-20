@@ -69,7 +69,7 @@ const PostDetails = ({ post, commentCount }: Props) => {
               ? "/u/profile"
               : `/u/${post.author_id.username}`
           }
-          className="text-2xl transition-all duration-400 hover:border-b hover:border-zinc-400"
+          className="text-xl transition-all duration-400 hover:border-b hover:border-zinc-400"
         >
           {capitalize(post.author_id.username)}
         </Link>
@@ -81,12 +81,12 @@ const PostDetails = ({ post, commentCount }: Props) => {
           ).toLocaleString(DateTime.DATETIME_SHORT)}
         </span>
       </div>
-      <div className="flex-1 p-6 text-2xl">
+      <div className="flex-1 p-6 text-xl">
         <section>{post.content}</section>
       </div>
       <div className="flex justify-around p-4 lg:p-8">
         <button
-          className={`flex items-center gap-4 text-lg lg:text-2xl ${
+          className={`flex items-center gap-4 text-lg lg:text-xl ${
             likedPost && "text-sky-500"
           }`}
           disabled={likeMutation.isPending || unlikeMutation.isPending}
@@ -97,12 +97,12 @@ const PostDetails = ({ post, commentCount }: Props) => {
             ? post.likes.length + " Like"
             : post.likes.length + " Likes"}
         </button>
-        <span className="flex items-center gap-4 text-lg lg:text-2xl">
+        <span className="flex items-center gap-4 text-lg lg:text-xl">
           <FaCommentAlt />{" "}
           {commentCount ? commentCount + " Comments" : "0 Comments"}
         </span>
         <div className="relative group">
-          <button className="flex items-center text-3xl lg:text-4xl ">
+          <button className="flex items-center text-3xl lg:text-3xl ">
             <HiDotsHorizontal />
           </button>
           <PostDialog ownPost={ownPost} handleDelete={handleDelete} />

@@ -1,6 +1,8 @@
 const Post = require("../models/Post");
+const fs = require("fs");
 
 const mongoose = require("mongoose");
+const cloudinary = require("../config/cloudinary");
 
 const { body } = require("express-validator");
 
@@ -32,6 +34,21 @@ exports.create_post = [
     }
   },
 ];
+
+exports.upload_image = (req, res) => {
+  cloudinary.uploader.upload(req.file.path, (err, result) => {
+    if (err) {
+      fs.rmSync(req.file.path);
+      res.status(500).json({
+        success: false,
+        message: "Error",
+      });
+    } else {
+      res.status(200).send(result);
+      fs.rmSync(req.file.path);
+    }
+  });
+};
 
 //Get all posts GET
 exports.get_all_posts = async (req, res) => {

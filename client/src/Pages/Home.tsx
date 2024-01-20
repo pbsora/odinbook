@@ -20,8 +20,8 @@ const Home = () => {
           <main
             className={`${
               open && "overflow-y-hidden"
-            } overflow-x-hidden lg:overflow-visible font-inter dark:bg-darkPrimary
-             
+            } overflow-x-hidden lg:overflow-visible font-inter bg-slate-100 dark:bg-darkPrimary
+
             `}
           >
             <Header open={open} setOpen={setOpen} />

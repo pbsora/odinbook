@@ -2,12 +2,16 @@ const router = require("express").Router();
 const postController = require("../controllers/postController");
 const commentController = require("../controllers/commentController");
 const checkAuthenticated = require("../lib/authMiddleware");
+const upload = require("../middleware/multer");
 
 //get multiple posts
 router.get("/", postController.get_all_posts);
 
 //create post
 router.post("/new-post", checkAuthenticated, postController.create_post);
+
+//image test
+router.post("/image", upload.single("image"), postController.upload_image);
 
 //get a post
 router.get("/:post_id", postController.get_post);

@@ -34,14 +34,14 @@ const Post = () => {
 
   if (!postData)
     return (
-      <div className="h-[90vh] lg:h-[55vh] w-full lg:w-[60vw] grid place-content-center border rounded-xl">
+      <div className="h-[90vh] lg:h-[55vh] w-full lg:w-[60vw] grid place-content-center  border-zinc-400 ">
         <RotatingLines width="70" strokeColor="blue" />
       </div>
     );
 
   return (
     <motion.div
-      className="w-full lg:w-[55vw] border rounded-xl shadow-xl mb-20 h-fit bg-zinc-50 dark:bg-darkSecondary lg:mt-6 "
+      className="w-full lg:w-[55vw] border rounded-xl shadow-xl mb-60 h-fit bg-zinc-50 dark:border-zinc-700 dark:bg-darkSecondary lg:mt-6 "
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 1 }}
@@ -50,17 +50,19 @@ const Post = () => {
         <button className="ml-5 text-3xl">{"<-"}</button>
       </Link>
       <PostDetails post={postData} commentCount={commentData?.length} />
-      <hr className="w-[90%] mt-6 px-4 m-auto border-b-2 border-zinc-700" />
+      <hr className="w-[90%] mt-6 px-4 m-auto border-b-2 border-zinc-400" />
       <CommentSection
         post_id={postData._id}
         commentResponse={commentResponse}
       />
-      {!!commentData.length && (
+      {commentResponse.isSuccess && commentData.length !== 0 ? (
         <hr
           className={`w-[90%] mt-6 px-4 m-auto 
           border-b-2
          border-zinc-700 `}
         />
+      ) : (
+        ""
       )}
 
       <div ref={parent}>

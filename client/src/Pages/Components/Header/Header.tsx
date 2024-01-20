@@ -31,10 +31,8 @@ const Header = ({ open, setOpen }: Props) => {
     }
   }, 200);
 
-  const handleTheme = () => {
-    if (currTheme === "light") setTheme("dark");
-    else setTheme("light");
-  };
+  const handleTheme = () =>
+    currTheme === "light" ? setTheme("dark") : setTheme("light");
 
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
@@ -46,25 +44,25 @@ const Header = ({ open, setOpen }: Props) => {
   }, [handleScroll]);
 
   return (
-    <header className="sticky flex justify-center max-w-[100vw] h-20 m-auto z-50 ">
+    <header className="sticky flex justify-center max-w-[100vw] h-20 m-auto z-50 text-zinc-800 dark:text-white">
       <nav
         className={`${
           nav ? "full-navbar" : "navbar"
-        } bg-zinc-100 dark:bg-darkSecondary dark:text-zinc-200 border-zinc-400 dark:border-transparent`}
+        } bg-zinc-100 dark:bg-darkSecondary dark:text-zinc-200 border-zinc-200 dark:border-transparent`}
       >
         <div
-          className={`text-[2rem]  flex justify-center items-center cursor-pointer lg:hidden lg:pointer-events-none hover:scale-110 duration-200`}
+          className={`flex justify-center items-center cursor-pointer lg:hidden lg:pointer-events-none hover:scale-110 duration-200`}
           onClick={() => setOpen(!open)}
         >
           <Hamburger toggled={open} toggle={setOpen} />
         </div>
         <div
-          className="items-center hidden text-4xl hover:scale-110 dark:text-white md:flex"
+          className="items-center hidden text-3xl hover:scale-110 dark:text-white md:flex"
           onClick={handleTheme}
         >
           {currTheme === "dark" ? <LuMoonStar /> : <IoIosSunny />}
         </div>
-        <div className="items-center justify-center flex-1 hidden gap-12 pl-20 text-4xl lg:flex ">
+        <div className="items-center justify-center flex-1 hidden gap-12 pl-20 text-3xl lg:flex ">
           <Link
             to={"/"}
             className="transition-all duration-200 hover:scale-125"
@@ -78,8 +76,12 @@ const Header = ({ open, setOpen }: Props) => {
             <FaSignsPost />
           </Link>
         </div>
-        <div className="relative flex items-center gap-6 pl-12 pr-3 group">
-          <span className="text-2xl select-none">
+        <div
+          className={`relative flex items-center gap-6 pl-12 group ${
+            nav && "md:pb-10"
+          }`}
+        >
+          <span className="text-xl select-none">
             {capitalize(user.firstName)}
           </span>
           <img

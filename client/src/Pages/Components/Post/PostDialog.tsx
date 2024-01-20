@@ -15,18 +15,18 @@ const PostDialog = ({ ownPost, handleDelete }: Props) => {
     >
       {ownPost() && (
         <button
-          className="flex items-center justify-center gap-2 py-2 text-3xl hover:bg-red-700"
+          className="flex items-center justify-center gap-2 py-2 text-2xl hover:bg-red-700"
           onClick={handleDelete}
         >
           <MdDeleteOutline />
           <span className="text-2xl text-red-400">Delete</span>
         </button>
       )}
-      <button className="flex items-center justify-center gap-2 py-3 text-3xl">
+      <button className="flex items-center justify-center gap-2 py-3 text-2xl">
         <FaShare />
         <span className="text-2xl ">Share</span>
       </button>
-      <button className="flex items-center justify-center gap-2 py-2 text-3xl ">
+      <button className="flex items-center justify-center gap-2 py-2 text-2xl ">
         <CiBookmark />
         <span className="text-2xl ">Save</span>
       </button>

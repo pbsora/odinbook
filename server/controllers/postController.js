@@ -22,12 +22,11 @@ exports.create_post = [
   async (req, res) => {
     const { author_id, content } = req.body;
     let image;
-    const extensions = ["jpg", "png", "gif"];
-
-    console.log(req.file.filename.includes(...extensions));
+    const extensions = ["jpeg", "png", "gif", "jpg"];
 
     if (req.file) {
-      if (!req.file.filename.includes(...extensions)) {
+      const fileExtension = req.file.filename.split(".").pop().toLowerCase();
+      if (!extensions.includes(fileExtension)) {
         fs.rmSync(req.file.path);
         return res.status(400).send({ error: "Image format not supported" });
       }

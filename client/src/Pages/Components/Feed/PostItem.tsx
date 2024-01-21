@@ -6,6 +6,7 @@ import { FaCommentAlt } from "react-icons/fa";
 import { HiDotsHorizontal } from "react-icons/hi";
 import { useState, useContext, useEffect } from "react";
 import { UserContext } from "../../../lib/Context/UserContext";
+import { useNavigate } from "react-router-dom";
 
 import {
   useDeletePost,
@@ -28,6 +29,8 @@ const PostItem = ({ post, deletePost }: Props) => {
   const likeMutation = useLikePost(post._id, user._id);
   const unlikeMutation = useUnlikePost(post._id, user._id);
   const deleteMutation = useDeletePost(post._id);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (isLiked(user._id, post.likes)) setLikedPost(true);
@@ -78,20 +81,19 @@ const PostItem = ({ post, deletePost }: Props) => {
             typeof post.created_at === "string"
               ? new Date(post.created_at)
               : post.created_at
-          ).toLocaleString(DateTime.DATE_SHORT)}
+          ).toFormat("MM/dd/yyyy")}
         </span>
       </div>
       <div className="flex-1 px-6 py-2 text-lg md:text-xl">
         <section>{post.content}</section>
-        <img
-          src={
-            post.image
-              ? post.image
-              : "https://images.unsplash.com/photo-1703587152450-e4534707e4a4?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-          }
-          alt="post image"
-          className="w-[90%]  sm:w-[80%] md:w-[70%] lg:w-[65%]  xl:w-[60%] m-auto mt-4 border rounded-xl"
-        />
+        {post.image && (
+          <img
+            src={post.image}
+            alt="post image"
+            className="w-full sm:w-[80%] md:w-[70%] lg:w-[65%] xl:w-[60%] m-auto mt-4 border rounded-xl cursor-pointer"
+            onClick={() => navigate(`/post/${post._id}`)}
+          />
+        )}
       </div>
       <div className="flex justify-around p-4 lg:p-6 text-zinc-600 dark:text-white">
         <button

@@ -18,3 +18,12 @@ export const useFollowingPosts = (user_id?: string) => {
     },
   });
 };
+
+export const usePostMutation = (form: FormData) => {
+  return useMutation({
+    mutationKey: ["newPost"],
+    mutationFn: async () => {
+      return await API.post("post/new-post", form);
+    },
+  });
+};

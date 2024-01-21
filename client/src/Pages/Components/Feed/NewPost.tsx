@@ -1,10 +1,15 @@
-import React, { ChangeEvent, useState, useContext } from "react";
+import React, {
+  ChangeEvent,
+  useState,
+  useContext,
+  useEffect,
+  useRef,
+} from "react";
 import { UserContext } from "../../../lib/Context/UserContext";
-import { API } from "../../../utils/api";
-import { useMutation } from "@tanstack/react-query";
 import { AuthData, PostResponse } from "../../../assets/Types & Interfaces";
 import { RotatingLines } from "react-loader-spinner";
 import { FaImage } from "react-icons/fa6";
+import { usePostMutation } from "../../../lib/Queries/PostQueries";
 
 type Props = {
   setAllPosts: React.Dispatch<React.SetStateAction<PostResponse[] | null>>;
@@ -13,52 +18,38 @@ type Props = {
 const NewPost = ({ setAllPosts }: Props) => {
   const [post, setPost] = useState("");
   const [, user] = useContext(UserContext) as AuthData;
-  const [image, setImage] = useState<File | null>(null);
+  const formData = new FormData();
+  const newPostMutation = usePostMutation(formData);
 
-  const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    setPost(e.target.value);
-  };
+  const [imageInput, setImageInput] = useState(false);
+  const [image, setImage] = useState<File | string>("");
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const newPostMutation = useMutation({
-    mutationKey: ["newPost"],
-    mutationFn: async () => {
-      return await API.post("post/new-post", {
-        author_id: user._id,
-        content: post,
-      });
-    },
-    onSuccess: (data) => {
-      console.log(data);
+  useEffect(() => {
+    if (newPostMutation.isSuccess) {
       setPost("");
+      if (fileInputRef.current) fileInputRef.current.value = "";
+      if (imageInput) setImageInput(false);
       setAllPosts((prev) => {
         const currentPosts = Array.isArray(prev) ? prev : [];
-        return [data.data, ...currentPosts];
+        return [newPostMutation.data.data, ...currentPosts];
       });
-    },
-  });
+      newPostMutation.reset();
+    }
+  }, [newPostMutation, setAllPosts, imageInput]);
 
   const handleNewPost = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (image) formData.append("image", image);
+    formData.append("author_id", user._id);
+    formData.append("content", post);
+
     newPostMutation.mutate();
   };
 
-  const handleImage = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    if (image) {
-      const formData = new FormData();
-      formData.append("image", image);
-
-      try {
-        const { data } = await API.post("/post/image", formData);
-        console.log(data);
-      } catch (error) {
-        console.error("Error uploading image:", error);
-      }
-    } else {
-      // Handle the case where image is null (optional)
-      console.warn("No image selected");
-    }
+  const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    setPost(e.target.value);
   };
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -84,12 +75,24 @@ const NewPost = ({ setAllPosts }: Props) => {
           placeholder="What's on your mind?"
           required
         />
+        <input
+          className={`${
+            imageInput ? "block" : "hidden"
+          } w-full mt-3 text-lg text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400`}
+          id="large_size"
+          onChange={handleFileChange}
+          type="file"
+        />
         <div className="flex items-center justify-between mx-6 mt-4 ">
           <span className="text-lg group-hover:text-red-600">
             {post.length}/320
           </span>
           <div className="flex items-center gap-6">
-            <button className="text-4xl duration-200 hover:scale-110 text-zinc-700 dark:text-white">
+            <button
+              className="text-4xl duration-200 hover:scale-110 text-zinc-700 dark:text-white"
+              type="button"
+              onClick={() => setImageInput(true)}
+            >
               <FaImage />
             </button>
             <button
@@ -107,12 +110,6 @@ const NewPost = ({ setAllPosts }: Props) => {
             </button>
           </div>
         </div>
-      </form>
-      <form action="" onSubmit={handleImage}>
-        <div className="flex items-center space-x-6">
-          <input type="file" name="" id="" onChange={handleFileChange} />
-        </div>
-        <button>Submit image</button>
       </form>
     </div>
   );

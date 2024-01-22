@@ -88,7 +88,7 @@ const PostItem = ({ post, deletePost }: Props) => {
         <section>{post.content}</section>
         {post.image && (
           <img
-            src={post.image}
+            src={post.image.url}
             alt="post image"
             className="w-full sm:w-[80%] md:w-[70%] lg:w-[65%] xl:w-[60%] m-auto mt-4 border rounded-xl cursor-pointer"
             onClick={() => navigate(`/post/${post._id}`)}

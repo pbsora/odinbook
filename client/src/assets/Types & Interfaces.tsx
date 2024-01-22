@@ -33,7 +33,10 @@ export type PostResponse = {
     username: string;
     _id: string;
   };
-  image?: string;
+  image: {
+    url: string;
+    id: string;
+  };
   content: string;
   likes: [string];
   created_at: string;

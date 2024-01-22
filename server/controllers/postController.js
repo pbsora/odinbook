@@ -38,7 +38,8 @@ exports.create_post = [
             message: "Error",
           });
         } else {
-          image = result.url;
+          console.log(result);
+          image = { url: result.url, id: result.public_id };
           fs.rmSync(req.file.path);
         }
       });

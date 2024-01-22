@@ -1,8 +1,35 @@
+import { AuthData } from "@/assets/Types & Interfaces";
+import { UserContext } from "@/lib/Context/UserContext";
+import { useContext, useState } from "react";
+
 const Settings = () => {
+  const [, user] = useContext(UserContext) as AuthData;
+  const [image, setImage] = useState<File | string>("");
+  console.log(user);
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      setImage(e.target.files[0]);
+    }
+  };
+
   return (
     <div className="w-full 2xl:max-w-[55vw] border-2 rounded-xl pb-28 px-12 flex flex-col gap-12 shadow-xl bg-zinc-50 dark:bg-darkSecondary mt-6 border-zinc-400 p-6">
       <h1 className="text-4xl">Settings</h1>
-      <section className="text-2xl">Profile picture</section>
+      <section className="text-2xl">
+        <h2 className="mb-3">Profile picture</h2>
+        <div className="flex items-center gap-10">
+          <img src={user.image} alt="user profile picture" className="w-24" />
+          <input
+            className={`
+             block
+           w-2/4 h-fit mt-3 text-lg text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400`}
+            id="large_size"
+            onChange={handleFileChange}
+            type="file"
+          />
+        </div>
+      </section>
 
       <section className="flex flex-col w-3/4 gap-3 p-2">
         <label htmlFor="description" className="block mb-4 text-2xl">

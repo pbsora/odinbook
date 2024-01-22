@@ -83,7 +83,7 @@ const Header = ({ open, setOpen }: Props) => {
           <img
             src={user.image}
             alt="user picture"
-            className="h-12  border-[2px] border-black rounded-full cursor-pointer justify-self-end transition-transform duration-200 dark:border-zinc-600"
+            className="h-12 w-12 border-[2px] border-black rounded-full cursor-pointer justify-self-end transition-transform duration-200 dark:border-zinc-600"
           />
           <UserCard user={user} nav={nav} />
         </div>

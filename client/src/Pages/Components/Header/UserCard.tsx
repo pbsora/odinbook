@@ -25,7 +25,7 @@ const UserCard = ({ user, nav }: Props) => {
       <img
         src={user.image}
         alt="user image"
-        className="w-[7rem] rounded-full border-2 border-zinc-400"
+        className="w-[7rem] h-[7rem] rounded-full border-2 border-zinc-400"
       />
       <Link to={"/u/profile"}>
         {" "}

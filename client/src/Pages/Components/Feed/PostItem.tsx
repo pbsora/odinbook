@@ -62,9 +62,10 @@ const PostItem = ({ post, deletePost }: Props) => {
     >
       <div className="flex items-center gap-6 py-3 pl-6 text-2xl">
         <img
-          className="max-w-[3rem] rounded-full border-2 border-zinc-400 xl:max-w-[3rem]"
+          className="w-[3rem] h-[3rem] rounded-full border-2 border-zinc-400 hover:cursor-pointer"
           src={post.author_id.image}
           alt="post creator image"
+          onClick={() => navigate(`/u/${user.username}`)}
         />
         <Link
           to={

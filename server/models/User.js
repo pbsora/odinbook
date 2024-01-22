@@ -21,6 +21,10 @@ const User = new Schema({
   loginType: { type: String, default: "Local" },
   createdAt: { type: Date, default: Date.now },
   image: { type: String, default: "http://localhost:5000/default_user.png" },
+  description: {
+    type: String,
+    default: "Hi, i'm using Momiji. How about we follow each other",
+  },
 });
 
 module.exports = mongoose.model("User", User);

@@ -1,8 +1,22 @@
 const bcrypt = require("bcryptjs");
 const { body, validationResult } = require("express-validator");
 const passport = require("passport");
+const fs = require("fs");
+const mongoose = require("mongoose");
+const cloudinary = require("../config/cloudinary");
 
 const User = require("../models/User");
+
+const isError = (res, error) => {
+  if (error instanceof mongoose.Error.ValidationError) {
+    res.status(400).json({ error: error.message });
+  } else if (error instanceof mongoose.Error.CastError) {
+    res.status(400).json({ error: "Invalid parameters" });
+  } else {
+    console.log(error.message);
+    res.status(500).json({ error: error.message });
+  }
+};
 
 //login
 exports.log_in = (req, res, next) => {
@@ -107,6 +121,44 @@ exports.auth = (req, res) => {
 
 //add follow
 
-//edit user
+//edit profile picture
+exports.change_picture = async (req, res) => {
+  let image;
+  const { user_id } = req.body;
+
+  if (!req.file) return res.status(400).send({ error: "No image was sent" });
+
+  const fileExtension = req.file.filename.split(".").pop().toLowerCase();
+  const extensions = ["jpeg", "png", "gif", "jpg"];
+
+  if (!extensions.includes(fileExtension)) {
+    fs.rmSync(req.file.path);
+    return res.status(400).send({ error: "Image format not supported" });
+  }
+
+  try {
+    await cloudinary.uploader.upload(req.file.path, (err, result) => {
+      if (err) {
+        fs.rmSync(req.file.path);
+        return res.status(500).json({
+          success: false,
+          message: "Error",
+        });
+      } else {
+        fs.rmSync(req.file.path);
+        image = result.url;
+      }
+    });
+
+    if (image) {
+      await User.findByIdAndUpdate({ _id: user_id }, { image });
+      res.send(image);
+    } else {
+      res.status(500).send({ error: "Something went wrong" });
+    }
+  } catch (error) {
+    isError(res, error);
+  }
+};
 
 //edit password

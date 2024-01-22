@@ -2,12 +2,7 @@ import { CiBookmark } from "react-icons/ci";
 import { FaShare } from "react-icons/fa6";
 import { MdDeleteOutline } from "react-icons/md";
 import { Dialog, DialogTrigger, DialogContent } from "../ui/dialog";
-import {
-  Drawer,
-  DrawerClose,
-  DrawerContent,
-  DrawerTrigger,
-} from "../ui/drawer";
+import { Drawer, DrawerContent, DrawerTrigger } from "../ui/drawer";
 
 type Props = {
   ownPost: () => boolean;

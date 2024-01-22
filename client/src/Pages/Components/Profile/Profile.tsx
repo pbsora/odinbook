@@ -68,7 +68,7 @@ const Profile = ({ user, relationship }: Props) => {
         <img
           src={user?.image}
           alt="User picture"
-          className="h-32 border-2 rounded-full"
+          className="w-40 h-40 border-2 rounded-full"
         />
         <figcaption className="text-2xl text-center">{`${capitalize(
           user?.firstName

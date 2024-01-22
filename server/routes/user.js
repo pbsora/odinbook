@@ -1,5 +1,7 @@
 const router = require("express").Router();
 const passport = require("passport");
+const upload = require("../middleware/multer");
+const checkAuthenticated = require("../lib/authMiddleware");
 
 const user_controller = require("../controllers/userController");
 
@@ -36,7 +38,13 @@ router.get("/:username", user_controller.get_user);
 
 //add follow
 
-//edit user
+//edit profile picture
+router.patch(
+  "/profile/picture",
+  checkAuthenticated,
+  upload.single("image"),
+  user_controller.change_picture
+);
 
 //edit password
 

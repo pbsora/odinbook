@@ -1,4 +1,6 @@
 const Post = require("../models/Post");
+const Comment = require("../models/Comment");
+
 const fs = require("fs");
 
 const mongoose = require("mongoose");
@@ -12,6 +14,7 @@ const isError = (res, error) => {
   } else if (error instanceof mongoose.Error.CastError) {
     res.status(400).json({ error: "Invalid parameters" });
   } else {
+    console.log(error.message);
     res.status(500).json({ error: error.message });
   }
 };
@@ -38,7 +41,6 @@ exports.create_post = [
             message: "Error",
           });
         } else {
-          console.log(result);
           image = { url: result.url, id: result.public_id };
           fs.rmSync(req.file.path);
         }
@@ -88,7 +90,16 @@ exports.get_post = async (req, res) => {
 //Delete post DELETE
 exports.delete_post = async (req, res) => {
   try {
-    await Post.findByIdAndDelete(req.params.post_id);
+    const post = await Post.findById(req.params.post_id);
+    const comments = await Comment.deleteMany({ post_id: post._id });
+    if (comments) {
+      await Post.findByIdAndDelete(post._id);
+    }
+    if (post.image.id) {
+      await cloudinary.uploader.destroy(post.image.id, (err, res) => {
+        console.log(res);
+      });
+    }
     res.status(200).json({ message: "Deleted successfully" });
   } catch (error) {
     isError(res, error);

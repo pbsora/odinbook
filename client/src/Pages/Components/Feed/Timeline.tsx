@@ -27,13 +27,15 @@ const Timeline = ({ posts, setAllPosts }: Props) => {
 
   return (
     <div className="mb-10 lg:rounded-xl" ref={parent}>
-      {posts?.length
-        ? posts.map((post) => (
-            <Fragment key={post._id}>
-              <PostItem post={post} deletePost={deletePost} />
-            </Fragment>
-          ))
-        : "Nothing here yet"}
+      {posts?.length ? (
+        posts.map((post) => (
+          <Fragment key={post._id}>
+            <PostItem post={post} deletePost={deletePost} />
+          </Fragment>
+        ))
+      ) : (
+        <div className="w-full m-auto text-center">Nothing here yet</div>
+      )}
     </div>
   );
 };

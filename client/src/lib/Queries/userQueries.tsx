@@ -27,3 +27,12 @@ export const useUnfollow = (follower: string, following: string) => {
     },
   });
 };
+
+export const useChangePicture = (form: FormData) => {
+  return useMutation({
+    mutationKey: ["changePicture"],
+    mutationFn: async () => {
+      return API.patch("/auth/profile/picture", form);
+    },
+  });
+};

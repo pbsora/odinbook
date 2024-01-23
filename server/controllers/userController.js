@@ -124,7 +124,7 @@ exports.auth = (req, res) => {
 //edit profile picture
 exports.change_picture = async (req, res) => {
   let image;
-  const { user_id } = req.body;
+  const { user_id, profile_picture } = req.body;
 
   if (!req.file) return res.status(400).send({ error: "No image was sent" });
 
@@ -137,6 +137,13 @@ exports.change_picture = async (req, res) => {
   }
 
   try {
+    //Delete picture if not default
+    if (profile_picture !== "Default") {
+      await cloudinary.uploader.destroy(profile_picture, (err, res) => {
+        console.log(res);
+      });
+    }
+
     await cloudinary.uploader.upload(req.file.path, (err, result) => {
       if (err) {
         fs.rmSync(req.file.path);
@@ -146,7 +153,7 @@ exports.change_picture = async (req, res) => {
         });
       } else {
         fs.rmSync(req.file.path);
-        image = result.url;
+        image = { url: result.url, id: result.public_id };
       }
     });
 

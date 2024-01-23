@@ -56,7 +56,7 @@ const CommentItem = ({ comment, commentResponse }: Props) => {
     <div className="w-[90%] m-auto mt-5 flex flex-col gap-10 py-6 border-b">
       <div key={comment._id} className={`flex items-center w-full gap-3`}>
         <img
-          src={comment.author_id.image}
+          src={comment.author_id.image.url}
           alt="user picture"
           className="max-w-[3rem] rounded-full border-2 border-zinc-400 xl:max-w-[4rem]"
         />

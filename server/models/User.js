@@ -20,7 +20,13 @@ const User = new Schema({
   lastName: { type: String, minLength: 2 },
   loginType: { type: String, default: "Local" },
   createdAt: { type: Date, default: Date.now },
-  image: { type: String, default: "http://localhost:5000/default_user.png" },
+  image: {
+    url: {
+      type: String,
+      default: "http://localhost:5000/default_user.png",
+    },
+    id: { type: String, default: "Default" },
+  },
   description: {
     type: String,
     default: "Hi, i'm using Momiji. How about we follow each other",

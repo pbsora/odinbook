@@ -81,7 +81,7 @@ const Header = ({ open, setOpen }: Props) => {
             {capitalize(user.firstName)}
           </span>
           <img
-            src={user.image}
+            src={user.image.url}
             alt="user picture"
             className="h-12 w-12 border-[2px] border-black rounded-full cursor-pointer justify-self-end transition-transform duration-200 dark:border-zinc-600"
           />

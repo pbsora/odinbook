@@ -63,7 +63,7 @@ const PostItem = ({ post, deletePost }: Props) => {
       <div className="flex items-center gap-6 py-3 pl-6 text-2xl">
         <img
           className="w-[3rem] h-[3rem] rounded-full border-2 border-zinc-400 hover:cursor-pointer"
-          src={post.author_id.image}
+          src={post.author_id.image.url}
           alt="post creator image"
           onClick={() => navigate(`/u/${user.username}`)}
         />
@@ -91,7 +91,7 @@ const PostItem = ({ post, deletePost }: Props) => {
           <img
             src={post.image.url}
             alt="post image"
-            className="w-full sm:w-[80%] md:w-[70%] lg:w-[65%] xl:w-[60%] m-auto mt-4 border rounded-xl cursor-pointer"
+            className="w-full sm:w-[80%] md:w-[70%] lg:w-[65%] xl:w-[65%] m-auto mt-4 border rounded-xl cursor-pointer"
             onClick={() => navigate(`/post/${post._id}`)}
           />
         )}

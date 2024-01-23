@@ -66,7 +66,7 @@ const Profile = ({ user, relationship }: Props) => {
       )}
       <section className="flex flex-col items-center gap-3">
         <img
-          src={user?.image}
+          src={user?.image.url}
           alt="User picture"
           className="w-40 h-40 border-2 rounded-full"
         />

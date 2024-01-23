@@ -16,7 +16,10 @@ export type UserType = {
   lastName: string;
   username: string;
   _id: string;
-  image: string;
+  image: {
+    url: string;
+    id: string;
+  };
   createdAt: string;
 };
 
@@ -29,7 +32,10 @@ export type PostResponse = {
   _id: string;
   author_id: {
     createdAt: string;
-    image: string;
+    image: {
+      url: string;
+      id: string;
+    };
     username: string;
     _id: string;
   };
@@ -47,7 +53,10 @@ export type CommentResponse = {
   author_id: {
     _id: string;
     username: string;
-    image: string;
+    image: {
+      url: string;
+      id: string;
+    };
   };
   post_id: string;
   content: string;

@@ -21,8 +21,6 @@ const NewPost = ({ setAllPosts }: Props) => {
   const formData = new FormData();
   const newPostMutation = usePostMutation(formData);
 
-  console.log(user);
-
   const [imageInput, setImageInput] = useState(false);
   const [image, setImage] = useState<File | string>("");
   const fileInputRef = useRef<HTMLInputElement>(null);

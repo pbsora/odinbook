@@ -41,7 +41,7 @@ export type PostResponse = {
     username: string;
     _id: string;
   };
-  image: {
+  image?: {
     url: string;
     id: string;
   };

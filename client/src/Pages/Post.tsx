@@ -19,13 +19,13 @@ const Post = () => {
 
   const [parent] = useAutoAnimate();
 
-  useEffect(() => {
+  /*   useEffect(() => {
     window.scrollTo({
       top: 0,
       behavior: "smooth",
     });
   }, [postData]);
-
+ */
   if (postResponse.error)
     return (
       <div className="h-[90vh] lg:h-[55vh] w-full lg:w-[60vw] grid place-content-center border rounded-xl text-3xl">
@@ -42,7 +42,7 @@ const Post = () => {
 
   return (
     <motion.div
-      className="w-full lg:w-[55vw] border rounded-xl shadow-xl mb-60 h-fit bg-zinc-50 dark:border-zinc-700 dark:bg-darkSecondary lg:mt-6 "
+      className="w-full lg:w-[55vw] border rounded-xl shadow-xl mb-12 h-fit bg-zinc-50 dark:border-zinc-700 dark:bg-darkSecondary lg:mt-6 "
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 1 }}

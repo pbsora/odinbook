@@ -55,7 +55,7 @@ const Profile = ({ user, relationship }: Props) => {
     );
 
   return (
-    <div className=" w-[95%] md:w-[75%] lg:w-[85%] m-auto h-[55vh] flex flex-col justify-around border-b-2 border-zinc-300 lg:border lg:rounded-xl md:mt-6  shadow-xl relative mb-5 bg-zinc-50 dark:bg-darkSecondary dark:border-zinc-700">
+    <div className=" w-[95%] md:w-[75%] lg:w-[60%] xl:w-[60%] 2xl:w-[85%] m-auto h-[55vh] flex flex-col justify-around border-b-2 border-zinc-300 lg:border lg:rounded-xl md:mt-6  shadow-xl relative mb-5 bg-zinc-50 dark:bg-darkSecondary dark:border-zinc-700">
       {ownProfile && (
         <Link
           to={"/u/settings"}
@@ -65,11 +65,13 @@ const Profile = ({ user, relationship }: Props) => {
         </Link>
       )}
       <section className="flex flex-col items-center gap-3">
-        <img
-          src={user?.image.url}
-          alt="User picture"
-          className="w-40 h-40 border-2 rounded-full"
-        />
+        {
+          <img
+            src={user?.image.url}
+            alt="User picture"
+            className="w-40 h-40 border-2 rounded-full"
+          />
+        }
         <figcaption className="text-2xl text-center">{`${capitalize(
           user?.firstName
         )} ${capitalize(user?.lastName)}`}</figcaption>

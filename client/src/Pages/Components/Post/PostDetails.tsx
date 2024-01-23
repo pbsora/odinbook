@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   useDeletePost,
   useLikePost,
@@ -23,12 +23,21 @@ type Props = {
 const PostDetails = ({ post, commentCount }: Props) => {
   const [, user] = useContext(UserContext) as AuthData;
   const [likedPost, setLikedPost] = useState(false);
+
   const ownPost = () => user._id === post.author_id._id;
   const navigate = useNavigate();
 
   const likeMutation = useLikePost(post._id, user._id);
   const unlikeMutation = useUnlikePost(post._id, user._id);
   const deleteMutation = useDeletePost(post._id);
+
+  const isWide = () =>
+    post.image?.url && imageDimensions.width >= imageDimensions.height;
+
+  const [imageDimensions, setImageDimensions] = useState({
+    width: 0,
+    height: 0,
+  });
 
   useEffect(() => {
     if (isLiked(user._id, post.likes)) setLikedPost(true);
@@ -46,6 +55,19 @@ const PostDetails = ({ post, commentCount }: Props) => {
     post._id,
     navigate,
   ]);
+
+  // Load image dimensions
+  useEffect(() => {
+    const image = new Image();
+    image.src = post.image?.url || "";
+
+    image.onload = () => {
+      setImageDimensions({
+        width: image.width,
+        height: image.height,
+      });
+    };
+  }, [post.image?.url]);
 
   const handleDelete = () => {
     deleteMutation.mutate();
@@ -89,7 +111,11 @@ const PostDetails = ({ post, commentCount }: Props) => {
               <img
                 src={post.image.url}
                 alt="post image"
-                className="w-full sm:w-[80%] md:w-[70%] lg:w-[65%] xl:w-[60%] m-auto mt-4 rounded-xl"
+                className={`${
+                  isWide()
+                    ? "w-full"
+                    : "w-full sm:w-[80%] md:w-[70%] lg:w-[65%] xl:w-[60%]"
+                } m-auto mt-4 rounded-xl`}
               />
             )}
           </div>
@@ -122,6 +148,7 @@ const PostDetails = ({ post, commentCount }: Props) => {
     </>
   );
 };
+
 export default PostDetails;
 
 function isLiked(user_id: string, likes: string[]) {

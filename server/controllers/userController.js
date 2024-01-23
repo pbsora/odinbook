@@ -144,18 +144,29 @@ exports.change_picture = async (req, res) => {
       });
     }
 
-    await cloudinary.uploader.upload(req.file.path, (err, result) => {
-      if (err) {
-        fs.rmSync(req.file.path);
-        return res.status(500).json({
-          success: false,
-          message: "Error",
-        });
-      } else {
-        fs.rmSync(req.file.path);
-        image = { url: result.url, id: result.public_id };
+    await cloudinary.uploader.upload(
+      req.file.path,
+      {
+        transformation: {
+          width: 250,
+          height: 250,
+          gravity: "face",
+          crop: "fill",
+        },
+      },
+      (err, result) => {
+        if (err) {
+          fs.rmSync(req.file.path);
+          return res.status(500).json({
+            success: false,
+            message: "Error",
+          });
+        } else {
+          fs.rmSync(req.file.path);
+          image = { url: result.url, id: result.public_id };
+        }
       }
-    });
+    );
 
     if (image) {
       await User.findByIdAndUpdate({ _id: user_id }, { image });

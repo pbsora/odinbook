@@ -20,6 +20,8 @@ export type UserType = {
     url: string;
     id: string;
   };
+  followers?: string;
+  description: string;
   createdAt: string;
 };
 

@@ -62,7 +62,7 @@ const NewPost = ({ setAllPosts }: Props) => {
 
   return (
     <div
-      className={`w-full md:w-[75%]  lg:w-[60%]  xl:w-[60%] 2xl:w-[85%] m-auto border-b lg:border border-zinc-300 dark:border-zinc-700 lg:rounded-xl min-h-[25vh] py-4 shadow-xl mb-5 dark:bg-darkSecondary bg-zinc-50 dark:text-slate-300`}
+      className={`w-full md:w-[75%]  lg:w-[60%]  xl:w-[60%] 2xl:w-[85%] m-auto border-b lg:border border-zinc-300 dark:border-zinc-700 lg:rounded-xl h-fit py-4 shadow-xl mb-5 dark:bg-darkSecondary bg-zinc-50 dark:text-slate-300`}
     >
       <form className=" w-[90vw] md:w-[80%] m-auto" onSubmit={handleNewPost}>
         <textarea

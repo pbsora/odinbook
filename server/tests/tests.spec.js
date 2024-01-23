@@ -224,6 +224,15 @@ it("Unfollows a user", async () => {
   expect(res.statusCode).toBe(200);
 });
 
+it("Changes the description", async () => {
+  const res = await user
+    .patch("/auth/profile/description")
+    .send({ description: "New description", user_id: usersId[0] });
+  console.log(res.body);
+  expect(res.body).toHaveProperty("message");
+  expect(res.status).toBe(200);
+});
+
 it("Logs out", async () => {
   await user.post("/auth/log-out").expect(200);
 });

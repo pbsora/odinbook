@@ -23,6 +23,8 @@ const OwnProfile = () => {
     if (posts) setProfilePosts(posts);
   }, [posts]);
 
+  console.log(user);
+
   return (
     <motion.div
       className="w-full 2xl:max-w-[55vw]"

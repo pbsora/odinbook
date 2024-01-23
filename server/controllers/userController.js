@@ -6,6 +6,7 @@ const mongoose = require("mongoose");
 const cloudinary = require("../config/cloudinary");
 
 const User = require("../models/User");
+const Relationship = require("../models/Relationship");
 
 const isError = (res, error) => {
   if (error instanceof mongoose.Error.ValidationError) {
@@ -99,9 +100,18 @@ exports.register = [
 exports.get_user = async (req, res) => {
   try {
     const { username } = req.params;
-    const user = await User.findOne({ username }).select(
+    let user = await User.findOne({ username }).select(
       "-password -loginType -__v"
     );
+
+    const count = await Relationship.where({
+      following: user.id,
+    }).countDocuments();
+
+    //Convert form mongoose object and append follower count
+    user = user.toObject();
+    user.followers = count.toString();
+
     if (!user) return res.status(404).send();
     res.send(user);
   } catch (error) {
@@ -174,6 +184,23 @@ exports.change_picture = async (req, res) => {
     } else {
       res.status(500).send({ error: "Something went wrong" });
     }
+  } catch (error) {
+    isError(res, error);
+  }
+};
+
+//Change profile desc PATCH
+exports.change_description = async (req, res) => {
+  const { description, user_id } = req.body;
+
+  try {
+    await User.findByIdAndUpdate(
+      { _id: user_id },
+      { description },
+      { new: true }
+    );
+
+    res.send({ message: "Updated successfully" });
   } catch (error) {
     isError(res, error);
   }

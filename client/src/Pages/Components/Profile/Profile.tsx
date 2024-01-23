@@ -74,15 +74,11 @@ const Profile = ({ user, relationship }: Props) => {
           user?.firstName
         )} ${capitalize(user?.lastName)}`}</figcaption>
 
-        <p className="w-2/4">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Hic dolor
-          dicta non nobis error a quisquam quidem voluptas. Nam magni itaque in
-          aliquid deleniti dolor temporibus dolores, non facere officiis.
-        </p>
+        <p className="w-2/4 mt-6 text-center">{user.description}</p>
       </section>
       <div className="flex">
         <div className="flex flex-col w-2/4 gap-3 pl-10 text-xl justify-self">
-          <p>Followers: 6969</p>
+          <p>Followers: {user.followers}</p>
           <p>
             Joined on:{"\t"}
             {user &&
@@ -103,7 +99,7 @@ const Profile = ({ user, relationship }: Props) => {
               onClick={handleFollow}
               disabled={followMutation.isPending || unfollowMutation.isPending}
             >
-              {following ? "Already following" : "Follow"}
+              {following ? "Following" : "Follow"}
             </button>
           </div>
         )}

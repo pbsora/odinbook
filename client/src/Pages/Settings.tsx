@@ -1,8 +1,9 @@
 import { AuthData } from "@/assets/Types & Interfaces";
 import { UserContext } from "@/lib/Context/UserContext";
 import React, { useContext, useEffect, useState } from "react";
-import { useChangePicture } from "@/lib/Queries/userQueries";
+import { useChangePicture, useChangeDesc } from "@/lib/Queries/userQueries";
 import { useToast } from "./Components/ui/use-toast";
+import { RotatingLines } from "react-loader-spinner";
 
 const Settings = () => {
   const [, user] = useContext(UserContext) as AuthData;
@@ -10,11 +11,23 @@ const Settings = () => {
   const imageForm = new FormData();
   const imageMutation = useChangePicture(imageForm);
 
+  const [desc, setDesc] = useState(user.description);
+  const descriptionMutation = useChangeDesc(desc, user._id);
+
   const { toast } = useToast();
+
+  console.log(user);
 
   useEffect(() => {
     if (imageMutation.isSuccess) location.reload();
-  }, [imageMutation, toast]);
+    if (descriptionMutation.isSuccess) {
+      toast({
+        title: "Success",
+        description: "Your description was changed with success",
+      });
+      descriptionMutation.reset();
+    }
+  }, [imageMutation, toast, descriptionMutation]);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
@@ -39,8 +52,16 @@ const Settings = () => {
     imageMutation.mutate();
   };
 
+  const handleDescription = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (!desc.trim()) return;
+
+    descriptionMutation.mutate();
+  };
+
   return (
-    <div className="w-full 2xl:max-w-[55vw] border-2 rounded-xl  px-12 flex flex-col gap-12 shadow-xl bg-zinc-50 dark:bg-darkSecondary mt-6 border-zinc-400 p-6">
+    <div className="w-full md:w-[50vw] lg:w-[45vw] 2xl:max-w-[55vw] border-2 rounded-xl px-12 flex flex-col gap-12 shadow-xl bg-zinc-50 dark:bg-darkSecondary mt-6 border-zinc-400 p-6">
       <h1 className="text-4xl">Settings</h1>
       <form className="text-2xl" onSubmit={handleNewPicture}>
         <h2 className="mb-3">Profile picture</h2>
@@ -64,7 +85,10 @@ const Settings = () => {
         </button>
       </form>
 
-      <section className="flex flex-col w-3/4 gap-3 p-2">
+      <form
+        className="flex flex-col w-3/4 gap-3 p-2"
+        onSubmit={handleDescription}
+      >
         <label htmlFor="description" className="block mb-4 text-2xl">
           About me
         </label>
@@ -73,12 +97,18 @@ const Settings = () => {
           id=""
           cols={30}
           rows={4}
-          className="block w-full p-4 text-xl border-2 resize-none border-zinc-400 focus:outline-sky-400 rounded-xl"
+          className="block w-full p-4 text-xl border-2 resize-none border-zinc-400 dark:bg-zinc-800 focus:outline-sky-400 rounded-xl"
+          onChange={(e) => setDesc(e.target.value)}
+          value={desc}
         />
-        <button className="self-start px-6 py-3 rounded-lg bg-sky-300">
-          Submit
+        <button className="self-start px-6 py-3 rounded-lg w-25 bg-sky-300 dark:bg-zinc-600">
+          {descriptionMutation.isPending ? (
+            <RotatingLines width="30" strokeColor="blue" />
+          ) : (
+            "Submit"
+          )}
         </button>
-      </section>
+      </form>
     </div>
   );
 };

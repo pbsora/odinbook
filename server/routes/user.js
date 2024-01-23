@@ -46,6 +46,13 @@ router.patch(
   user_controller.change_picture
 );
 
+//edit description
+router.patch(
+  "/profile/description",
+  checkAuthenticated,
+  user_controller.change_description
+);
+
 //edit password
 
 module.exports = router;

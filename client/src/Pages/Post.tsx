@@ -8,6 +8,7 @@ import CommentSection from "./Components/Post/CommentSection";
 import CommentItem from "./Components/Post/CommentItem";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { motion } from "framer-motion";
+import { FaLongArrowAltLeft } from "react-icons/fa";
 
 const Post = () => {
   const { post_id } = useParams();
@@ -47,7 +48,9 @@ const Post = () => {
       transition={{ duration: 1 }}
     >
       <Link to={"/"} className="lg:hidden">
-        <button className="ml-5 text-3xl">{"<-"}</button>
+        <button className="pt-2 pl-4 ml-5 text-3xl">
+          <FaLongArrowAltLeft />
+        </button>
       </Link>
       <PostDetails post={postData} commentCount={commentData?.length} />
       <hr className="w-[90%] mt-6 px-4 m-auto border-b-2 border-zinc-400" />
@@ -57,7 +60,7 @@ const Post = () => {
       />
       {commentResponse.isSuccess && commentData.length !== 0 ? (
         <hr
-          className={`w-[90%] mt-6 px-4 m-auto 
+          className={`w-[90%] mt-6 px-4 m-auto
           border-b-2
          border-zinc-700 `}
         />

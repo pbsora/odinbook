@@ -59,7 +59,7 @@ const Login = () => {
           <input
             type="text"
             name="username"
-            className="login-input"
+            className="dark:text-white login-input dark:bg-zinc-800"
             onChange={handleChange}
             value={login.username}
             minLength={3}
@@ -74,7 +74,7 @@ const Login = () => {
           <input
             type="password"
             name="password"
-            className="login-input"
+            className="dark:text-white login-input dark:bg-zinc-800"
             onChange={handleChange}
             value={login.password}
             placeholder="Password"

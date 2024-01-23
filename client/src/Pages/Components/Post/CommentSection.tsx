@@ -1,10 +1,11 @@
-import { FormEvent, useContext, useState } from "react";
+import { FormEvent, useContext, useEffect, useState } from "react";
 import { UserContext } from "../../../lib/Context/UserContext";
 import { AuthData } from "../../../assets/Types & Interfaces";
 import { useComment } from "../../../lib/Queries/Queries";
 import { useToast } from "../ui/use-toast";
 import { UseQueryResult } from "@tanstack/react-query";
 import { AxiosResponse } from "axios";
+import { RotatingLines } from "react-loader-spinner";
 
 type Props = {
   post_id: string;
@@ -18,14 +19,20 @@ const CommentSection = ({ post_id, commentResponse }: Props) => {
   const commentMutation = useComment(post_id, user._id, comment);
   const { toast } = useToast();
 
+  useEffect(() => {
+    if (commentMutation.isSuccess) {
+      toast({
+        title: "Success",
+        description: "Comment added sucessfully",
+        className: "text-xl",
+      });
+      commentMutation.reset();
+    }
+  });
+
   const handleNewComment = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     commentMutation.mutate();
-    toast({
-      title: "Success",
-      description: "Comment added sucessfully",
-      className: "text-xl",
-    });
     setTimeout(() => {
       setComment("");
     }, 0);
@@ -51,12 +58,16 @@ const CommentSection = ({ post_id, commentResponse }: Props) => {
           <span>{comment.length}/160</span>
           <button
             type="submit"
-            className={`p-5 border rounded-xl bg-sky-400 ${
+            className={`p-5 w-40 border rounded-xl bg-sky-400  ${
               commentMutation.isPending && "cursor-not-allowed"
             }`}
             disabled={commentMutation.isPending}
           >
-            Comment
+            {commentMutation.isPending ? (
+              <RotatingLines width="24" strokeColor="blue" />
+            ) : (
+              "Comment"
+            )}
           </button>
         </div>
       </form>

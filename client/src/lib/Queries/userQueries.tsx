@@ -36,3 +36,15 @@ export const useChangePicture = (form: FormData) => {
     },
   });
 };
+
+export const useChangeDesc = (desc: string, user_id: string) => {
+  return useMutation({
+    mutationKey: ["description"],
+    mutationFn: async () => {
+      return API.patch("/auth/profile/description", {
+        description: desc,
+        user_id,
+      });
+    },
+  });
+};

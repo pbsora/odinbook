@@ -61,6 +61,7 @@ it("Gets a user", async () => {
 
 it("Fails to get a user", async () => {
   const res = await user.get(`/auth/asfsadfsfddfg`);
+
   expect(res.statusCode).toBe(404);
 });
 
@@ -228,8 +229,18 @@ it("Changes the description", async () => {
   const res = await user
     .patch("/auth/profile/description")
     .send({ description: "New description", user_id: usersId[0] });
-  console.log(res.body);
   expect(res.body).toHaveProperty("message");
+  expect(res.status).toBe(200);
+});
+
+it("Changes the username", async () => {
+  const res = await user
+    .patch("/auth/profile/username")
+    .send({ user_id: usersId[0], username: "Sorinha" });
+
+  console.log(res.body);
+
+  expect(res.body).toHaveProperty("username");
   expect(res.status).toBe(200);
 });
 

@@ -53,6 +53,13 @@ router.patch(
   user_controller.change_description
 );
 
+//edit username
+router.patch(
+  "/profile/username",
+  checkAuthenticated,
+  user_controller.change_username
+);
+
 //edit password
 
 module.exports = router;

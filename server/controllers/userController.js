@@ -104,6 +104,8 @@ exports.get_user = async (req, res) => {
       "-password -loginType -__v"
     );
 
+    if (!user) return res.status(404).send();
+
     const count = await Relationship.where({
       following: user.id,
     }).countDocuments();
@@ -112,11 +114,10 @@ exports.get_user = async (req, res) => {
     user = user.toObject();
     user.followers = count.toString();
 
-    if (!user) return res.status(404).send();
     res.send(user);
   } catch (error) {
     console.log(error);
-    res.status(500).send();
+    res.status(500).send(error);
   }
 };
 
@@ -128,8 +129,6 @@ exports.auth = (req, res) => {
   // });
   res.send([req.isAuthenticated(), req.user]);
 };
-
-//add follow
 
 //edit profile picture
 exports.change_picture = async (req, res) => {
@@ -201,6 +200,23 @@ exports.change_description = async (req, res) => {
     );
 
     res.send({ message: "Updated successfully" });
+  } catch (error) {
+    isError(res, error);
+  }
+};
+
+//Edit username PATCH
+exports.change_username = async (req, res) => {
+  const { user_id, username } = req.body;
+
+  try {
+    const result = await User.findByIdAndUpdate(
+      { _id: user_id },
+      { username },
+      { new: true }
+    ).select("username");
+
+    res.status(200).send(result);
   } catch (error) {
     isError(res, error);
   }

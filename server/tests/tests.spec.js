@@ -244,6 +244,17 @@ it("Changes the username", async () => {
   expect(res.status).toBe(200);
 });
 
+it("Rejects username change if it has alreasy been changed once", async () => {
+  const res = await user
+    .patch("/auth/profile/username")
+    .send({ user_id: usersId[0], username: "Sorinha2" });
+
+  console.log(res.body);
+
+  expect(res.body).toHaveProperty("error");
+  expect(res.status).toBe(400);
+});
+
 it("Logs out", async () => {
   await user.post("/auth/log-out").expect(200);
 });

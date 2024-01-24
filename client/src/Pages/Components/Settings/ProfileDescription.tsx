@@ -44,11 +44,11 @@ const ProfileDescription = ({ user }: Props) => {
         id=""
         cols={30}
         rows={4}
-        className="block w-full p-4 text-xl border-2 resize-none border-zinc-400 dark:bg-zinc-800 focus:outline-sky-400 rounded-xl"
+        className="block w-full p-4 text-lg border-2 resize-none border-zinc-400 dark:bg-zinc-800 focus:outline-sky-400 rounded-xl"
         onChange={(e) => setDesc(e.target.value)}
         value={desc}
       />
-      <button className="self-start px-6 py-3 rounded-lg w-25 bg-sky-300 dark:bg-zinc-600">
+      <button className="self-start px-6 py-3 duration-200 rounded-lg w-25 bg-sky-300 dark:bg-zinc-600 hover:dark:bg-zinc-700">
         {descriptionMutation.isPending ? (
           <RotatingLines width="30" strokeColor="blue" />
         ) : (

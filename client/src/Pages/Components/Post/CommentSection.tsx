@@ -28,6 +28,14 @@ const CommentSection = ({ post_id, commentResponse }: Props) => {
       });
       commentMutation.reset();
     }
+    if (commentMutation.isError) {
+      toast({
+        title: "Error",
+        description: "Comment must be at least 6 characters long",
+        className: "text-xl",
+      });
+      commentMutation.reset();
+    }
   });
 
   const handleNewComment = (e: FormEvent<HTMLFormElement>) => {

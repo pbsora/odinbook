@@ -79,7 +79,7 @@ const CommentItem = ({ comment, commentResponse }: Props) => {
         </span>
       </div>
       <div className="text-xl">{comment.content}</div>
-      <div className="flex justify-between px-4 text-2xl">
+      <div className="flex justify-between text-xl">
         <button
           className={`flex items-center gap-3 ${
             likedComment && "text-sky-500"
@@ -93,7 +93,7 @@ const CommentItem = ({ comment, commentResponse }: Props) => {
             : comment.likes.length + " Likes"}
         </button>
         <div className="relative group">
-          <button className="flex items-center text-3xl lg:text-4xl ">
+          <button className="flex items-center text-3xl lg:text-3xl ">
             <HiDotsHorizontal />
           </button>
           <PostDialog ownPost={ownComment} handleDelete={handleDelete} />

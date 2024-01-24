@@ -48,3 +48,12 @@ export const useChangeDesc = (desc: string, user_id: string) => {
     },
   });
 };
+
+export const useChangeUsername = (user_id: string, username: string) => {
+  return useMutation({
+    mutationKey: ["changeUsername"],
+    mutationFn: async () => {
+      return API.patch("/auth/profile/username", { user_id, username });
+    },
+  });
+};

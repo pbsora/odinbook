@@ -61,7 +61,7 @@ const ProfilePicture = ({ user }: Props) => {
             type="file"
           />
         </div>
-        <button className="px-6 py-3 mt-3 text-lg text-white border rounded-xl bg-sky-500 dark:bg-zinc-600">
+        <button className="px-6 py-3 mt-3 text-lg text-white duration-200 border rounded-xl bg-sky-500 dark:bg-zinc-600 hover:dark:bg-zinc-700">
           {imageMutation.isPending ? (
             <RotatingLines width="30" strokeColor="blue" />
           ) : (

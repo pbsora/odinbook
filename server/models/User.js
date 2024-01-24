@@ -31,6 +31,9 @@ const User = new Schema({
     type: String,
     default: "Hi, i'm using Momiji. How about we follow each other",
   },
+  config: {
+    changedUsername: { type: Boolean, default: false },
+  },
 });
 
 module.exports = mongoose.model("User", User);

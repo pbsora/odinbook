@@ -210,9 +210,21 @@ exports.change_username = async (req, res) => {
   const { user_id, username } = req.body;
 
   try {
+    const usernameExists = await User.findOne({ username });
+
+    if (usernameExists)
+      return res.status(400).send({ error: "Username already exists" });
+
+    const changedUsername = await User.findById({ _id: user_id });
+
+    if (changedUsername.config.changedUsername)
+      return res
+        .status(400)
+        .send({ error: "Your username has already been changed once" });
+
     const result = await User.findByIdAndUpdate(
       { _id: user_id },
-      { username },
+      { username, config: { changedUsername: true } },
       { new: true }
     ).select("username");
 

@@ -255,6 +255,32 @@ it("Rejects username change if it has alreasy been changed once", async () => {
   expect(res.status).toBe(400);
 });
 
+it("Reject password change when they don't match", async () => {
+  const res = await user
+    .patch("/auth/profile/password/new")
+    .send({
+      password: "teste",
+      confirm_password: "testea",
+      user_id: usersId[0],
+    });
+
+  expect(res.body).toHaveProperty("error");
+  expect(res.status).toBe(400);
+});
+
+it("Changes the password", async () => {
+  const res = await user
+    .patch("/auth/profile/password/new")
+    .send({
+      password: "teste",
+      confirm_password: "teste",
+      user_id: usersId[0],
+    });
+
+  expect(res.body).toHaveProperty("success");
+  expect(res.status).toBe(200);
+});
+
 it("Logs out", async () => {
   await user.post("/auth/log-out").expect(200);
 });

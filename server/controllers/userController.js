@@ -12,6 +12,7 @@ const isError = (res, error) => {
   if (error instanceof mongoose.Error.ValidationError) {
     res.status(400).json({ error: error.message });
   } else if (error instanceof mongoose.Error.CastError) {
+    console.log(error);
     res.status(400).json({ error: "Invalid parameters" });
   } else {
     console.log(error.message);
@@ -234,4 +235,42 @@ exports.change_username = async (req, res) => {
   }
 };
 
+//confirm password POST
+exports.confirm_password = async (req, res) => {
+  const { password, user_id } = req.body;
+
+  try {
+    const user = await User.findById(user_id);
+
+    if (user.loginType === "Google")
+      return res.status(403).send({
+        error: "You've logged in with google. No password required",
+      });
+
+    const isValid = await bcrypt.compare(password, user.password);
+
+    if (!isValid) return res.status(400).send({ error: "Invalid password" });
+
+    res.send({ success: "Valid password" });
+  } catch (error) {
+    isError(res, error);
+  }
+};
+
 //edit password
+exports.change_password = async (req, res) => {
+  const { password, confirm_password, user_id } = req.body;
+
+  try {
+    if (password !== confirm_password)
+      return res.status(400).send({ error: "Passwords don't match" });
+
+    const newPassword = await bcrypt.hash(password, 10);
+
+    await User.findByIdAndUpdate({ _id: user_id }, { password: newPassword });
+
+    res.send({ success: "Password updated with success" });
+  } catch (error) {
+    isError(res, error);
+  }
+};

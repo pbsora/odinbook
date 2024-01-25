@@ -51,7 +51,7 @@ const Username = ({ user }: Props) => {
 
   return (
     <form action="" className="flex flex-col gap-3" onSubmit={handleUsername}>
-      <label htmlFor="username" className="block text-xl">
+      <label htmlFor="username" className="block">
         Username
       </label>
       <input

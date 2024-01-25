@@ -36,8 +36,6 @@ router.get("/auth", user_controller.auth);
 //GET a user
 router.get("/:username", user_controller.get_user);
 
-//add follow
-
 //edit profile picture
 router.patch(
   "/profile/picture",
@@ -60,6 +58,18 @@ router.patch(
   user_controller.change_username
 );
 
+//check if valid password
+router.post(
+  "/profile/password",
+  checkAuthenticated,
+  user_controller.confirm_password
+);
+
 //edit password
+router.patch(
+  "/profile/password/new",
+  checkAuthenticated,
+  user_controller.change_password
+);
 
 module.exports = router;

@@ -57,3 +57,29 @@ export const useChangeUsername = (user_id: string, username: string) => {
     },
   });
 };
+
+export const useConfirmPassword = (password: string, user_id: string) => {
+  return useMutation({
+    mutationKey: ["confirmPassword"],
+    mutationFn: async () => {
+      return API.post("/auth/profile/password", { password, user_id });
+    },
+  });
+};
+
+export const useChangePassword = (
+  password: string,
+  confirm_password: string,
+  user_id: string
+) => {
+  return useMutation({
+    mutationKey: ["changePassword"],
+    mutationFn: async () => {
+      return API.patch("/auth/profile/password/new", {
+        password,
+        confirm_password,
+        user_id,
+      });
+    },
+  });
+};

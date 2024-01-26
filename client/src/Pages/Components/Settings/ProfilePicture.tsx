@@ -46,16 +46,16 @@ const ProfilePicture = ({ user }: Props) => {
       <h1 className="text-4xl">Settings</h1>
       <form className="text-2xl" onSubmit={handleNewPicture}>
         <h2 className="mb-3">Profile picture</h2>
-        <div className="flex items-center gap-10">
+        <div className="items-center gap-10 md:flex">
           <img
             src={user.image.url}
             alt="user profile picture"
-            className="w-24"
+            className="w-24 "
           />
           <input
             className={`
              block
-           w-2/4 h-fit mt-3 text-lg text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400`}
+           w-full md:w-3/4 h-fit mt-3 text-lg  text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400`}
             id="large_size"
             onChange={handleFileChange}
             type="file"

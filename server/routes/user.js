@@ -72,4 +72,7 @@ router.patch(
   user_controller.change_password
 );
 
+//change name
+router.patch("/profile/name", checkAuthenticated, user_controller.change_name);
+
 module.exports = router;

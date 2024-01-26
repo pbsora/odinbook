@@ -110,7 +110,7 @@ const Password = ({ user }: Props) => {
             </label>
             <input
               type="password"
-              className="w-2/4 px-3 py-2 border border-white rounded-xl dark:bg-zinc-700"
+              className="w-full px-3 py-2 border border-white lg:w-2/4 rounded-xl dark:bg-zinc-700"
               value={password.password}
               onChange={handlePassword}
               name="password"
@@ -122,13 +122,13 @@ const Password = ({ user }: Props) => {
             </label>
             <input
               type="password"
-              className="w-2/4 px-3 py-2 border border-white rounded-xl dark:bg-zinc-700"
+              className="w-full px-3 py-2 border border-white lg:w-2/4 rounded-xl dark:bg-zinc-700"
               value={password.confirmPassword}
               onChange={handlePassword}
               name="confirmPassword"
             />
           </div>
-          <button className="w-1/4 px-6 py-3 duration-200 rounded-lg w-25 bg-sky-300 dark:bg-zinc-600 hover:dark:bg-zinc-700">
+          <button className="block w-2/4 py-3 duration-200 lg:w-1/4 dark:bg-zinc-600 rounded-xl hover:dark:bg-zinc-700">
             {confirmMutation.isPending ? (
               <RotatingLines width="30" strokeColor="blue" />
             ) : (
@@ -143,11 +143,11 @@ const Password = ({ user }: Props) => {
           </label>
           <input
             type="password"
-            className="w-2/4 px-3 py-2 border border-white rounded-xl dark:bg-zinc-700"
+            className="px-3 py-2 border border-white lg:w-2/4 rounded-xl dark:bg-zinc-700"
             value={passwordConfirmation}
             onChange={(e) => setPasswordConfirmation(e.target.value)}
           />
-          <button className="px-6 py-3 duration-200 rounded-lg  w-fit bg-sky-300 dark:bg-zinc-600 hover:dark:bg-zinc-700">
+          <button className="block w-2/4 py-3 duration-200 lg:w-1/4 dark:bg-zinc-600 rounded-xl hover:dark:bg-zinc-700">
             {confirmMutation.isPending ? (
               <RotatingLines width="30" strokeColor="blue" />
             ) : (

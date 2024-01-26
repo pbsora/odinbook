@@ -256,28 +256,35 @@ it("Rejects username change if it has alreasy been changed once", async () => {
 });
 
 it("Reject password change when they don't match", async () => {
-  const res = await user
-    .patch("/auth/profile/password/new")
-    .send({
-      password: "teste",
-      confirm_password: "testea",
-      user_id: usersId[0],
-    });
+  const res = await user.patch("/auth/profile/password/new").send({
+    password: "teste",
+    confirm_password: "testea",
+    user_id: usersId[0],
+  });
 
   expect(res.body).toHaveProperty("error");
   expect(res.status).toBe(400);
 });
 
 it("Changes the password", async () => {
-  const res = await user
-    .patch("/auth/profile/password/new")
-    .send({
-      password: "teste",
-      confirm_password: "teste",
-      user_id: usersId[0],
-    });
+  const res = await user.patch("/auth/profile/password/new").send({
+    password: "teste",
+    confirm_password: "teste",
+    user_id: usersId[0],
+  });
 
   expect(res.body).toHaveProperty("success");
+  expect(res.status).toBe(200);
+});
+
+it("Changes the name of the user", async () => {
+  const res = await user.patch("/auth/profile/name").send({
+    firstName: "Sorinha",
+    lastName: "Hoshizinho",
+    user_id: usersId[0],
+  });
+
+  expect(res.body).toHaveProperty("firstName");
   expect(res.status).toBe(200);
 });
 

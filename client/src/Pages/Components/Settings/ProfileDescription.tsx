@@ -33,7 +33,7 @@ const ProfileDescription = ({ user }: Props) => {
 
   return (
     <form
-      className="flex flex-col w-[85%] gap-3 p-2"
+      className="flex flex-col lg:w-[85%] gap-3 md:p-2"
       onSubmit={handleDescription}
     >
       <label htmlFor="description" className="block mb-4 text-2xl">

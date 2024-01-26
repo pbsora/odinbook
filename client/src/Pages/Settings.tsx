@@ -5,12 +5,13 @@ import ProfilePicture from "./Components/Settings/ProfilePicture";
 import ProfileDescription from "./Components/Settings/ProfileDescription";
 import Username from "./Components/Settings/Username";
 import Password from "./Components/Settings/Password";
+import Name from "./Components/Settings/Name";
 
 const Settings = () => {
   const [, user] = useContext(UserContext) as AuthData;
 
   return (
-    <div className="w-full md:w-[50vw] lg:w-[55vw] 2xl:max-w-[55vw] border mb-20 rounded-xl px-12 flex flex-col gap-12 shadow-xl bg-zinc-50 dark:bg-darkSecondary mt-6 border-zinc-700 p-6">
+    <div className="w-full md:w-[70vw]  2xl:max-w-[55vw] border mb-20 rounded-xl px-12 flex flex-col gap-12 shadow-xl bg-zinc-50 dark:bg-darkSecondary mt-6 border-zinc-700 p-6">
       <ProfilePicture user={user} />
       <hr className="border-b dark:border-white border-zinc-400" />
       <ProfileDescription user={user} />
@@ -18,6 +19,8 @@ const Settings = () => {
       <Username user={user} />
       <hr className="border-b dark:border-white border-zinc-400" />
       <Password user={user} />
+      <hr className="border-b dark:border-white border-zinc-400" />
+      <Name user={user} />
     </div>
   );
 };

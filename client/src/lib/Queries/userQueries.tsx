@@ -83,3 +83,16 @@ export const useChangePassword = (
     },
   });
 };
+
+export const useChangeName = (
+  firstName: string,
+  lastName: string,
+  user_id: string
+) => {
+  return useMutation({
+    mutationKey: ["changeName"],
+    mutationFn: async () => {
+      return API.patch("/auth/profile/name", { firstName, lastName, user_id });
+    },
+  });
+};

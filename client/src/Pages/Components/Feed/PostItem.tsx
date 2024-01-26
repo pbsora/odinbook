@@ -65,14 +65,12 @@ const PostItem = ({ post, deletePost }: Props) => {
           className="w-[3rem] h-[3rem] rounded-full border-2 border-zinc-400 hover:cursor-pointer"
           src={post.author_id.image.url}
           alt="post creator image"
-          onClick={() => navigate(`/u/${user.username}`)}
+          onClick={() =>
+            navigate(ownPost() ? "/u/profile" : `/u/${post.author_id.username}`)
+          }
         />
         <Link
-          to={
-            post.author_id._id === user._id
-              ? "/u/profile"
-              : `/u/${post.author_id.username}`
-          }
+          to={ownPost() ? "/u/profile" : `/u/${post.author_id.username}`}
           className="text-xl transition-all duration-400 hover:border-b hover:border-zinc-400"
         >
           {capitalize(post.author_id.username)}

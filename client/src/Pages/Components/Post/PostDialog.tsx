@@ -14,15 +14,15 @@ const PostDialog = ({ ownPost, handleDelete }: Props) => {
     <div
       className={`
                 scale-0 group-hover:scale-100
-              min-w-[9rem] divide-y-2 px-6 border border-white w-fit  absolute bg-zinc-100 dark:bg-darkSecondary flex flex-col -translate-x-32 lg:translate-x-0 xl:translate-x-4 transition-all duration-200 ease-out origin-top-right lg:origin-top-left rounded-xl z-30`}
+              min-w-[9rem] divide-y-2 px-6 border border-white w-fit  absolute bg-zinc-100 dark:bg-darkSecondary flex flex-col -translate-x-32 lg:translate-x-0 xl:-translate-x-14 transition-all duration-200 ease-out origin-top-right lg:origin-top rounded-xl z-30`}
     >
       {ownPost() ? (
         isMobile() ? (
           <Dialog>
             <DialogTrigger>
-              <div className="flex items-center justify-center gap-2 py-2 text-2xl hover:bg-red-700">
+              <div className="flex items-center justify-center gap-2 py-2 text-xl hover:bg-red-700">
                 <MdDeleteOutline />
-                <span className="text-2xl text-red-400">Delete</span>
+                <span className="text-xl text-red-400">Delete</span>
               </div>
             </DialogTrigger>
             <DialogContent>
@@ -40,7 +40,7 @@ const PostDialog = ({ ownPost, handleDelete }: Props) => {
         ) : (
           <Drawer>
             <DrawerTrigger>
-              <div className="flex items-center justify-center gap-2 py-2 text-2xl hover:bg-red-700">
+              <div className="flex items-center justify-center gap-2 py-2 text-xl hover:bg-red-700">
                 <MdDeleteOutline />
                 <span className="text-2xl text-red-400">Delete</span>
               </div>
@@ -63,13 +63,13 @@ const PostDialog = ({ ownPost, handleDelete }: Props) => {
       ) : (
         ""
       )}
-      <button className="flex items-center justify-center gap-2 py-3 text-2xl">
+      <button className="flex items-center justify-center gap-2 py-3 text-xl">
         <FaShare />
-        <span className="text-2xl ">Share</span>
+        <span className="text-xl ">Share</span>
       </button>
-      <button className="flex items-center justify-center gap-2 py-2 text-2xl ">
+      <button className="flex items-center justify-center gap-2 py-2 text-xl ">
         <CiBookmark />
-        <span className="text-2xl ">Save</span>
+        <span className="text-xl ">Save</span>
       </button>
     </div>
   );

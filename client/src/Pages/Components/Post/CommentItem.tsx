@@ -75,7 +75,7 @@ const CommentItem = ({ comment, commentResponse }: Props) => {
             typeof comment.created_at === "string"
               ? new Date(comment.created_at)
               : comment.created_at
-          ).toLocaleString(DateTime.DATETIME_SHORT)}
+          ).toFormat("MM/dd/yyyy")}
         </span>
       </div>
       <div className="text-xl">{comment.content}</div>

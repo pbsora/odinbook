@@ -207,33 +207,36 @@ exports.change_description = async (req, res) => {
 };
 
 //Edit username PATCH
-exports.change_username = async (req, res) => {
-  const { user_id, username } = req.body;
+exports.change_username = [
+  body("username").trim().toLowerCase().escape(),
+  async (req, res) => {
+    const { user_id, username } = req.body;
 
-  try {
-    const usernameExists = await User.findOne({ username });
+    try {
+      const usernameExists = await User.findOne({ username });
 
-    if (usernameExists)
-      return res.status(400).send({ error: "Username already exists" });
+      if (usernameExists)
+        return res.status(400).send({ error: "Username already exists" });
 
-    const changedUsername = await User.findById({ _id: user_id });
+      const changedUsername = await User.findById({ _id: user_id });
 
-    if (changedUsername.config.changedUsername)
-      return res
-        .status(400)
-        .send({ error: "Your username has already been changed once" });
+      if (changedUsername.config.changedUsername)
+        return res
+          .status(400)
+          .send({ error: "Your username has already been changed once" });
 
-    const result = await User.findByIdAndUpdate(
-      { _id: user_id },
-      { username, config: { changedUsername: true } },
-      { new: true }
-    ).select("username");
+      const result = await User.findByIdAndUpdate(
+        { _id: user_id },
+        { username, config: { changedUsername: true } },
+        { new: true }
+      ).select("username");
 
-    res.status(200).send(result);
-  } catch (error) {
-    isError(res, error);
-  }
-};
+      res.status(200).send(result);
+    } catch (error) {
+      isError(res, error);
+    }
+  },
+];
 
 //confirm password POST
 exports.confirm_password = async (req, res) => {
@@ -274,3 +277,24 @@ exports.change_password = async (req, res) => {
     isError(res, error);
   }
 };
+
+//change username PATCH
+exports.change_name = [
+  body("firstName").toLowerCase().trim().escape(),
+  body("lastName").toLowerCase().trim().escape(),
+  async (req, res) => {
+    const { firstName, lastName, user_id } = req.body;
+
+    try {
+      const newName = await User.findByIdAndUpdate(
+        { _id: user_id },
+        { firstName, lastName },
+        { new: true }
+      ).select("firstName lastName");
+
+      res.send(newName);
+    } catch (error) {
+      isError(res, error);
+    }
+  },
+];

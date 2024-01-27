@@ -1,19 +1,15 @@
-import { useEffect, useState } from "react";
-import { PostResponse } from "../assets/Types & Interfaces";
 import { useFetchPosts } from "../lib/Queries/PostQueries";
 
 import Timeline from "./Components/Feed/Timeline";
 import { useTab } from "./Home";
 import { motion } from "framer-motion";
+import AllPostsInfinite from "./Components/Discover/AllPostsInfinite";
 
 const Discover = () => {
-  const posts: PostResponse[] = useFetchPosts().data?.data;
-  const [allPosts, setAllPosts] = useState<PostResponse[] | null>(null);
+  const postsQuery = useFetchPosts();
   const { open } = useTab();
 
-  useEffect(() => {
-    posts && setAllPosts(posts);
-  }, [posts]);
+  const nextPage = () => postsQuery.fetchNextPage();
 
   return (
     <motion.div
@@ -22,7 +18,8 @@ const Discover = () => {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
     >
-      <Timeline posts={allPosts} setAllPosts={setAllPosts} />
+      <Timeline refetch={postsQuery.refetch} data={postsQuery.data} />
+      <AllPostsInfinite nextPage={nextPage} />
     </motion.div>
   );
 };

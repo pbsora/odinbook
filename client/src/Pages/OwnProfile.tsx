@@ -1,15 +1,15 @@
-import { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef } from "react";
 import { UserContext } from "../lib/Context/UserContext";
-import { AuthData, PostResponse } from "../assets/Types & Interfaces";
+import { AuthData } from "../assets/Types & Interfaces";
 import Profile from "./Components/Profile/Profile";
 import Timeline from "./Components/Feed/Timeline";
 import { useFetchPosts } from "../lib/Queries/PostQueries";
 import { motion } from "framer-motion";
+import AllPostsInfinite from "./Components/Discover/AllPostsInfinite";
 
 const OwnProfile = () => {
-  const [profilePosts, setProfilePosts] = useState<PostResponse[] | null>(null);
   const [, user] = useContext(UserContext) as AuthData;
-  const posts: PostResponse[] = useFetchPosts(user._id).data?.data;
+  const postsQuery = useFetchPosts(user._id);
   const profileRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -19,9 +19,9 @@ const OwnProfile = () => {
         block: "center",
         inline: "start",
       });
+  }, []);
 
-    if (posts) setProfilePosts(posts);
-  }, [posts]);
+  const nextPage = () => postsQuery.fetchNextPage();
 
   return (
     <motion.div
@@ -33,7 +33,8 @@ const OwnProfile = () => {
       <section ref={profileRef}>
         <Profile user={user} />
       </section>
-      <Timeline posts={profilePosts} setAllPosts={setProfilePosts} />
+      <Timeline data={postsQuery.data} refetch={postsQuery.refetch} />
+      <AllPostsInfinite nextPage={nextPage} />
     </motion.div>
   );
 };

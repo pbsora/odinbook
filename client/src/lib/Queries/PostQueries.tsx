@@ -1,23 +1,68 @@
 import { API } from "../../utils/api";
-import { useQuery, useMutation } from "@tanstack/react-query";
+import { useQuery, useMutation, useInfiniteQuery } from "@tanstack/react-query";
 
-export const useFetchPosts = (params?: string) => {
+/* export const useFetchPosts = (page: number, params?: string) => {
   return useQuery({
     queryKey: ["all-posts"],
+    enabled: false,
     queryFn: async () => {
+      return await API.get(`/post/?${params && "id=" + params}&page=${page}`);
+    },
+  });
+}; */
+
+/* export const useFetchPosts = (params = "") => {
+  return useInfiniteQuery({
+    queryKey: ["all-posts"],
+    queryFn: async ({ pageParam }) => {
       return await API.get(`/post/?${params && "id=" + params}`);
+    },
+    initialPageParam: 0,
+    getNextPageParam: (lastPage) => {
+      return lastPage;
+    },
+  });
+}; */
+
+export const useFetchPosts = (params?: string) => {
+  return useInfiniteQuery({
+    initialPageParam: 1,
+    queryKey: ["all-posts"],
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    getNextPageParam: (lastPage: any, pages) => {
+      return pages.length + 1;
+    },
+    queryFn: async ({ pageParam }) => {
+      return await API.get(
+        `/post/?${params && "id=" + params}&page=${pageParam}`
+      );
     },
   });
 };
 
-export const useFollowingPosts = (user_id?: string) => {
+export const useFollowingPosts = (user_id: string) => {
+  return useInfiniteQuery({
+    initialPageParam: 1,
+    queryKey: ["followingPosts"],
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    getNextPageParam: (lastPage: any, pages) => {
+      return pages.length + 1;
+    },
+    queryFn: async ({ pageParam }) => {
+      return await API.get(`/relationship/post/${user_id}?page=${pageParam}`);
+    },
+  });
+};
+
+/* export const useFollowingPosts = (user_id?: string) => {
   return useQuery({
     queryKey: ["following-posts"],
     queryFn: async () => {
-      return await API.get(`/relationship/post/${user_id}`);
+      return await API.get(`/relationship/post/${user_id}?`);
     },
   });
 };
+ */
 
 export const usePostMutation = (form: FormData) => {
   return useMutation({

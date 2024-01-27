@@ -1,21 +1,19 @@
-import { useContext, useEffect, useState } from "react";
-import { AuthData, PostResponse } from "../assets/Types & Interfaces";
+import { useContext } from "react";
+import { AuthData } from "../assets/Types & Interfaces";
 import { useFollowingPosts } from "../lib/Queries/PostQueries";
 import NewPost from "./Components/Feed/NewPost";
 import Timeline from "./Components/Feed/Timeline";
 import { useTab } from "./Home";
 import { motion } from "framer-motion";
 import { UserContext } from "@/lib/Context/UserContext";
+import AllPostsInfinite from "./Components/Discover/AllPostsInfinite";
 
 const Feed = () => {
   const [, user] = useContext(UserContext) as AuthData;
-  const posts: PostResponse[] = useFollowingPosts(user._id).data?.data;
-  const [allPosts, setAllPosts] = useState<PostResponse[] | null>(null);
+  const postsQuery = useFollowingPosts(user._id);
   const { open } = useTab();
 
-  useEffect(() => {
-    posts && setAllPosts(posts);
-  }, [posts]);
+  const nextPage = () => postsQuery.fetchNextPage();
 
   return (
     <motion.div
@@ -24,8 +22,9 @@ const Feed = () => {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
     >
-      <NewPost setAllPosts={setAllPosts} />
-      <Timeline posts={allPosts} setAllPosts={setAllPosts} />
+      <NewPost refetch={postsQuery.refetch} />
+      <Timeline data={postsQuery.data} refetch={postsQuery.refetch} />
+      <AllPostsInfinite nextPage={nextPage} />
     </motion.div>
   );
 };

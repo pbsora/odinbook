@@ -6,16 +6,20 @@ import React, {
   useRef,
 } from "react";
 import { UserContext } from "../../../lib/Context/UserContext";
-import { AuthData, PostResponse } from "../../../assets/Types & Interfaces";
+import { AuthData } from "../../../assets/Types & Interfaces";
 import { RotatingLines } from "react-loader-spinner";
 import { FaImage } from "react-icons/fa6";
 import { usePostMutation } from "../../../lib/Queries/PostQueries";
+import { QueryObserverResult, RefetchOptions } from "@tanstack/react-query";
 
 type Props = {
-  setAllPosts: React.Dispatch<React.SetStateAction<PostResponse[] | null>>;
+  refetch: (
+    options?: RefetchOptions | undefined
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  ) => Promise<QueryObserverResult<any, Error>>;
 };
 
-const NewPost = ({ setAllPosts }: Props) => {
+const NewPost = ({ refetch }: Props) => {
   const [post, setPost] = useState("");
   const [, user] = useContext(UserContext) as AuthData;
   const formData = new FormData();
@@ -30,13 +34,10 @@ const NewPost = ({ setAllPosts }: Props) => {
       setPost("");
       if (fileInputRef.current) fileInputRef.current.value = "";
       if (imageInput) setImageInput(false);
-      setAllPosts((prev) => {
-        const currentPosts = Array.isArray(prev) ? prev : [];
-        return [newPostMutation.data.data, ...currentPosts];
-      });
+      refetch();
       newPostMutation.reset();
     }
-  }, [newPostMutation, setAllPosts, imageInput]);
+  }, [newPostMutation, imageInput, refetch]);
 
   const handleNewPost = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

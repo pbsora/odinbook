@@ -49,10 +49,6 @@ const NewPost = ({ refetch }: Props) => {
     newPostMutation.mutate();
   };
 
-  const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    setPost(e.target.value);
-  };
-
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
       setImage(e.target.files[0]);
@@ -71,7 +67,7 @@ const NewPost = ({ refetch }: Props) => {
           className={`block w-full border-zinc-400 p-3 text-xl border-[3px] resize-none rounded-xl group dark:bg-zinc-800 dark:border-zinc-700 dark:border`}
           minLength={6}
           maxLength={320}
-          onChange={handleChange}
+          onChange={(e) => setPost(e.target.value)}
           value={post}
           placeholder="What's on your mind?"
           required

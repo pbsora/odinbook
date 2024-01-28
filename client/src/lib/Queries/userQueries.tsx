@@ -96,3 +96,24 @@ export const useChangeName = (
     },
   });
 };
+
+export const useRegister = (
+  firstName: string,
+  lastName: string,
+  email: string,
+  username: string,
+  password: string
+) => {
+  return useMutation({
+    mutationKey: ["register"],
+    mutationFn: async () => {
+      return await API.post("/auth/register", {
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        username: username,
+        password: password,
+      });
+    },
+  });
+};

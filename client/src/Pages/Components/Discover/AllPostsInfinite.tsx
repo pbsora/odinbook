@@ -2,6 +2,9 @@ import {
   InfiniteData,
   InfiniteQueryObserverResult,
 } from "@tanstack/react-query";
+import { useInView } from "framer-motion";
+import { debounce } from "lodash";
+import { useEffect, useRef } from "react";
 
 type Props = {
   nextPage: () => Promise<
@@ -10,14 +13,25 @@ type Props = {
   >;
 };
 const AllPostsInfinite = ({ nextPage }: Props) => {
+  const ref = useRef(null);
+  const isInView = useInView(ref);
+
+  useEffect(() => {
+    const fetchNextPage = debounce(() => {
+      nextPage();
+    }, 200);
+
+    if (isInView) {
+      fetchNextPage();
+    }
+    return () => {
+      fetchNextPage.cancel();
+    };
+  }, [isInView, nextPage]);
+
   return (
     <>
-      <div
-        className="flex items-center w-full mb-20 "
-        onClick={() => nextPage()}
-      >
-        <button className="m-auto border bg-zinc-400">Fetch more posts</button>
-      </div>
+      <div ref={ref} className="flex items-center w-full mb-20 "></div>
     </>
   );
 };

@@ -66,15 +66,15 @@ exports.get_all_posts = async (req, res) => {
   try {
     const { id, page } = req.query;
     const query = id ? { author_id: { $eq: id } } : {};
-    const skip = (page - 1) * 1;
+    const skip = (page - 1) * 10;
 
     const posts = await Post.find(query)
       .sort({ created_at: -1 })
       .skip(skip)
-      .limit(1)
+      .limit(10)
       .populate("author_id", "username image createdAt _id firstName");
 
-    if (posts.length === 0) return res.send([]);
+    if (posts.length === 0) return res.status(400);
 
     res.status(200).json(posts);
   } catch (error) {

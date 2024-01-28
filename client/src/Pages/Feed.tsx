@@ -15,6 +15,8 @@ const Feed = () => {
 
   const nextPage = () => postsQuery.fetchNextPage();
 
+  // console.log(postsQuery.isFetching, postsQuery.isError);
+
   return (
     <motion.div
       className={`w-full 2xl:w-[55vw] ${open && "hidden"} lg:mt-6 z-[-1000px] `}

@@ -32,9 +32,11 @@ const Timeline = ({ refetch, data }: Props) => {
     refetch();
   };
 
+  console.log(data);
+
   return (
     <div className="mb-10 lg:rounded-xl" ref={parent}>
-      {data?.pages ? (
+      {data?.pages[0].data ? (
         data?.pages
           .flatMap((data) => data.data)
           .map((post) => (

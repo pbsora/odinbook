@@ -1,5 +1,5 @@
 import { API } from "../../utils/api";
-import { useQuery, useMutation, useInfiniteQuery } from "@tanstack/react-query";
+import { useMutation, useInfiniteQuery } from "@tanstack/react-query";
 
 /* export const useFetchPosts = (page: number, params?: string) => {
   return useQuery({
@@ -49,20 +49,20 @@ export const useFollowingPosts = (user_id: string) => {
       return pages.length + 1;
     },
     queryFn: async ({ pageParam }) => {
-      return await API.get(`/relationship/post/${user_id}?page=${pageParam}`);
-    },
-  });
-};
+      const response = await API.get(
+        `/relationship/post/${user_id}?page=${pageParam}`
+      );
+      const posts = response.data;
 
-/* export const useFollowingPosts = (user_id?: string) => {
-  return useQuery({
-    queryKey: ["following-posts"],
-    queryFn: async () => {
-      return await API.get(`/relationship/post/${user_id}?`);
+      // Check if there are no more posts
+      const hasMorePosts = posts.length > 0;
+      return {
+        data: posts,
+        hasMore: hasMorePosts,
+      };
     },
   });
 };
- */
 
 export const usePostMutation = (form: FormData) => {
   return useMutation({

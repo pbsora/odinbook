@@ -69,7 +69,7 @@ exports.following_posts = async (req, res) => {
   try {
     const { user_id } = req.params;
     const { page } = req.query;
-    const skip = (page - 1) * 5;
+    const skip = (page - 1) * 10;
     const following = await Relationship.find({ follower: user_id });
     if (!following.length) return res.send({ message: "Not following anyone" });
     const followingIds = following.map((user) => user.following);
@@ -77,10 +77,12 @@ exports.following_posts = async (req, res) => {
       author_id: { $in: [...followingIds, user_id] },
     })
       .skip(skip)
-      .limit(5)
+      .limit(10)
       .populate("author_id")
       .sort({ created_at: -1 });
-    res.send(posts);
+
+    if (posts.length === 0) return res.status(400);
+    res.status(200).send(posts);
   } catch (error) {
     isError(res, error);
   }

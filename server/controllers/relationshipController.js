@@ -90,8 +90,7 @@ exports.following_posts = async (req, res) => {
         .sort({ created_at: -1 })
         .lean(),
     ]);
-    console.log(posts);
-    if (posts.length === 0) return res.status(400).send([]);
+
     res.status(200).send({ posts, nextPage: nextPage.length });
   } catch (error) {
     isError(res, error);

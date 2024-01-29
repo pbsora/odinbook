@@ -13,12 +13,11 @@ const Auth = () => {
 
   return (
     <div className="flex w-screen h-screen ">
-      <div className="hidden w-2/4 bg-cyan-400 xl:block"></div>
       <div
-        className="flex flex-col items-center justify-center w-full h-full gap-6 xl:w-2/4"
+        className="flex flex-col items-center justify-center w-[60%] h-full gap-6 m-auto"
         ref={parent}
       >
-        <div className="flex gap-6 ">
+        <div className="flex w-2/4 gap-6">
           <button
             className={`border-b-2 ${
               auth == "login" ? "border-sky-400" : "border-zinc-400"

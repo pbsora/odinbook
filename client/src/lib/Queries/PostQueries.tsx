@@ -30,12 +30,25 @@ export const useFetchPosts = (params?: string) => {
     queryKey: ["all-posts"],
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     getNextPageParam: (lastPage: any, pages) => {
-      return pages.length + 1;
+      return lastPage.hasMore ? pages.length + 1 : undefined;
     },
     queryFn: async ({ pageParam }) => {
-      return await API.get(
+      const response = await API.get(
         `/post/?${params && "id=" + params}&page=${pageParam}`
       );
+      const { posts, nextPage } = response.data;
+
+      if (response.data.message) {
+        return {
+          data: response.data.message,
+          hasMore: false,
+        };
+      }
+
+      return {
+        data: posts,
+        hasMore: nextPage,
+      };
     },
   });
 };

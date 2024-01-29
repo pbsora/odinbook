@@ -25,7 +25,7 @@ const Feed = () => {
     >
       <NewPost refetch={postsQuery.refetch} />
       <Timeline data={postsQuery.data} refetch={postsQuery.refetch} />
-      {!postsQuery.data?.pages[0].data && (
+      {postsQuery.data?.pages[0].data && (
         <AllPostsInfinite nextPage={nextPage} />
       )}
       <ToTopButton />

@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRegister } from "../../../lib/Queries/userQueries";
 import RegisterFirstStep from "./RegisterFirstStep";
 import RegisterSecondStep from "./RegisterSecondStep";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
+import { AxiosError } from "axios";
 
 const matchPassword = (pass: string, secondPass: string) => {
   return pass === secondPass;
@@ -50,6 +51,16 @@ const MultiRegister = ({ setAuth }: Props) => {
     form.password
   );
 
+  useEffect(() => {
+    if (registerMutation.isError) {
+      const error = registerMutation.failureReason as AxiosError;
+      const responseData = error.response?.data as { error: string };
+      setErrors(responseData.error);
+    } else if (registerMutation.isSuccess) {
+      setAuth("login");
+    }
+  }, [registerMutation, setAuth]);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm((prev) => ({
       ...prev,
@@ -73,7 +84,7 @@ const MultiRegister = ({ setAuth }: Props) => {
   };
 
   return (
-    <div className="py-6 px-3 border-2 border-black w-[90%]  sm:w-3/4 rounded-xl text-xl h-fit">
+    <div className="py-6 px-3 border-2 border-black w-[90%]  sm:w-[60%] rounded-xl text-xl h-fit">
       <form
         action=""
         className="flex flex-col items-center w-full gap-4 m-auto md:w-3/4 "

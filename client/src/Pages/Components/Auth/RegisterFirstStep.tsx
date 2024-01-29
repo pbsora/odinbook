@@ -11,7 +11,7 @@ type Props = {
   errors: string;
   setStep: React.Dispatch<React.SetStateAction<number>>;
 };
-const RegisterFirstStep = ({ handleChange, form, errors, setStep }: Props) => {
+const RegisterFirstStep = ({ handleChange, form, setStep }: Props) => {
   const handleNextStep = () => {
     if (!form.firstName.trim() || !form.lastName.trim() || !form.email.trim())
       return;
@@ -21,7 +21,7 @@ const RegisterFirstStep = ({ handleChange, form, errors, setStep }: Props) => {
 
   return (
     <>
-      <div className="w-3/4">
+      <div className="w-full">
         <label htmlFor="firstName" className="label ">
           First name
         </label>
@@ -31,9 +31,10 @@ const RegisterFirstStep = ({ handleChange, form, errors, setStep }: Props) => {
           className="register-input"
           onChange={handleChange}
           value={form.firstName}
+          required
         />
       </div>
-      <div className="w-3/4">
+      <div className="w-full">
         <label htmlFor="lastName" className="label">
           Last name
         </label>
@@ -43,9 +44,10 @@ const RegisterFirstStep = ({ handleChange, form, errors, setStep }: Props) => {
           className="register-input"
           onChange={handleChange}
           value={form.lastName}
+          required
         />
       </div>
-      <div className="w-3/4">
+      <div className="w-full">
         <label htmlFor="email" className="label">
           E-mail
         </label>
@@ -55,18 +57,13 @@ const RegisterFirstStep = ({ handleChange, form, errors, setStep }: Props) => {
           className="register-input"
           onChange={handleChange}
           value={form.email}
+          required
         />
       </div>
-      <span
-        className={`italic text-red-600 opacity-0 ${
-          errors !== "" && "opacity-100"
-        }`}
-      >
-        {errors || "Nothing"}
-      </span>
+
       <button
         type="button"
-        className={`flex items-center self-end justify-center w-[30%] px-6 py-2 transition-colors duration-200 border-2 border-black rounded-lg hover:bg-zinc-200
+        className={`flex items-center mt-8 dark:border-white self-end justify-center w-[30%] px-6 py-2 transition-colors duration-200 border-2 border-black rounded-lg hover:bg-zinc-200
        `}
         onClick={handleNextStep}
       >

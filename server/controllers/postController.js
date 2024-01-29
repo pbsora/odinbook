@@ -68,15 +68,23 @@ exports.get_all_posts = async (req, res) => {
     const query = id ? { author_id: { $eq: id } } : {};
     const skip = (page - 1) * 10;
 
-    const posts = await Post.find(query)
-      .sort({ created_at: -1 })
-      .skip(skip)
-      .limit(10)
-      .populate("author_id", "username image createdAt _id firstName");
+    const [posts, nextPage] = await Promise.all([
+      await Post.find(query)
+        .sort({ created_at: -1 })
+        .skip(skip)
+        .limit(10)
+        .populate("author_id", "username image createdAt _id firstName"),
+      await Post.find(query)
+        .sort({ created_at: -1 })
+        .skip(skip + 10)
+        .limit(10)
+        .populate("author_id", "username image createdAt _id firstName")
+        .lean(),
+    ]);
 
-    if (posts.length === 0) return res.status(400);
+    if (posts.length === 0) return res.send({ message: "No more posts" });
 
-    res.status(200).json(posts);
+    res.status(200).json({ posts, nextPage: nextPage.length });
   } catch (error) {
     isError(res, error);
   }

@@ -19,13 +19,13 @@ const Post = () => {
 
   const [parent] = useAutoAnimate();
 
-  /*   useEffect(() => {
+  useEffect(() => {
     window.scrollTo({
       top: 0,
       behavior: "smooth",
     });
   }, [postData]);
- */
+
   if (postResponse.error)
     return (
       <div className="h-[90vh] lg:h-[55vh] w-full lg:w-[60vw] grid place-content-center border rounded-xl text-3xl">

@@ -73,16 +73,26 @@ exports.following_posts = async (req, res) => {
     const following = await Relationship.find({ follower: user_id });
     if (!following.length) return res.send({ message: "Not following anyone" });
     const followingIds = following.map((user) => user.following);
-    const posts = await Post.find({
-      author_id: { $in: [...followingIds, user_id] },
-    })
-      .skip(skip)
-      .limit(10)
-      .populate("author_id")
-      .sort({ created_at: -1 });
 
-    if (posts.length === 0) return res.status(400);
-    res.status(200).send(posts);
+    const [posts, nextPage] = await Promise.all([
+      await Post.find({
+        author_id: { $in: [...followingIds, user_id] },
+      })
+        .skip(skip)
+        .limit(10)
+        .populate("author_id")
+        .sort({ created_at: -1 }),
+      await Post.find({
+        author_id: { $in: [...followingIds, user_id] },
+      })
+        .skip(skip + 10)
+        .limit(10)
+        .sort({ created_at: -1 })
+        .lean(),
+    ]);
+    console.log(posts);
+    if (posts.length === 0) return res.status(400).send([]);
+    res.status(200).send({ posts, nextPage: nextPage.length });
   } catch (error) {
     isError(res, error);
   }

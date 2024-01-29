@@ -1,4 +1,4 @@
-import { Fragment } from "react";
+import { Fragment, useEffect } from "react";
 
 import PostItem from "./PostItem";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
@@ -21,7 +21,11 @@ type Props = {
 const Timeline = ({ refetch, data }: Props) => {
   const [parent] = useAutoAnimate();
 
-  if (!data)
+  useEffect(() => {
+    refetch();
+  }, [refetch]);
+
+  if (!data?.pages[0].data)
     return (
       <div className="flex justify-center h-screen mt-10 ">
         <RotatingLines strokeColor="blue" width="60" />
@@ -32,11 +36,9 @@ const Timeline = ({ refetch, data }: Props) => {
     refetch();
   };
 
-  console.log(data);
-
   return (
     <div className="mb-10 lg:rounded-xl" ref={parent}>
-      {data?.pages[0].data ? (
+      {Array.isArray(data?.pages[0].data) ? (
         data?.pages
           .flatMap((data) => data.data)
           .map((post) => (

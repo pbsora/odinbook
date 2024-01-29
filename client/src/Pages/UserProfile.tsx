@@ -2,12 +2,12 @@ import Profile from "./Components/Profile/Profile";
 import { useLoaderData } from "react-router-dom";
 import { useFetchPosts } from "../lib/Queries/PostQueries";
 import { AuthData, UserType } from "../assets/Types & Interfaces";
-import Timeline from "./Components/Feed/Timeline";
 import { useContext, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { useGetRelationship } from "@/lib/Queries/userQueries";
 import { UserContext } from "@/lib/Context/UserContext";
 import AllPostsInfinite from "./Components/Discover/AllPostsInfinite";
+import Timeline from "./Components/Feed/Timeline";
 
 const UserProfile = () => {
   const [, currentUser] = useContext(UserContext) as AuthData;

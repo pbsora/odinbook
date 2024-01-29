@@ -1,6 +1,5 @@
 import { useState } from "react";
 import Login from "./Components/Auth/Login";
-import Register from "./Components/Auth/Register";
 import MultiRegister from "./Components/Auth/MultiRegister";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 

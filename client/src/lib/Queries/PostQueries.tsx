@@ -46,19 +46,24 @@ export const useFollowingPosts = (user_id: string) => {
     queryKey: ["followingPosts"],
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     getNextPageParam: (lastPage: any, pages) => {
-      return pages.length + 1;
+      return lastPage.hasMore ? pages.length + 1 : undefined;
     },
     queryFn: async ({ pageParam }) => {
       const response = await API.get(
         `/relationship/post/${user_id}?page=${pageParam}`
       );
-      const posts = response.data;
+      const { posts, nextPage } = response.data;
 
-      // Check if there are no more posts
-      const hasMorePosts = posts.length > 0;
+      if (response.data.message) {
+        return {
+          data: response.data.message,
+          hasMore: false,
+        };
+      }
+
       return {
         data: posts,
-        hasMore: hasMorePosts,
+        hasMore: nextPage,
       };
     },
   });

@@ -1,9 +1,10 @@
 import { useFetchPosts } from "../lib/Queries/PostQueries";
 
-import Timeline from "./Components/Feed/Timeline";
 import { useTab } from "./Home";
 import { motion } from "framer-motion";
 import AllPostsInfinite from "./Components/Discover/AllPostsInfinite";
+import ToTopButton from "./Components/Global/ToTopButton";
+import Timeline from "./Components/Feed/Timeline";
 
 const Discover = () => {
   const postsQuery = useFetchPosts();
@@ -20,6 +21,7 @@ const Discover = () => {
     >
       <Timeline refetch={postsQuery.refetch} data={postsQuery.data} />
       <AllPostsInfinite nextPage={nextPage} />
+      <ToTopButton />
     </motion.div>
   );
 };

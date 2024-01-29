@@ -2,10 +2,10 @@ import { useContext, useEffect, useRef } from "react";
 import { UserContext } from "../lib/Context/UserContext";
 import { AuthData } from "../assets/Types & Interfaces";
 import Profile from "./Components/Profile/Profile";
-import Timeline from "./Components/Feed/Timeline";
 import { useFetchPosts } from "../lib/Queries/PostQueries";
 import { motion } from "framer-motion";
 import AllPostsInfinite from "./Components/Discover/AllPostsInfinite";
+import Timeline from "./Components/Feed/Timeline";
 
 const OwnProfile = () => {
   const [, user] = useContext(UserContext) as AuthData;
@@ -19,7 +19,8 @@ const OwnProfile = () => {
         block: "center",
         inline: "start",
       });
-  }, []);
+    postsQuery.refetch();
+  }, [postsQuery]);
 
   const nextPage = () => postsQuery.fetchNextPage();
 

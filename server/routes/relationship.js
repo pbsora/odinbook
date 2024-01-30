@@ -7,7 +7,13 @@ const relationshipController = require("../controllers/relationshipController");
 router.post("/follow", checkAuthenticated, relationshipController.follow);
 
 //Get list of following users
-router.get("/:user_id", relationshipController.following);
+router.get("/following/:user_id", relationshipController.following);
+
+//Get list of followers
+router.get("/follower/:user_id", relationshipController.follower);
+
+//Get count of following and followers
+router.get("/count/:user_id", relationshipController.relationship_count);
 
 //Gets list of posts from following users
 router.get(

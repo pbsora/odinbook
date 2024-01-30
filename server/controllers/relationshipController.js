@@ -55,11 +55,42 @@ exports.unfollow = async (req, res) => {
 };
 
 //Gets list of following users
+exports.relationship_count = async (req, res) => {
+  try {
+    const { user_id } = req.params;
+    const [following, follower] = await Promise.all([
+      Relationship.find({ follower: user_id }).countDocuments(),
+      Relationship.find({ following: user_id }).countDocuments(),
+    ]);
+    res.send({ following, follower });
+  } catch (error) {
+    isError(res, error);
+  }
+};
+
+//Gets list of following users
 exports.following = async (req, res) => {
   try {
     const { user_id } = req.params;
-    const following = await Relationship.find({ follower: user_id });
+    const following = await Relationship.find({ follower: user_id }).populate(
+      "following",
+      "username firstName lastName image"
+    );
     res.send(following);
+  } catch (error) {
+    isError(res, error);
+  }
+};
+
+//Gets list of followers
+exports.follower = async (req, res) => {
+  try {
+    const { user_id } = req.params;
+    const follower = await Relationship.find({ following: user_id }).populate(
+      "follower",
+      "username firstName lastName image"
+    );
+    await res.send(follower);
   } catch (error) {
     isError(res, error);
   }

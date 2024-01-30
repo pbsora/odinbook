@@ -1,7 +1,7 @@
 import { FormEvent, useContext, useEffect, useState } from "react";
 import { UserContext } from "../../../lib/Context/UserContext";
 import { AuthData } from "../../../assets/Types & Interfaces";
-import { useComment } from "../../../lib/Queries/Queries";
+import { useComment } from "../../../lib/Queries/PostQueries";
 import { useToast } from "../ui/use-toast";
 import { UseQueryResult } from "@tanstack/react-query";
 import { AxiosResponse } from "axios";

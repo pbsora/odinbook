@@ -8,6 +8,7 @@ import { useGetRelationship } from "@/lib/Queries/userQueries";
 import { UserContext } from "@/lib/Context/UserContext";
 import AllPostsInfinite from "./Components/Discover/AllPostsInfinite";
 import Timeline from "./Components/Feed/Timeline";
+import ToTopButton from "./Components/Global/ToTopButton";
 
 const UserProfile = () => {
   const [, currentUser] = useContext(UserContext) as AuthData;
@@ -40,6 +41,7 @@ const UserProfile = () => {
       </section>
       <Timeline data={postsQuery.data} refetch={postsQuery.refetch} />
       <AllPostsInfinite nextPage={nextPage} />
+      <ToTopButton />
     </motion.div>
   );
 };

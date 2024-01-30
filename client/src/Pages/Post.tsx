@@ -1,7 +1,7 @@
 import { Link, useParams } from "react-router-dom";
 import { Fragment, useEffect } from "react";
 import PostDetails from "./Components/Post/PostDetails";
-import { useGetComments, useGetPostDetails } from "../lib/Queries/Queries";
+import { useGetComments, useGetPostDetails } from "../lib/Queries/PostQueries";
 import { CommentResponse, PostResponse } from "../assets/Types & Interfaces";
 import { RotatingLines } from "react-loader-spinner";
 import CommentSection from "./Components/Post/CommentSection";
@@ -22,7 +22,6 @@ const Post = () => {
   useEffect(() => {
     window.scrollTo({
       top: 0,
-      behavior: "smooth",
     });
   }, [postData]);
 
@@ -53,7 +52,7 @@ const Post = () => {
         </button>
       </Link>
       <PostDetails post={postData} commentCount={commentData?.length} />
-      <hr className="w-[90%] mt-6 px-4 m-auto border-b-2 border-zinc-400" />
+      <hr className="w-[90%] mt-6 px-4 m-auto border-b border-zinc-700" />
       <CommentSection
         post_id={postData._id}
         commentResponse={commentResponse}
@@ -61,7 +60,7 @@ const Post = () => {
       {commentResponse.isSuccess && commentData.length !== 0 ? (
         <hr
           className={`w-[90%] mt-6 px-4 m-auto
-          border-b-2
+          border-b
          border-zinc-700 `}
         />
       ) : (

@@ -84,7 +84,7 @@ const MultiRegister = ({ setAuth }: Props) => {
   };
 
   return (
-    <div className="py-6 px-3 border-2 border-black w-[90%]  sm:w-[60%] rounded-xl text-xl h-fit">
+    <div className="py-6  border-2 dark:border-zinc-800 border-black w-[90%]  sm:w-[50%] rounded-xl text-xl h-fit shadow-xl">
       <form
         action=""
         className="flex flex-col items-center w-full gap-4 m-auto md:w-3/4 "

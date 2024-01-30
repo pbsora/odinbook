@@ -25,8 +25,10 @@ const Feed = () => {
     >
       <NewPost refetch={postsQuery.refetch} />
       <Timeline data={postsQuery.data} refetch={postsQuery.refetch} />
-      {postsQuery.data?.pages[0].data && (
+      {postsQuery.data?.pages[0].data && postsQuery.hasNextPage ? (
         <AllPostsInfinite nextPage={nextPage} />
+      ) : (
+        <div className="mb-6 text-center">End of the line</div>
       )}
       <ToTopButton />
     </motion.div>

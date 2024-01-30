@@ -3,7 +3,7 @@ import {
   useDeletePost,
   useLikePost,
   useUnlikePost,
-} from "../../../lib/Queries/Queries";
+} from "../../../lib/Queries/PostQueries";
 import { useNavigate } from "react-router-dom";
 import { AuthData, PostResponse } from "../../../assets/Types & Interfaces";
 import { UserContext } from "../../../lib/Context/UserContext";

@@ -12,7 +12,7 @@ import {
   useDeletePost,
   useLikePost,
   useUnlikePost,
-} from "../../../lib/Queries/Queries";
+} from "../../../lib/Queries/PostQueries";
 import { DateTime } from "ts-luxon";
 import PostDialog from "../Post/PostDialog";
 

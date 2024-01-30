@@ -117,3 +117,12 @@ export const useRegister = (
     },
   });
 };
+
+export const useGetUser = (user_id: string) => {
+  return useQuery({
+    queryKey: ["getUser"],
+    queryFn: async () => {
+      return await API.get(`/auth/${user_id}`);
+    },
+  });
+};

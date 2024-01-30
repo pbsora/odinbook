@@ -29,12 +29,13 @@ const UserCard = ({ user, nav }: Props) => {
       />
       <Link to={"/u/profile"}>
         {" "}
-        <h2 className="text-2xl">{capitalize(user.firstName)}</h2>
+        <h2 className="text-2xl">
+          {capitalize(user.firstName) + " " + capitalize(user.lastName)}
+        </h2>
       </Link>
       <span className="text-xl">{user.username}</span>
-      <span className="text-xl text-zinc-400">{user.email}</span>
       <button
-        className="flex items-center gap-1 px-6 py-2 mt-3 text-lg transition-transform duration-200 bg-red-600 rounded-full hover:scale-110"
+        className="flex items-center gap-1 px-6 py-2 mt-3 text-lg text-white transition-transform duration-200 bg-red-600 rounded-full hover:scale-110"
         onClick={handleLogout}
       >
         <BiLogOut />

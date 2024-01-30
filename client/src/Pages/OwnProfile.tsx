@@ -6,6 +6,7 @@ import { useFetchPosts } from "../lib/Queries/PostQueries";
 import { motion } from "framer-motion";
 import AllPostsInfinite from "./Components/Discover/AllPostsInfinite";
 import Timeline from "./Components/Feed/Timeline";
+import ToTopButton from "./Components/Global/ToTopButton";
 
 const OwnProfile = () => {
   const [, user] = useContext(UserContext) as AuthData;
@@ -36,6 +37,7 @@ const OwnProfile = () => {
       </section>
       <Timeline data={postsQuery.data} refetch={postsQuery.refetch} />
       <AllPostsInfinite nextPage={nextPage} />
+      <ToTopButton />
     </motion.div>
   );
 };

@@ -96,7 +96,7 @@ const NewPost = ({ refetch }: Props) => {
               type="submit"
               className={`${
                 newPostMutation.isPending && "bg-sky-700 cursor-not-allowed"
-              }  px-16 py-4 text-lg text-white duration-300 bg-sky-500 rounded-2xl hover:bg-sky-600 `}
+              }  px-12 py-3 text-lg text-white duration-300 bg-sky-500 rounded-2xl hover:bg-sky-600 `}
               disabled={newPostMutation.isPending}
             >
               {newPostMutation.isPending ? (

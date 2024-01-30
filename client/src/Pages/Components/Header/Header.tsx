@@ -24,7 +24,7 @@ const Header = ({ open, setOpen }: Props) => {
   const { setTheme } = useTheme();
 
   const handleScroll = debounce(() => {
-    if (window.scrollY > 400) {
+    if (window.scrollY > 400 && window.innerWidth > 600) {
       setNav(true);
     } else {
       setNav(false);

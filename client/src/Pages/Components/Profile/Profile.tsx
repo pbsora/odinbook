@@ -79,7 +79,7 @@ const Profile = ({ user, relationship }: Props) => {
         <p className="w-2/4 mt-6 text-center">{user.description}</p>
       </section>
       <div className="flex">
-        <div className="flex flex-col w-2/4 gap-3 pl-10 text-xl justify-self">
+        <div className="flex flex-col flex-1 w-2/4 gap-3 pl-10 text-xl justify-self">
           <p>Followers: {user.followers}</p>
           <p>
             Joined on:{"\t"}
@@ -92,9 +92,9 @@ const Profile = ({ user, relationship }: Props) => {
           </p>
         </div>
         {!ownProfile && (
-          <div className="flex justify-end w-2/4 pr-10">
+          <div className="flex items-center pr-10 ">
             <button
-              className={`px-6 transition-all duration-1000 bg-sky-500 rounded-xl ${
+              className={`px-6 py-3 transition-all duration-1000  bg-sky-500 rounded-xl ${
                 followMutation.isPending ||
                 (unfollowMutation.isPending && "cursor-not-allowed")
               }`}

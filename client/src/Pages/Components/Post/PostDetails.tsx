@@ -113,8 +113,8 @@ const PostDetails = ({ post, commentCount }: Props) => {
                 alt="post image"
                 className={`${
                   isWide()
-                    ? "w-full"
-                    : "w-full sm:w-[80%] md:w-[70%] lg:w-[65%] xl:w-[65%]"
+                    ? "w-[80%]"
+                    : "w-full sm:w-[80%] md:w-[70%] lg:w-[65%] xl:w-[60%]"
                 } m-auto mt-4 rounded-xl`}
               />
             )}

@@ -1,18 +1,34 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import GoogleButton from "react-google-button";
-import { API } from "../../../utils/api";
-import { useMutation } from "@tanstack/react-query";
-import { ErrorResponse } from "../../../assets/Types & Interfaces";
 import { RotatingLines } from "react-loader-spinner";
+import { useLogin } from "@/lib/Queries/userQueries";
+import { AxiosError } from "axios";
 
 const Login = () => {
   const [login, setLogin] = useState({
     username: "",
     password: "",
   });
+  const loginMutation = useLogin(login.username, login.password);
   const [errors, setErrors] = useState("");
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (loginMutation.isSuccess) {
+      navigate("/");
+    } else if (loginMutation.isError) {
+      const res = loginMutation.failureReason as AxiosError;
+      const error = res.response?.data as { error: string };
+      setErrors(error.error);
+      loginMutation.reset();
+    }
+  }, [
+    loginMutation.isSuccess,
+    loginMutation.isError,
+    loginMutation.failureReason,
+    navigate,
+  ]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setLogin((prev) => ({
@@ -20,20 +36,6 @@ const Login = () => {
       [e.target.name]: e.target.value,
     }));
   };
-
-  const loginMutation = useMutation({
-    mutationKey: ["login"],
-    mutationFn: async () => {
-      return await API.post("/auth/log-in", {
-        username: login.username,
-        password: login.password,
-      });
-    },
-    onSettled: (_data, error: ErrorResponse | null) => {
-      if (error) return setErrors(error.response.data.error);
-      navigate("/");
-    },
-  });
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

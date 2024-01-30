@@ -1,6 +1,18 @@
 import { API } from "@/utils/api";
 import { useQuery, useMutation } from "@tanstack/react-query";
 
+export const useLogin = (username: string, password: string) => {
+  return useMutation({
+    mutationKey: ["login"],
+    mutationFn: async () => {
+      return await API.post("/auth/log-in", {
+        username: username,
+        password: password,
+      });
+    },
+  });
+};
+
 export const useGetRelationship = (follower: string, following: string) => {
   return useQuery({
     queryKey: ["getRelationship"],

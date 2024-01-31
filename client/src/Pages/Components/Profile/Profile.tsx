@@ -79,14 +79,14 @@ const Profile = ({ user, relationship }: Props) => {
           <p className="text-lg">@{user.username}</p>
         </section>
         <section className="flex self-center gap-4 text-xl md:mb-28 2xl:mr-16 md:gap-10">
-          <div className="duration-200 select-none  hover:cursor-pointer hover:text-blue-400">
-            <Link to={"/following"} className="flex flex-col items-center">
+          <div className="duration-200 select-none hover:cursor-pointer hover:text-blue-400">
+            <Link to={"/followers"} className="flex flex-col items-center">
               <p>Followers</p>
               <span className="text-center">{user.followers}</span>
             </Link>
           </div>
           <div className="flex flex-col items-center duration-200 select-none hover:cursor-pointer hover:text-blue-400">
-            <Link to={"/followers"} className="flex flex-col items-center">
+            <Link to={"/following"} className="flex flex-col items-center">
               <p>Following</p>
               <span className="text-center">{user.followers}</span>
             </Link>

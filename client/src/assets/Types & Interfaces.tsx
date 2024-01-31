@@ -66,4 +66,30 @@ export type CommentResponse = {
   likes: string[];
 };
 
+export type FollowingResponse = {
+  following: {
+    firstName: string;
+    lastName: string;
+    username: string;
+    _id: string;
+    image: {
+      url: string;
+      id: string;
+    };
+  };
+};
+
+export type FollowerResponse = {
+  follower: {
+    firstName: string;
+    lastName: string;
+    username: string;
+    _id: string;
+    image: {
+      url: string;
+      id: string;
+    };
+  };
+};
+
 export type OutletContext = { open: boolean };

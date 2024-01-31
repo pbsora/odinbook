@@ -138,3 +138,21 @@ export const useGetUser = (user_id: string) => {
     },
   });
 };
+
+export const useGetFollowing = (user_id: string) => {
+  return useQuery({
+    queryKey: ["following"],
+    queryFn: async () => {
+      return API.get(`/relationship/following/${user_id}`);
+    },
+  });
+};
+
+export const useGetFollower = (user_id: string) => {
+  return useQuery({
+    queryKey: ["follower"],
+    queryFn: async () => {
+      return API.get(`/relationship/follower/${user_id}`);
+    },
+  });
+};

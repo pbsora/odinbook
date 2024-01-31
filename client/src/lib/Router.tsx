@@ -10,6 +10,8 @@ import Post from "@/Pages/Post";
 import UserProfile from "@/Pages/UserProfile";
 import Settings from "@/Pages/Settings";
 import { profileLoader } from "./profileLoader";
+import Following from "@/Pages/Following";
+import Follower from "@/Pages/Follower";
 
 const Router = () => {
   const router = createBrowserRouter([
@@ -32,6 +34,8 @@ const Router = () => {
           loader: profileLoader,
         },
         { path: "/post/:post_id", element: <Post /> },
+        { path: "/following", element: <Following /> },
+        { path: "/followers", element: <Follower /> },
       ],
     },
     {

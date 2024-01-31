@@ -34,8 +34,14 @@ const PostItem = ({ post, deletePost }: Props) => {
 
   useEffect(() => {
     if (isLiked(user._id, post.likes)) setLikedPost(true);
-    if (likeMutation.isSuccess) setLikedPost(true);
-    if (unlikeMutation.isSuccess) setLikedPost(false);
+    if (likeMutation.isSuccess) {
+      setLikedPost(true);
+      likeMutation.reset();
+    }
+    if (unlikeMutation.isSuccess) {
+      setLikedPost(false);
+      unlikeMutation.reset();
+    }
     if (deleteMutation.isSuccess) deletePost && deletePost(post._id);
   }, [
     post.likes,

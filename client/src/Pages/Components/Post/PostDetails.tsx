@@ -43,14 +43,18 @@ const PostDetails = ({ post, commentCount }: Props) => {
     if (isLiked(user._id, post.likes)) setLikedPost(true);
     if (likeMutation.isSuccess) {
       setLikedPost(true);
+      likeMutation.reset();
     }
-    if (unlikeMutation.isSuccess) setLikedPost(false);
+    if (unlikeMutation.isSuccess) {
+      setLikedPost(false);
+      unlikeMutation.reset();
+    }
     if (deleteMutation.isSuccess) navigate("/");
   }, [
     post.likes,
     user._id,
-    likeMutation,
-    unlikeMutation,
+    likeMutation.isSuccess,
+    unlikeMutation.isSuccess,
     deleteMutation,
     post._id,
     navigate,

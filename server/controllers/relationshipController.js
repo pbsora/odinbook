@@ -54,15 +54,16 @@ exports.unfollow = async (req, res) => {
   }
 };
 
-//Gets list of following users
+//Gets count of following users
 exports.relationship_count = async (req, res) => {
   try {
     const { user_id } = req.params;
-    const [following, follower] = await Promise.all([
+    const [following, follower, postCount] = await Promise.all([
       Relationship.find({ follower: user_id }).countDocuments(),
       Relationship.find({ following: user_id }).countDocuments(),
+      Post.find({ author_id: user_id }).countDocuments(),
     ]);
-    res.send({ following, follower });
+    res.send({ following, follower, postCount });
   } catch (error) {
     isError(res, error);
   }

@@ -156,3 +156,12 @@ export const useGetFollower = (user_id: string) => {
     },
   });
 };
+
+export const useGetFollowCount = (user_id: string) => {
+  return useQuery({
+    queryKey: ["followCount"],
+    queryFn: async () => {
+      return API.get(`/relationship/count/${user_id}`);
+    },
+  });
+};

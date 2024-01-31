@@ -1,6 +1,6 @@
 import { capitalize } from "../../../utils/capitalize";
 import { AuthData, UserType } from "../../../assets/Types & Interfaces";
-import { DateTime } from "ts-luxon";
+
 import { RotatingLines } from "react-loader-spinner";
 import { useFollow, useUnfollow } from "../../../lib/Queries/userQueries";
 import { UserContext } from "@/lib/Context/UserContext";
@@ -15,9 +15,14 @@ type Props = {
   user: UserType;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   relationship?: UseQueryResult<AxiosResponse<any, any>, Error>;
+  follow: {
+    following: number;
+    follower: number;
+    postCount: number;
+  };
 };
 
-const Profile = ({ user, relationship }: Props) => {
+const Profile = ({ user, relationship, follow }: Props) => {
   const [, currentUser] = useContext(UserContext) as AuthData;
   const ownProfile = user._id === currentUser._id;
   const following = relationship && relationship?.data?.data;
@@ -82,25 +87,21 @@ const Profile = ({ user, relationship }: Props) => {
           <div className="duration-200 select-none hover:cursor-pointer hover:text-blue-400">
             <Link to={"/followers"} className="flex flex-col items-center">
               <p>Followers</p>
-              <span className="text-center">{user.followers}</span>
+              <span className="text-center">{follow && follow.follower}</span>
             </Link>
           </div>
           <div className="flex flex-col items-center duration-200 select-none hover:cursor-pointer hover:text-blue-400">
-            <Link to={"/following"} className="flex flex-col items-center">
+            <Link
+              to={ownProfile ? "/following" : `/following?userid=${user._id}`}
+              className="flex flex-col items-center"
+            >
               <p>Following</p>
-              <span className="text-center">{user.followers}</span>
+              <span className="text-center">{follow && follow.following}</span>
             </Link>
           </div>
           <div className="flex flex-col items-center duration-200 select-none ">
-            <p>Joined on</p>
-            <p>
-              {user &&
-                DateTime.fromJSDate(
-                  typeof user.createdAt === "string"
-                    ? new Date(user.createdAt)
-                    : user.createdAt
-                ).toFormat("MM/dd/yyyy")}
-            </p>
+            <p>Posts</p>
+            <p>{follow && follow.postCount}</p>
           </div>
         </section>
       </div>

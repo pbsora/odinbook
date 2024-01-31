@@ -18,6 +18,7 @@ type Props = {
 
 const FollowItem = ({ user, currentUser }: Props) => {
   const unfollowMutation = useUnfollow(currentUser._id, user._id);
+  const ownProfile = user._id === currentUser._id;
 
   useEffect(() => {
     if (unfollowMutation.isSuccess) {
@@ -43,15 +44,17 @@ const FollowItem = ({ user, currentUser }: Props) => {
         </Link>
       </div>
 
-      <button
-        className={` py-3 transition-all duration-1000 w-24  mr-6 bg-sky-500 rounded-xl ${
-          unfollowMutation.isPending && "cursor-not-allowed"
-        }`}
-        onClick={handleUnfollow}
-        disabled={unfollowMutation.isPending}
-      >
-        Unfollow
-      </button>
+      {!ownProfile && (
+        <button
+          className={` py-3 transition-all  w-24  mr-6 bg-sky-500 hover:bg-sky-600 duration-200 rounded-xl ${
+            unfollowMutation.isPending && "cursor-not-allowed"
+          }`}
+          onClick={handleUnfollow}
+          disabled={unfollowMutation.isPending}
+        >
+          Unfollow
+        </button>
+      )}
     </div>
   );
 };

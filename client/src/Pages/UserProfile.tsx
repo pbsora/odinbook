@@ -4,7 +4,10 @@ import { useFetchPosts } from "../lib/Queries/PostQueries";
 import { AuthData, UserType } from "../assets/Types & Interfaces";
 import { useContext, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
-import { useGetRelationship } from "@/lib/Queries/userQueries";
+import {
+  useGetFollowCount,
+  useGetRelationship,
+} from "@/lib/Queries/userQueries";
 import { UserContext } from "@/lib/Context/UserContext";
 import AllPostsInfinite from "./Components/Discover/AllPostsInfinite";
 import Timeline from "./Components/Feed/Timeline";
@@ -15,6 +18,7 @@ const UserProfile = () => {
   const user = useLoaderData() as UserType;
   const postsQuery = useFetchPosts(user._id);
   const relationship = useGetRelationship(currentUser._id, user._id);
+  const followQuery = useGetFollowCount(user._id);
 
   const profileRef = useRef<HTMLDivElement | null>(null);
 
@@ -37,7 +41,11 @@ const UserProfile = () => {
       transition={{ duration: 0.5 }}
     >
       <section ref={profileRef}>
-        <Profile user={user} relationship={relationship} />
+        <Profile
+          user={user}
+          relationship={relationship}
+          follow={followQuery.data?.data}
+        />
       </section>
       <Timeline data={postsQuery.data} refetch={postsQuery.refetch} />
       <AllPostsInfinite nextPage={nextPage} />

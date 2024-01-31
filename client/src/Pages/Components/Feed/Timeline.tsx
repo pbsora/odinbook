@@ -1,4 +1,4 @@
-import { Fragment, useEffect } from "react";
+import { Fragment } from "react";
 
 import PostItem from "./PostItem";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
@@ -20,10 +20,6 @@ type Props = {
 
 const Timeline = ({ refetch, data }: Props) => {
   const [parent] = useAutoAnimate();
-
-  useEffect(() => {
-    refetch();
-  }, [refetch]);
 
   if (!data?.pages[0].data)
     return (

@@ -7,11 +7,15 @@ import { motion } from "framer-motion";
 import AllPostsInfinite from "./Components/Discover/AllPostsInfinite";
 import Timeline from "./Components/Feed/Timeline";
 import ToTopButton from "./Components/Global/ToTopButton";
+import { useGetFollowCount } from "@/lib/Queries/userQueries";
 
 const OwnProfile = () => {
   const [, user] = useContext(UserContext) as AuthData;
   const postsQuery = useFetchPosts(user._id);
+  const followQuery = useGetFollowCount(user._id);
   const profileRef = useRef<HTMLDivElement | null>(null);
+
+  console.log(followQuery.data?.data);
 
   useEffect(() => {
     profileRef.current &&
@@ -33,7 +37,7 @@ const OwnProfile = () => {
       transition={{ duration: 0.5 }}
     >
       <section ref={profileRef}>
-        <Profile user={user} />
+        <Profile user={user} follow={followQuery.data?.data} />
       </section>
       <Timeline data={postsQuery.data} refetch={postsQuery.refetch} />
       <AllPostsInfinite nextPage={nextPage} />

@@ -33,8 +33,14 @@ const CommentItem = ({ comment, commentResponse }: Props) => {
 
   useEffect(() => {
     if (isLiked(user._id, comment.likes)) setLikedComment(true);
-    if (likeMutation.isSuccess) setLikedComment(true);
-    if (unlikeMutation.isSuccess) setLikedComment(false);
+    if (likeMutation.isSuccess) {
+      setLikedComment(true);
+      likeMutation.reset();
+    }
+    if (unlikeMutation.isSuccess) {
+      setLikedComment(false);
+      unlikeMutation.reset();
+    }
   }, [comment.likes, user._id, likeMutation, unlikeMutation]);
 
   const handleDelete = () => {

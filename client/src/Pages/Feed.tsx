@@ -8,6 +8,7 @@ import { motion } from "framer-motion";
 import { UserContext } from "@/lib/Context/UserContext";
 import AllPostsInfinite from "./Components/Discover/AllPostsInfinite";
 import ToTopButton from "./Components/Global/ToTopButton";
+import end_of_timeline from "../assets/end_of_timeline.svg";
 
 const Feed = () => {
   const [, user] = useContext(UserContext) as AuthData;
@@ -28,7 +29,10 @@ const Feed = () => {
       {postsQuery.data?.pages[0].data && postsQuery.hasNextPage ? (
         <AllPostsInfinite nextPage={nextPage} />
       ) : (
-        <div className="mb-6 text-center">End of the line</div>
+        <div className="flex flex-col items-center gap-3 mb-6 text-center">
+          <img src={end_of_timeline} alt="end svg" className="w-1/4" />
+          <h2 className="text-xl">End of the line</h2>
+        </div>
       )}
       <ToTopButton />
     </motion.div>

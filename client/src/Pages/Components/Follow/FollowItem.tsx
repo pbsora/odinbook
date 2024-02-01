@@ -32,7 +32,7 @@ const FollowItem = ({ user, currentUser }: Props) => {
     unfollowMutation.mutate();
   };
   return (
-    <div className="flex items-center px-3 py-6 border-b md:px-12 bg-darkSecondary border-zinc-700">
+    <div className="flex items-center px-3 py-6 md:px-12 border-zinc-700">
       <div className="flex items-center flex-1 gap-3">
         <img
           src={user.image.url}
@@ -46,7 +46,7 @@ const FollowItem = ({ user, currentUser }: Props) => {
 
       {!ownProfile && (
         <button
-          className={` py-3 transition-all  w-24  mr-6 bg-sky-500 hover:bg-sky-600 duration-200 rounded-xl ${
+          className={` py-3 transition-all  w-24  mr-6 bg-sky-500 hover:bg-sky-600 text-white duration-200 rounded-xl ${
             unfollowMutation.isPending && "cursor-not-allowed"
           }`}
           onClick={handleUnfollow}

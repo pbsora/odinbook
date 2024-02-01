@@ -15,8 +15,6 @@ const OwnProfile = () => {
   const followQuery = useGetFollowCount(user._id);
   const profileRef = useRef<HTMLDivElement | null>(null);
 
-  console.log(followQuery.data?.data);
-
   useEffect(() => {
     profileRef.current &&
       profileRef.current.scrollIntoView({

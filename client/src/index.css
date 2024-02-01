@@ -87,7 +87,7 @@
     @apply w-full px-6 py-2 border-b-2 border-black focus:outline-4 focus:outline-sky-400;
   }
   .navbar {
-    @apply bg-zinc-100 dark:bg-darkSecondary dark:text-zinc-200 border-zinc-200 dark:border-transparent w-full m-auto border-b-2 lg:border-2 lg:h-14 lg:w-[75%]  py-3 lg:py-0 lg:mt-2 lg:rounded-3xl shadow-xl flex justify-between px-8  fixed top-0 transition-all duration-500;
+    @apply bg-zinc-100 dark:bg-darkSecondary dark:text-zinc-200 border-zinc-200 dark:border-transparent w-full m-auto border-b-2 lg:border-2 lg:h-14 lg:w-[75%]  py-3 lg:py-0 lg:mt-4 lg:rounded-3xl shadow-xl flex justify-between px-8  fixed top-0 transition-all duration-500;
   }
   .full-navbar {
     @apply bg-zinc-100 dark:bg-darkSecondary dark:text-zinc-200 border-zinc-200 dark:border-transparent fixed top-0 flex border-b-2 justify-between  w-[100vw] px-12 py-2  lg:py-8  m-auto transition-all duration-500 border-2 shadow-xl  lg:h-10;

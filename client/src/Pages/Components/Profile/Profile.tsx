@@ -106,8 +106,8 @@ const Profile = ({ user, relationship, follow }: Props) => {
         </section>
       </div>
 
-      <div className="flex flex-col justify-between gap-6 mb-10 md:items-center md:flex-row md:gap-0 md:mb-10">
-        <p className="block w-full px-5 text-lg md:px-0 md:ml-10 md:w-2/4 lg:text-xl">
+      <div className="flex flex-col justify-between gap-6 mb-10 md:items-center md:flex-row md:gap-3 md:mb-10">
+        <p className="block w-full px-5 text-lg md:px-0 md:ml-10 md:w-full lg:text-xl">
           {user.description}
         </p>
         {!ownProfile && (

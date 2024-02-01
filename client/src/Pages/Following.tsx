@@ -12,15 +12,20 @@ const Following = () => {
   const followingQuery = useGetFollowing(id ? id : user._id);
 
   return (
-    <div className="w-full border rounded-lg md:w-3/4 lg:w-2/4 bg-darkSecondary h-fit">
+    <div className="w-full min-h-screen border rounded-lg shadow-xl md:w-3/4 lg:w-2/4 bg-neutral-50 dark:bg-darkSecondary md:min-h-fit">
       <h2 className="pt-6 pl-6 mb-6 text-3xl md:pl-12">Following</h2>
-      <hr className="w-[90%] m-auto mb-6 border-b border-zinc-700" />
+      <hr className="w-[90%] m-auto mb-6 border-b border-zinc-400" />
       {followingQuery &&
-        followingQuery.data?.data.map((follow: FollowingResponse) => (
-          <Fragment key={follow.following._id}>
-            <FollowItem user={follow.following} currentUser={user} />
-          </Fragment>
-        ))}
+        followingQuery.data?.data.map(
+          (follow: FollowingResponse, index: number) => (
+            <Fragment key={follow.following._id}>
+              <FollowItem user={follow.following} currentUser={user} />
+              {index !== followingQuery.data?.data.length - 1 && (
+                <hr className="w-[90%] m-auto mb-6 border-b border-zinc-400" />
+              )}
+            </Fragment>
+          )
+        )}
     </div>
   );
 };

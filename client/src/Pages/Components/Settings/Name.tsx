@@ -51,6 +51,7 @@ const Name = ({ user }: Props) => {
 
   return (
     <form action="" className="flex flex-col gap-6" onSubmit={handleChangeName}>
+      <h2 className="text-xl">Change Name</h2>
       <div className="">
         <label htmlFor="confirmPassword" className="block mb-2">
           First name:

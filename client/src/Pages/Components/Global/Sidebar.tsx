@@ -1,6 +1,9 @@
 import { IoHomeOutline, IoSettings } from "react-icons/io5";
 import { FaSignsPost } from "react-icons/fa6";
 import { Link } from "react-router-dom";
+import { useTheme } from "../ui/ThemeProvider";
+import { LuMoonStar } from "react-icons/lu";
+import { IoIosSunny } from "react-icons/io";
 
 type Props = {
   open: boolean;
@@ -8,6 +11,12 @@ type Props = {
 };
 
 const Sidebar = ({ open, setOpen }: Props) => {
+  const currTheme = localStorage.getItem("vite-ui-theme");
+  const { setTheme } = useTheme();
+
+  const handleTheme = () =>
+    currTheme === "light" ? setTheme("dark") : setTheme("light");
+
   return (
     <aside
       className={`fixed top-10 lg:absolute lg:top-[8rem] ${
@@ -44,6 +53,16 @@ const Sidebar = ({ open, setOpen }: Props) => {
           Settings
         </span>
       </Link>
+
+      <button
+        onClick={handleTheme}
+        className="flex items-center gap-4 text-5xl duration-200 cursor-pointer lg:text-4xl hover:text-zinc-500"
+      >
+        {currTheme === "dark" ? <LuMoonStar /> : <IoIosSunny />}
+        <span className="text-4xl font-light lg:text-2xl xl:text-3xl">
+          {currTheme === "dark" ? "Light mode" : "Dark mode"}
+        </span>
+      </button>
     </aside>
   );
 };

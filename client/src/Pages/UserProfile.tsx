@@ -20,6 +20,8 @@ const UserProfile = () => {
   const relationship = useGetRelationship(currentUser._id, user._id);
   const followQuery = useGetFollowCount(user._id);
 
+  console.log(followQuery.data?.data);
+
   const profileRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {

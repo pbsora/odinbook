@@ -22,8 +22,7 @@ const OwnProfile = () => {
         block: "center",
         inline: "start",
       });
-    postsQuery.refetch();
-  }, [postsQuery]);
+  }, []);
 
   const nextPage = () => postsQuery.fetchNextPage();
 

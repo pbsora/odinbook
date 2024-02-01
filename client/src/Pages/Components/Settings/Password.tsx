@@ -98,6 +98,7 @@ const Password = ({ user }: Props) => {
 
   return (
     <>
+      <h2 className="text-xl">Change password</h2>
       {confirmedPassword ? (
         <form
           action=""

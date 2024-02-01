@@ -4,12 +4,21 @@ import { useGetFollowing } from "@/lib/Queries/userQueries";
 import { Fragment, useContext } from "react";
 import FollowItem from "./Components/Follow/FollowItem";
 import { useSearchParams } from "react-router-dom";
+import { RotatingLines } from "react-loader-spinner";
 
 const Following = () => {
   const [searchParams] = useSearchParams();
   const id = searchParams.get("userid");
   const [, user] = useContext(UserContext) as AuthData;
   const followingQuery = useGetFollowing(id ? id : user._id);
+
+  if (!followingQuery.data?.data) {
+    return (
+      <div className="flex items-center justify-center w-full min-h-screen border rounded-lg shadow-xl md:w-3/4 lg:w-2/4 bg-neutral-50 dark:bg-darkSecondary md:min-h-fit">
+        <RotatingLines width="48" strokeColor="blue" />
+      </div>
+    );
+  }
 
   return (
     <div className="w-full min-h-screen border rounded-lg shadow-xl md:w-3/4 lg:w-2/4 bg-neutral-50 dark:bg-darkSecondary md:min-h-fit">

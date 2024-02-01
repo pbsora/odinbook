@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { toast } from "../ui/use-toast";
 import { capitalize } from "@/utils/capitalize";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 type Props = {
   user: {
@@ -20,6 +21,8 @@ const FollowItem = ({ user, currentUser }: Props) => {
   const unfollowMutation = useUnfollow(currentUser._id, user._id);
   const ownProfile = user._id === currentUser._id;
 
+  const navigate = useNavigate();
+
   useEffect(() => {
     if (unfollowMutation.isSuccess) {
       toast({
@@ -34,7 +37,12 @@ const FollowItem = ({ user, currentUser }: Props) => {
         <img
           src={user.image.url}
           alt="user picture"
-          className="w-16 rounded-full"
+          className="w-16 rounded-full hover:cursor-pointer"
+          onClick={() =>
+            ownProfile
+              ? navigate("/u/profile")
+              : navigate(`/u/${user.username}`)
+          }
         />
         <Link to={`/u/${user.username}`} className="text-lg">
           {capitalize(user.firstName) + " " + capitalize(user.lastName)}

@@ -4,7 +4,7 @@ import { AuthData, UserType } from "../../../assets/Types & Interfaces";
 import { RotatingLines } from "react-loader-spinner";
 import { useFollow, useUnfollow } from "../../../lib/Queries/userQueries";
 import { UserContext } from "@/lib/Context/UserContext";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { toast } from "../ui/use-toast";
 import { UseQueryResult } from "@tanstack/react-query";
 import { AxiosResponse } from "axios";
@@ -30,27 +30,34 @@ const Profile = ({ user, relationship, follow }: Props) => {
   const followMutation = useFollow(currentUser._id, user._id);
   const unfollowMutation = useUnfollow(currentUser._id, user._id);
 
-  const handleFollow = () => {
-    if (following) {
-      unfollowMutation.mutate();
-      toast({
-        title: "Success",
-        description: "Unfollowed with success",
-      });
-      setTimeout(() => {
-        relationship.refetch();
-      }, 1000);
-    } else {
-      followMutation.mutate();
+  useEffect(() => {
+    if (followMutation.isSuccess) {
       toast({
         title: "Success",
         description: "Followed with success",
       });
-      setTimeout(() => {
-        relationship?.refetch();
-      }, 1000);
+      relationship?.refetch();
+      followMutation.reset();
     }
-  };
+
+    if (unfollowMutation.isSuccess) {
+      toast({
+        title: "Success",
+        description: "Unfollowed with success",
+      });
+      relationship?.refetch();
+      unfollowMutation.reset();
+    }
+  }, [
+    followMutation.isSuccess,
+    followMutation.reset,
+    unfollowMutation.isSuccess,
+    unfollowMutation.reset,
+    relationship,
+  ]);
+
+  const handleFollow = () =>
+    following ? unfollowMutation.mutate() : followMutation.mutate();
 
   if (!user)
     return (
@@ -85,7 +92,10 @@ const Profile = ({ user, relationship, follow }: Props) => {
         </section>
         <section className="flex self-center gap-4 text-xl md:mb-28 2xl:mr-16 md:gap-10">
           <div className="duration-200 select-none hover:cursor-pointer hover:text-blue-400">
-            <Link to={"/followers"} className="flex flex-col items-center">
+            <Link
+              to={ownProfile ? "/followers" : `/followers?userid=${user._id}`}
+              className="flex flex-col items-center"
+            >
               <p>Followers</p>
               <span className="text-center">{follow && follow.follower}</span>
             </Link>

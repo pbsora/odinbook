@@ -11,7 +11,7 @@ const Settings = () => {
   const [, user] = useContext(UserContext) as AuthData;
 
   return (
-    <div className="w-full md:w-[70vw]  2xl:max-w-[55vw] border mb-20 rounded-xl px-12 flex flex-col gap-12 shadow-xl bg-zinc-50 dark:bg-darkSecondary mt-6 border-zinc-700 p-6">
+    <div className="w-full md:w-[70vw]  2xl:max-w-[55vw] border pb-10 md:rounded-xl px-12 flex flex-col gap-12 shadow-xl bg-zinc-50 dark:bg-darkSecondary md:mt-6 border-zinc-700 p-6">
       <ProfilePicture user={user} />
       <hr className="border-b dark:border-white border-zinc-400" />
       <ProfileDescription user={user} />

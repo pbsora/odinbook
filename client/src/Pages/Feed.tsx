@@ -9,6 +9,7 @@ import { UserContext } from "@/lib/Context/UserContext";
 import AllPostsInfinite from "./Components/Discover/AllPostsInfinite";
 import ToTopButton from "./Components/Global/ToTopButton";
 import end_of_timeline from "../assets/end_of_timeline.svg";
+import { Link } from "react-router-dom";
 
 const Feed = () => {
   const [, user] = useContext(UserContext) as AuthData;
@@ -31,7 +32,13 @@ const Feed = () => {
       ) : (
         <div className="flex flex-col items-center gap-3 mb-6 text-center">
           <img src={end_of_timeline} alt="end svg" className="w-1/4" />
-          <h2 className="text-xl">End of the line</h2>
+          <h2 className="text-xl">Nothing here yet</h2>
+          <Link
+            to={"/discover"}
+            className="mb-10 text-xl duration-200 hover:text-blue-400 hover:border-b hover:border-blue-400"
+          >
+            Click here to go to the Discover page
+          </Link>
         </div>
       )}
       <ToTopButton />

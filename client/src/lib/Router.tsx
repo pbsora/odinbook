@@ -1,6 +1,6 @@
 import Home from "@/Pages/Home";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import { authLoader, loginLoader } from "./authLoader";
+import { loginLoader } from "./authLoader";
 import NotFound from "@/Pages/NotFound";
 import Auth from "@/Pages/Auth";
 import Discover from "@/Pages/Discover";
@@ -41,7 +41,6 @@ const Router = () => {
     {
       path: "/auth",
       element: <Auth />,
-      loader: authLoader,
     },
   ]);
 

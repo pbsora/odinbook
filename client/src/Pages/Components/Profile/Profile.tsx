@@ -112,7 +112,7 @@ const Profile = ({ user, relationship, follow }: Props) => {
         </p>
         {!ownProfile && (
           <button
-            className={`px-6 py-3 transition-all duration-1000 w-36  mr-6 self-end bg-sky-500 rounded-xl ${
+            className={`px-6 py-3 transition-all duration-1000 w-36  mr-6 self-end bg-sky-500 text-white rounded-xl ${
               followMutation.isPending ||
               (unfollowMutation.isPending && "cursor-not-allowed")
             }`}

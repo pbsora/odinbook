@@ -11,6 +11,8 @@ import { RotatingLines } from "react-loader-spinner";
 import { FaImage } from "react-icons/fa6";
 import { usePostMutation } from "../../../lib/Queries/PostQueries";
 import { QueryObserverResult, RefetchOptions } from "@tanstack/react-query";
+import { AxiosError } from "axios";
+import { useToast } from "../ui/use-toast";
 
 type Props = {
   refetch: (
@@ -29,12 +31,22 @@ const NewPost = ({ refetch }: Props) => {
   const [image, setImage] = useState<File | string>("");
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  const { toast } = useToast();
+
   useEffect(() => {
     if (newPostMutation.isSuccess) {
       setPost("");
       if (fileInputRef.current) fileInputRef.current.value = "";
       if (imageInput) setImageInput(false);
       refetch();
+      newPostMutation.reset();
+    } else if (newPostMutation.isError) {
+      const res = newPostMutation.failureReason as AxiosError;
+      const error = res.response?.data as { error: string };
+      toast({
+        title: "Error",
+        description: error.error,
+      });
       newPostMutation.reset();
     }
   }, [newPostMutation, imageInput, refetch]);
@@ -70,7 +82,6 @@ const NewPost = ({ refetch }: Props) => {
           onChange={(e) => setPost(e.target.value)}
           value={post}
           placeholder="What's on your mind?"
-          required
         />
         <input
           className={`${

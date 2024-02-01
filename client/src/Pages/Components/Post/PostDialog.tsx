@@ -3,12 +3,16 @@ import { FaShare } from "react-icons/fa6";
 import { MdDeleteOutline } from "react-icons/md";
 import { Dialog, DialogTrigger, DialogContent } from "../ui/dialog";
 import { Drawer, DrawerContent, DrawerTrigger } from "../ui/drawer";
+import { useContext } from "react";
+import { UserContext } from "@/lib/Context/UserContext";
+import { AuthData } from "@/assets/Types & Interfaces";
 
 type Props = {
   ownPost: () => boolean;
   handleDelete: () => void;
 };
 const PostDialog = ({ ownPost, handleDelete }: Props) => {
+  const [, user] = useContext(UserContext) as AuthData;
   const isMobile = () => window.innerWidth >= 768;
   return (
     <div
@@ -16,7 +20,7 @@ const PostDialog = ({ ownPost, handleDelete }: Props) => {
                 scale-0 group-hover:scale-100
               min-w-[9rem] divide-y-2 px-6 border border-white w-fit  absolute bg-zinc-100 dark:bg-darkSecondary flex flex-col -translate-x-32 lg:translate-x-0 xl:-translate-x-14 transition-all duration-200 ease-out origin-top-right lg:origin-top rounded-xl z-30`}
     >
-      {ownPost() ? (
+      {ownPost() || user.config.admin ? (
         isMobile() ? (
           <Dialog>
             <DialogTrigger>

@@ -43,7 +43,7 @@ const Timeline = ({ refetch, data }: Props) => {
             </Fragment>
           ))
       ) : (
-        <div className="w-full m-auto text-center">Nothing here yet</div>
+        <div className="w-full m-auto text-center"></div>
       )}
     </div>
   );

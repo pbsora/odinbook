@@ -33,6 +33,7 @@ const User = new Schema({
   },
   config: {
     changedUsername: { type: Boolean, default: false },
+    admin: { type: Boolean, default: false },
   },
 });
 

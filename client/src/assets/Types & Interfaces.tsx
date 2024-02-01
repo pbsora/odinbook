@@ -23,6 +23,9 @@ export type UserType = {
   followers?: string;
   description: string;
   createdAt: string;
+  config: {
+    admin: boolean;
+  };
 };
 
 export interface IUser {

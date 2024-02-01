@@ -1,11 +1,23 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Login from "./Components/Auth/Login";
 import MultiRegister from "./Components/Auth/MultiRegister";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
+import { API } from "@/utils/api";
+import { useNavigate } from "react-router-dom";
 
 const Auth = () => {
   const [auth, setAuth] = useState("login");
   const [parent] = useAutoAnimate();
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const getAuth = async () => {
+      const { data } = await API.get("/auth/auth");
+      if (data[0]) return navigate("/");
+    };
+    getAuth();
+  }, [navigate]);
 
   const handleTab = () => {
     setAuth((prev) => (prev === "login" ? "register" : "login"));

@@ -27,27 +27,30 @@ exports.create_post = [
     let image;
     const extensions = ["jpeg", "png", "gif", "jpg"];
 
-    if (req.file) {
-      const fileExtension = req.file.filename.split(".").pop().toLowerCase();
-      if (!extensions.includes(fileExtension)) {
-        fs.rmSync(req.file.path);
-        return res.status(400).send({ error: "Image format not supported" });
-      }
-      await cloudinary.uploader.upload(req.file.path, (err, result) => {
-        if (err) {
-          fs.rmSync(req.file.path);
-          return res.status(500).json({
-            success: false,
-            message: "Error",
-          });
-        } else {
-          image = { url: result.url, id: result.public_id };
-          fs.rmSync(req.file.path);
-        }
-      });
-    }
+    if (!req.file && !content.trim())
+      return res.status(400).send({ error: "No image or content sent" });
 
     try {
+      if (req.file) {
+        const fileExtension = req.file.filename.split(".").pop().toLowerCase();
+        if (!extensions.includes(fileExtension)) {
+          fs.rmSync(req.file.path);
+          return res.status(400).send({ error: "Image format not supported" });
+        }
+        await cloudinary.uploader.upload(req.file.path, (err, result) => {
+          if (err) {
+            fs.rmSync(req.file.path);
+            return res.status(500).json({
+              success: false,
+              message: "Error",
+            });
+          } else {
+            image = { url: result.url, id: result.public_id };
+            fs.rmSync(req.file.path);
+          }
+        });
+      }
+
       const newPost = new Post({ author_id, content, image });
       await newPost.save();
       const post = await newPost.populate(

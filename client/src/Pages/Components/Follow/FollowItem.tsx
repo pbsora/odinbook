@@ -28,9 +28,6 @@ const FollowItem = ({ user, currentUser }: Props) => {
     }
   }, [unfollowMutation.isSuccess]);
 
-  const handleUnfollow = () => {
-    unfollowMutation.mutate();
-  };
   return (
     <div className="flex items-center px-3 py-6 md:px-12 border-zinc-700">
       <div className="flex items-center flex-1 gap-3">
@@ -45,15 +42,12 @@ const FollowItem = ({ user, currentUser }: Props) => {
       </div>
 
       {!ownProfile && (
-        <button
-          className={` py-3 transition-all  w-24  mr-6 bg-sky-500 hover:bg-sky-600 text-white duration-200 rounded-xl ${
-            unfollowMutation.isPending && "cursor-not-allowed"
-          }`}
-          onClick={handleUnfollow}
-          disabled={unfollowMutation.isPending}
+        <Link
+          to={`/u/${user.username}`}
+          className="px-6 py-3 text-white duration-200 bg-blue-400 rounded-2xl hover:scale-110"
         >
-          Unfollow
-        </button>
+          Profile
+        </Link>
       )}
     </div>
   );

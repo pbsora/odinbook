@@ -20,7 +20,8 @@ const Login = () => {
     } else if (loginMutation.isError) {
       const res = loginMutation.failureReason as AxiosError;
       const error = res.response?.data as { error: string };
-      setErrors(error.error);
+      console.log(error);
+      error && setErrors(error.error);
       loginMutation.reset();
     }
   }, [
@@ -41,6 +42,12 @@ const Login = () => {
     e.preventDefault();
     if (!login.username.trim() || !login.password.trim()) return;
     loginMutation.mutate();
+
+    setTimeout(() => {
+      setErrors(
+        "Waking up Backend services. Please wait a moment and try again!"
+      );
+    }, 5000);
   };
 
   const handleGoogle = () => {
@@ -83,7 +90,9 @@ const Login = () => {
             required
           />
         </div>
-        <span className={`italic text-red-600 opacity-0 ${"opacity-100"}`}>
+        <span
+          className={`italic text-lg text-center text-red-600 opacity-0 ${"opacity-100"}`}
+        >
           {errors !== "" && errors}
         </span>
 

@@ -66,7 +66,7 @@ const RegisterFirstStep = ({ handleChange, form, setStep }: Props) => {
 
       <button
         type="button"
-        className={`flex items-center mt-8 dark:border-white self-end justify-center w-[30%] px-6 py-2 transition-colors duration-200 border-2 border-black rounded-lg hover:bg-zinc-200
+        className={`flex items-center mt-8 dark:border-white self-end justify-center w-[30%] px-6 py-2 transition-colors duration-200 border-2 border-zinc-600 rounded-lg hover:bg-zinc-200
        `}
         onClick={handleNextStep}
       >

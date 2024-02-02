@@ -63,7 +63,7 @@ const RegisterSecondStep = ({ handleChange, form, errors, setStep }: Props) => {
       <div className="flex justify-between w-full mt-4">
         <button
           type="button"
-          className={`flex dark:border-white items-center  justify-center w-[30%] px-6 py-2 transition-colors duration-200 border-2 border-black rounded-lg hover:bg-zinc-200
+          className={`flex dark:border-white items-center  justify-center w-[30%] px-6 py-2 transition-colors duration-200 border-2 border-zinc-600 rounded-lg hover:bg-zinc-200
        `}
           onClick={() => setStep(1)}
         >
@@ -71,7 +71,7 @@ const RegisterSecondStep = ({ handleChange, form, errors, setStep }: Props) => {
         </button>
         <button
           type="submit"
-          className={`flex items-center dark:border-white  justify-center w-[30%] px-6 py-2 transition-colors duration-200 border-2 border-black rounded-lg hover:bg-zinc-200
+          className={`flex items-center dark:border-white  justify-center w-[30%] px-6 py-2 transition-colors duration-200 border-2 border-zinc-600 rounded-lg hover:bg-zinc-200
         `}
         >
           Register

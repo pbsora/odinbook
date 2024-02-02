@@ -55,7 +55,7 @@ const Login = () => {
   };
 
   return (
-    <div className="p-10 border-2 border-zinc-800 w-[95%]  md:w-[60%] lg:w-[50%] xl:w-[30%] rounded-md h-fit shadow-2xl">
+    <div className="p-10 border-2 border-zinc-400 w-[95%]  md:w-[60%] lg:w-[50%] xl:w-[30%] rounded-md h-fit shadow-2xl">
       <form
         action=""
         className="flex flex-col items-center w-full gap-4 m-auto "
@@ -68,7 +68,7 @@ const Login = () => {
           <input
             type="text"
             name="username"
-            className="dark:text-white login-input dark:bg-zinc-800"
+            className="border-b-2 dark:text-white login-input dark:bg-zinc-800 dark:border-white"
             onChange={handleChange}
             value={login.username}
             minLength={3}
@@ -83,7 +83,7 @@ const Login = () => {
           <input
             type="password"
             name="password"
-            className="dark:text-white login-input dark:bg-zinc-800"
+            className="border-b-2 dark:border-white dark:text-white login-input dark:bg-zinc-800"
             onChange={handleChange}
             value={login.password}
             placeholder="Password"
@@ -98,7 +98,7 @@ const Login = () => {
 
         <button
           type="submit"
-          className={`flex items-center justify-center  w-3/4 px-6 py-2 border-2 border-black dark:border-zinc-800 rounded-lg dark:hover:bg-zinc-800 hover:bg-zinc-200
+          className={`flex items-center duration-200 text-lg justify-center w-3/4 px-6 py-2 border-2 border-zinc-600 dark:border-zinc-800 rounded-lg dark:hover:bg-zinc-800 hover:bg-neutral-200
           ${loginMutation.isPending && "cursor-not-allowed"}`}
           disabled={loginMutation.isPending}
         >
@@ -110,7 +110,7 @@ const Login = () => {
         </button>
         <button
           onClick={handleGoogle}
-          className="p-3 mt-3 text-4xl duration-200 bg-white border-2 rounded-full shadow-lg border-zinc-800 dark:bg-darkSecondary hover:scale-110"
+          className="p-3 mt-3 text-4xl duration-200 bg-white border-2 rounded-full shadow-lg border-zinc-300 dark:bg-darkSecondary hover:scale-110"
         >
           <FcGoogle />
         </button>

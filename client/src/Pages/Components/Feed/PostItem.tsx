@@ -89,8 +89,10 @@ const PostItem = ({ post, deletePost }: Props) => {
           ).toFormat("MM/dd/yyyy")}
         </span>
       </div>
-      <div className="flex-1 px-6 py-2 text-lg md:text-xl">
-        <section className="pl-6">{post.content}</section>
+      <div className="flex-1 px-6 py-2 text-lg md:text-xl hover:cursor-pointer">
+        <section className="pl-6" onClick={() => navigate(`/post/${post._id}`)}>
+          {post.content}
+        </section>
         {post.image && (
           <img
             src={post.image.url}

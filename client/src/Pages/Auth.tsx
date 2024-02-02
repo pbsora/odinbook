@@ -26,7 +26,7 @@ const Auth = () => {
 
   return (
     <div
-      className="flex flex-col items-center justify-center w-screen h-screen gap-10 border border-black "
+      className="flex flex-col items-center justify-center w-screen h-screen gap-10 font-inter"
       ref={parent}
     >
       <div className="flex items-center justify-center">

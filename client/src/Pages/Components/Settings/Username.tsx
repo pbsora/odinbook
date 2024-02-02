@@ -57,7 +57,7 @@ const Username = ({ user }: Props) => {
       </label>
       <input
         type="text"
-        className="px-3 py-2 border border-white lg:w-2/4 rounded-xl dark:bg-zinc-700"
+        className="px-3 py-2 border border-zinc-700 dark:border-white lg:w-2/4 rounded-xl dark:bg-zinc-700 "
         value={username}
         onChange={(e) => setUsername(e.target.value)}
         required
@@ -65,7 +65,7 @@ const Username = ({ user }: Props) => {
       <span className="block text-red-500 ">
         *Username can only be changed once
       </span>
-      <button className="block w-2/4 py-3 duration-200 lg:w-1/4 dark:bg-zinc-600 rounded-xl hover:dark:bg-zinc-700">
+      <button className="block w-2/4 py-3 text-white duration-200 lg:w-1/4 dark:bg-zinc-600 rounded-xl bg-sky-500 hover:dark:bg-zinc-700">
         Change Username
       </button>
     </form>

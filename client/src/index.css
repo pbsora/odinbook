@@ -1,4 +1,5 @@
-@import url("https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Acme&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -78,7 +79,7 @@
 
 @layer components {
   .label {
-    @apply block mb-2 text-3xl md:text-2xl;
+    @apply block mb-2 text-2xl;
   }
   .register-input {
     @apply w-full px-6 py-2 border-b-2 border-black focus:outline-4 focus:outline-sky-400 dark:bg-darkSecondary dark:border-white;

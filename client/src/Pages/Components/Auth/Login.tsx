@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import GoogleButton from "react-google-button";
 import { RotatingLines } from "react-loader-spinner";
 import { useLogin } from "@/lib/Queries/userQueries";
 import { AxiosError } from "axios";
+import { FcGoogle } from "react-icons/fc";
 
 const Login = () => {
   const [login, setLogin] = useState({
@@ -55,13 +55,13 @@ const Login = () => {
   };
 
   return (
-    <div className="w-[90%] p-10 border-2 border-zinc-800 md:w-2/4 rounded-md h-fit shadow-2xl">
+    <div className="p-10 border-2 border-zinc-800 w-[95%]  md:w-[60%] lg:w-[50%] xl:w-[30%] rounded-md h-fit shadow-2xl">
       <form
         action=""
         className="flex flex-col items-center w-full gap-4 m-auto "
         onSubmit={handleLogin}
       >
-        <div className="w-3/4">
+        <div className="w-[85%]">
           <label htmlFor="username" className="label">
             Username
           </label>
@@ -76,7 +76,7 @@ const Login = () => {
             required
           />
         </div>
-        <div className="w-3/4">
+        <div className="w-[85%]">
           <label htmlFor="password" className="label">
             Password
           </label>
@@ -108,8 +108,11 @@ const Login = () => {
             "Log-in"
           )}
         </button>
-        <button onClick={handleGoogle} className="mt-3">
-          <GoogleButton />
+        <button
+          onClick={handleGoogle}
+          className="p-3 mt-3 text-4xl duration-200 bg-white border-2 rounded-full shadow-lg border-zinc-800 dark:bg-darkSecondary hover:scale-110"
+        >
+          <FcGoogle />
         </button>
       </form>
     </div>

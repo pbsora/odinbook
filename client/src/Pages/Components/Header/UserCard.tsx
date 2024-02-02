@@ -25,7 +25,8 @@ const UserCard = ({ user, nav }: Props) => {
       <img
         src={user.image.url}
         alt="user image"
-        className="w-[7rem] h-[7rem] rounded-full border-2 border-zinc-400"
+        className="w-[7rem] h-[7rem] rounded-full border-2 border-zinc-400 hover:cursor-pointer"
+        onClick={() => navigate("/u/profile")}
       />
       <Link to={"/u/profile"}>
         {" "}
@@ -33,7 +34,9 @@ const UserCard = ({ user, nav }: Props) => {
           {capitalize(user.firstName) + " " + capitalize(user.lastName)}
         </h2>
       </Link>
-      <span className="text-xl">{user.username}</span>
+      <Link to={"/u/profile"}>
+        <span className="text-xl">@{user.username}</span>
+      </Link>
       <button
         className="flex items-center gap-1 px-6 py-2 mt-3 text-lg text-white transition-transform duration-200 bg-red-600 rounded-full hover:scale-110"
         onClick={handleLogout}

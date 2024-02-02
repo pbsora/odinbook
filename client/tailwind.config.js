@@ -18,7 +18,8 @@ module.exports = {
     },
     extend: {
       fontFamily: {
-        inter: ["Noto Sans", "monospace"],
+        inter: ["Inter", "monospace"],
+        acme: ["Acme", "sans-serif"],
       },
       colors: {
         border: "hsl(var(--border))",

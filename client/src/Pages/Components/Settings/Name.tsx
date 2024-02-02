@@ -58,7 +58,7 @@ const Name = ({ user }: Props) => {
         </label>
         <input
           type="text"
-          className="w-full px-3 py-2 border border-white lg:w-2/4 rounded-xl dark:bg-zinc-700"
+          className="w-full px-3 py-2 border border-zinc-700 dark:border-white lg:w-2/4 rounded-xl dark:bg-zinc-700"
           name="firstName"
           value={name.firstName}
           onChange={handleChange}
@@ -70,13 +70,13 @@ const Name = ({ user }: Props) => {
         </label>
         <input
           type="text"
-          className="w-full px-3 py-2 border border-white lg:w-2/4 rounded-xl dark:bg-zinc-700"
+          className="w-full px-3 py-2 border border-zinc-700 dark:border-white lg:w-2/4 rounded-xl dark:bg-zinc-700"
           name="lastName"
           value={name.lastName}
           onChange={handleChange}
         />
       </div>
-      <button className="block w-2/4 py-3 duration-200 lg:w-1/4 dark:bg-zinc-600 rounded-xl hover:dark:bg-zinc-700">
+      <button className="block w-2/4 py-3 text-white duration-200 lg:w-1/4 bg-sky-500 dark:bg-zinc-600 rounded-xl hover:dark:bg-zinc-700">
         {nameMutation.isPending ? (
           <RotatingLines width="30" strokeColor="blue" />
         ) : (

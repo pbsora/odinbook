@@ -111,10 +111,11 @@ const Password = ({ user }: Props) => {
             </label>
             <input
               type="password"
-              className="w-full px-3 py-2 border border-white lg:w-2/4 rounded-xl dark:bg-zinc-700"
+              className="w-full px-3 py-2 border border-zinc-700 dark:border-white lg:w-2/4 rounded-xl dark:bg-zinc-700"
               value={password.password}
               onChange={handlePassword}
               name="password"
+              placeholder="New Password"
             />
           </div>
           <div>
@@ -123,13 +124,14 @@ const Password = ({ user }: Props) => {
             </label>
             <input
               type="password"
-              className="w-full px-3 py-2 border border-white lg:w-2/4 rounded-xl dark:bg-zinc-700"
+              className="w-full px-3 py-2 border border-zinc-700 dark:border-white lg:w-2/4 rounded-xl dark:bg-zinc-700"
               value={password.confirmPassword}
               onChange={handlePassword}
               name="confirmPassword"
+              placeholder="Confirm password"
             />
           </div>
-          <button className="block w-2/4 py-3 duration-200 lg:w-1/4 dark:bg-zinc-600 rounded-xl hover:dark:bg-zinc-700">
+          <button className="block w-2/4 py-3 text-white duration-200 lg:w-1/4 bg-sky-500 dark:bg-zinc-600 rounded-xl hover:dark:bg-zinc-700">
             {confirmMutation.isPending ? (
               <RotatingLines width="30" strokeColor="blue" />
             ) : (
@@ -144,11 +146,12 @@ const Password = ({ user }: Props) => {
           </label>
           <input
             type="password"
-            className="px-3 py-2 border border-white lg:w-2/4 rounded-xl dark:bg-zinc-700"
+            className="px-3 py-2 border dark:border-white lg:w-2/4 rounded-xl border-zinc-700 dark:bg-zinc-700"
             value={passwordConfirmation}
             onChange={(e) => setPasswordConfirmation(e.target.value)}
+            placeholder="Confirm password"
           />
-          <button className="block w-2/4 py-3 duration-200 lg:w-1/4 dark:bg-zinc-600 rounded-xl hover:dark:bg-zinc-700">
+          <button className="block w-2/4 py-3 text-white duration-200 lg:w-1/4 dark:bg-zinc-600 bg-sky-500 rounded-xl hover:dark:bg-zinc-700">
             {confirmMutation.isPending ? (
               <RotatingLines width="30" strokeColor="blue" />
             ) : (

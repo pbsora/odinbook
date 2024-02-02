@@ -14,7 +14,7 @@ type Props = {
 const RegisterSecondStep = ({ handleChange, form, errors, setStep }: Props) => {
   return (
     <>
-      <div className="w-full">
+      <div className="w-[85%]">
         <label htmlFor="username" className="label">
           Username
         </label>
@@ -24,9 +24,10 @@ const RegisterSecondStep = ({ handleChange, form, errors, setStep }: Props) => {
           className="register-input"
           onChange={handleChange}
           value={form.username}
+          placeholder="Username"
         />
       </div>
-      <div className="w-full">
+      <div className="w-[85%]">
         <label htmlFor="password" className="label">
           Password
         </label>
@@ -36,9 +37,10 @@ const RegisterSecondStep = ({ handleChange, form, errors, setStep }: Props) => {
           className="register-input"
           onChange={handleChange}
           value={form.password}
+          placeholder="Password"
         />
       </div>
-      <div className="w-full">
+      <div className="w-[85%]">
         <label htmlFor="password" className="label">
           Confirm password
         </label>
@@ -48,6 +50,7 @@ const RegisterSecondStep = ({ handleChange, form, errors, setStep }: Props) => {
           className="register-input"
           onChange={handleChange}
           value={form.confirmPassword}
+          placeholder="Confirm password"
         />
       </div>
       <span

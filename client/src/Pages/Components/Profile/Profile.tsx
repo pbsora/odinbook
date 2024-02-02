@@ -76,7 +76,7 @@ const Profile = ({ user, relationship, follow }: Props) => {
           <IoSettings />
         </Link>
       )}
-      <div className="flex flex-col justify-between px-10 mb-10 2xl:flex-row md:mb-0 ">
+      <div className="flex flex-col justify-between px-16 mb-10 2xl:flex-row md:mb-0">
         <section className="flex flex-col items-center gap-3 mb-10 md:flex-col md:pl-6">
           {
             <img
@@ -117,7 +117,7 @@ const Profile = ({ user, relationship, follow }: Props) => {
       </div>
 
       <div className="flex flex-col justify-between gap-6 mb-10 md:items-center md:flex-row md:gap-3 md:mb-10">
-        <p className="block w-full px-5 text-lg md:px-0 md:ml-10 md:w-full lg:text-xl">
+        <p className="block w-full px-10 text-lg md:w-full lg:text-xl">
           {user.description}
         </p>
         {!ownProfile && (

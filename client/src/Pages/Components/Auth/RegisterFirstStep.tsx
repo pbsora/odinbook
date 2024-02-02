@@ -21,7 +21,7 @@ const RegisterFirstStep = ({ handleChange, form, setStep }: Props) => {
 
   return (
     <>
-      <div className="w-full">
+      <div className="w-[85%]">
         <label htmlFor="firstName" className="label ">
           First name
         </label>
@@ -31,10 +31,11 @@ const RegisterFirstStep = ({ handleChange, form, setStep }: Props) => {
           className="register-input"
           onChange={handleChange}
           value={form.firstName}
+          placeholder="Name"
           required
         />
       </div>
-      <div className="w-full">
+      <div className="w-[85%]">
         <label htmlFor="lastName" className="label">
           Last name
         </label>
@@ -44,10 +45,11 @@ const RegisterFirstStep = ({ handleChange, form, setStep }: Props) => {
           className="register-input"
           onChange={handleChange}
           value={form.lastName}
+          placeholder="Last name"
           required
         />
       </div>
-      <div className="w-full">
+      <div className="w-[85%]">
         <label htmlFor="email" className="label">
           E-mail
         </label>
@@ -57,6 +59,7 @@ const RegisterFirstStep = ({ handleChange, form, setStep }: Props) => {
           className="register-input"
           onChange={handleChange}
           value={form.email}
+          placeholder="email@email.com"
           required
         />
       </div>

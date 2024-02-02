@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { RotatingLines } from "react-loader-spinner";
 import { useToast } from "../ui/use-toast";
 import { UserType } from "@/assets/Types & Interfaces";
+import { AxiosError } from "axios";
 
 type Props = {
   user: UserType;
@@ -20,8 +21,21 @@ const ProfileDescription = ({ user }: Props) => {
         description: "Your description was changed with success",
       });
       descriptionMutation.reset();
+    } else if (descriptionMutation.isError) {
+      const res = descriptionMutation.failureReason as AxiosError;
+      const error = res.response?.data as { error: string };
+      toast({
+        title: "error",
+        description: error.error,
+      });
+      descriptionMutation.reset();
     }
-  }, [toast, descriptionMutation]);
+  }, [
+    toast,
+    descriptionMutation.isSuccess,
+    descriptionMutation.isError,
+    descriptionMutation.failureReason,
+  ]);
 
   const handleDescription = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -44,11 +58,13 @@ const ProfileDescription = ({ user }: Props) => {
         id=""
         cols={30}
         rows={4}
+        maxLength={320}
         className="block w-full p-4 text-lg border-2 resize-none border-zinc-400 dark:bg-zinc-800 focus:outline-sky-400 rounded-xl"
         onChange={(e) => setDesc(e.target.value)}
         value={desc}
       />
-      <button className="self-start px-6 py-3 duration-200 rounded-lg w-25 bg-sky-300 dark:bg-zinc-600 hover:dark:bg-zinc-700">
+      <p className="self-end">{desc.length}/320</p>
+      <button className="self-start px-6 py-3 text-white duration-200 rounded-lg w-25 bg-sky-500 dark:bg-zinc-600 hover:dark:bg-zinc-700">
         {descriptionMutation.isPending ? (
           <RotatingLines width="30" strokeColor="blue" />
         ) : (

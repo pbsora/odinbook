@@ -90,7 +90,7 @@ const PostItem = ({ post, deletePost }: Props) => {
         </span>
       </div>
       <div className="flex-1 px-6 py-2 text-lg md:text-xl">
-        <section>{post.content}</section>
+        <section className="pl-6">{post.content}</section>
         {post.image && (
           <img
             src={post.image.url}
